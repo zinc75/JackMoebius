@@ -1,0 +1,63 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "JackMoebius"
+  description: "Route macOS CoreAudio apps to and from JACK — per app, bidirectionally."
+  favicon: assets/favicon.png
+  open-graph: true
+  twitter-card: true
+
+  navbar:
+    pinned: true
+    logo: assets/picto.png
+    logo-alt: "JackMoebius"
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Guide
+        menu:
+          - href: guide/how-it-works.qmd
+            text: How it works
+          - href: guide/ipc.qmd
+            text: IPC protocol
+          - href: guide/cli.qmd
+            text: CLI reference
+      - href: changelog.qmd
+        text: Changelog
+    right:
+      - text: '<span class="nav-buy">Buy a license</span>'
+        href: "https://STORE_URL"
+      - icon: github
+        href: https://github.com/zinc75/JackMoebius
+
+  sidebar:
+    style: floating
+    search: true
+    contents:
+      - section: "Guide"
+        contents:
+          - guide/how-it-works.qmd
+          - guide/ipc.qmd
+          - guide/cli.qmd
+      - section: "Reference"
+        contents:
+          - changelog.qmd
+
+  page-footer:
+    center: "JackMoebius · © 2026 Éric Bavu · Proprietary software"
+
+  back-to-top-navigation: true
+
+format:
+  html:
+    theme: slate
+    css: assets/custom.css
+    include-in-header: assets/head.html   # Font Awesome via CDN (no extension needed)
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+    code-copy: true
+    smooth-scroll: true
+    anchor-sections: true
