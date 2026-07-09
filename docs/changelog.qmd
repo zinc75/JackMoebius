@@ -1,0 +1,209 @@
+---
+title: "Changelog"
+---
+
+Notable changes to JackMoebius.
+
+Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
+initial development phase (before commercialization).
+
+## 0.12.3 — 2026-07-07
+
+**Added**
+
+- The daemon and CLI report the running build: a `jackmoebius --version` banner and a
+  `version` field in the `status` reply, so a front-end can display and verify the
+  installed version.
+- Shell completion for the `version` subcommand.
+
+## 0.12.2 — 2026-07-07
+
+**Added**
+
+- **Event-driven routing (step 2):** per-process CoreAudio device listeners emit
+  fine-grained `routing_changed` events, so routing status stays live with no polling.
+
+**Fixed**
+
+- Reliable capture eligibility for multi-process apps — apps that play from helper
+  processes (browsers, etc.) are now detected correctly.
+
+## 0.12.1 — 2026-07-07
+
+**Changed**
+
+- The `apps` table is aligned, and channel ranges are shown compactly (e.g. `10->25`).
+
+**Fixed**
+
+- The daemon is launched through launchd rather than spawned as a child process (which
+  broke JACK when started from the GUI).
+
+## 0.12.0 — 2026-07-06
+
+**Added**
+
+- **Event-driven status (step 1):** a persistent `subscribe` channel over the IPC socket
+  pushes invalidation events (exposure, apps, routing, master, JACK, stopping). A
+  front-end stays in sync without polling and detects a daemon exit instantly.
+
+## 0.11.3 — 2026-07-02
+
+**Added**
+
+- On a routing mismatch, the JACK listings name the device currently in use
+  (`current_device` / `current_device_uid`), for a guided message in the GUI — both
+  output and input directions.
+
+## 0.11.2 — 2026-07-02
+
+**Added**
+
+- `status` reports per-direction exposed-box counts (`exposed_out` / `exposed_in`) so a
+  front-end can gate its polling.
+
+## 0.11.1 — 2026-06-26
+
+**Added**
+
+- Shell completion for the `blacklist` subcommand.
+
+**Fixed**
+
+- Per-app audio status is aggregated across an app's helper processes (so a browser
+  playing from a helper reads as active), and listings show friendly names.
+
+## 0.11.0 — 2026-06-26
+
+**Added**
+
+- **User blacklist:** apps you never want proposed for routing — hidden from `add` and
+  from the app selector — with CLI management.
+
+## 0.10.1 — 2026-06-26
+
+**Added**
+
+- The master box carries `org.jackmoebius.master` metadata so a front-end can recognise it.
+
+## 0.10.0 — 2026-06-25
+
+**Added**
+
+- Symmetric `apps` IPC — independent input/output state per app.
+- **Universal driver** (Intel + Apple Silicon).
+
+**Changed**
+
+- Per-app volume matches macOS's square-root volume taper.
+
+**Fixed**
+
+- The `jack_list_in` mirror.
+
+## 0.9.0 — 2026-06-22 — First packaged version
+
+The first formally versioned build, setting the macOS 15 floor.
+
+**Changed**
+
+- Set the **macOS 15.0** minimum, aligned with JackMate.
+- First version stamp on the driver and the bundle.
+
+**Added**
+
+- A login LaunchAgent that hides the internal devices at boot.
+
+## 0.8.0 — 2026-06-18 — Master, volume & sample rate
+
+**Added**
+
+- A **master box** (on/off) that replaces the plain monitor, with the system default output
+  switched to the JackMoebius output at start.
+- **Per-app volume** with a lockable *cadenas* (locked to the master by default).
+- **Per-app input/output device-routing status** — the foundation for the correctness
+  indicator.
+- **Sample-rate matching:** the driver follows jackd's rate, across 12 advertised rates
+  (8 kHz – 192 kHz).
+- A clock-drift diagnostic gauge.
+
+## 0.7.0 — 2026-06-16 — Bidirectional, per app
+
+**Added**
+
+- **Bidirectional per-app cards:** the daemon now receives from JACK, with a single box
+  wiring **both directions** for each app, an input-card pool and allocator (`add` /
+  `remove` / `clear --in`), and a masked card lifecycle.
+- App detection on the live CoreAudio process list, unified input/output listings, and
+  `--in` autocompletion.
+
+**Changed**
+
+- The forward device is split into a user-visible output device and a hidden internal tap.
+- **JACK-tied visibility:** the internal devices are hidden, and capture is gated, while
+  JACK is down.
+
+## 0.6.0 — 2026-06-13 — Deterministic transport + the reverse device
+
+**Added**
+
+- The **reverse-path foundations:** an input (*In*) device, a reverse bus with a *Feed*
+  write point, and a control-plane gate (the bus stays inert until claimed).
+
+**Changed**
+
+- **Deterministic bus transport** — a per-reader alignment delta on the write head removes
+  the timing "anchor lottery" (later measured at ±26 ms per take).
+
+## 0.5.0 — 2026-06-12 — Lifecycle & latency
+
+**Added**
+
+- Daemon lifecycle from the CLI (`start` / `stop` / `status`, clean SIGTERM).
+- Exposure intents **persist** — boxes revive across daemon restarts.
+- `clear` chains an implicit remove (unroute, drop the box, free the channels).
+- Bridge latency computed and pushed to the driver, buffer tuning, monitor volume + mute.
+
+## 0.4.0 — 2026-06-11 — One box per app
+
+**Added**
+
+- **SlotAllocator** — persistent, per-bundle-ID channel reservations (a saved patchbay
+  restores itself).
+- A HAL control plane with app-identity resolution.
+- The **IPC server** and the **`jackmoebius` CLI**.
+- **One JACK box per app** (localized names, a metadata tag, monitor control) with a
+  lifecycle reconciler: a box is visible if and only if its app is running and exposed.
+
+## 0.3.0 — 2026-06-11 — Into the JACK graph
+
+**Added**
+
+- **JackBridge** — monitor ports published in the JACK graph through a `dlopen`-ed libjack;
+  the system mix becomes audible through JACK.
+- A **supervised daemon** with auto-reconnect to both `jackd` and `coreaudiod`, plus latency
+  instrumentation.
+
+## 0.2.0 — 2026-06-11 — Continuous 64-channel capture
+
+**Added**
+
+- The **`jackmoebiusd`** daemon (a Swift package) with **AudioBridge** — continuous
+  64-channel CoreAudio capture from the driver. Validated with live hot-routing and a
+  10-minute endurance run.
+
+## 0.1.0 — 2026-06-10 — The driver
+
+The starting point was a close reading of [Stéphane Letz's note on moving *JackRouter* to
+AudioServerPlugin](https://github.com/jackaudio/jack-router/blob/main/macOS/docs/JackRouter-AudioServerPlugin.md).
+It lays out the showstoppers that turned the original JackRouter — built on the old
+**AudioHardwarePlugin** HAL plug-in, broken since macOS 10.15 — into a dead end, and points
+toward the modern **AudioServerPlugIn** driver model. JackMoebius doesn't follow that
+proposal strictly, but several of its ideas set the direction.
+
+**Added**
+
+- The **AudioServerPlugIn driver** (Rust): a per-app virtual audio device exposing
+  CoreAudio to a userspace plug-in.
+- A 64-channel capture probe and a minimal HAL control tool.
+- End-to-end validation of the full chain on modern macOS.

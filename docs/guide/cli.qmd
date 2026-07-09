@@ -1,0 +1,100 @@
+---
+title: "CLI reference"
+---
+
+`jackmoebius` is the command-line control tool. It talks to the `jackmoebiusd` daemon
+over a local socket. Most commands require the daemon (hence a running JACK server);
+`version` works even when everything is stopped.
+
+Apps are matched by their **display name** (`Safari`, `Music`) or their **bundle ID**
+(`com.apple.Safari`), case-insensitive.
+
+```bash
+jackmoebius <command> [arguments]
+```
+
+## Version & lifecycle
+
+| Command | What it does |
+|---|---|
+| `jackmoebius version` | Print the version + copyright (works while stopped). Aliases: `--version`, `-v`. |
+| `jackmoebius start` | Launch `jackmoebiusd` (JACK must be up). |
+| `jackmoebius stop` | Stop the daemon cleanly. |
+| `jackmoebius status` | Daemon / device / JACK health, exposed-box counts, master gain. |
+
+```bash
+$ jackmoebius version
+JackMoebius 0.12.3
+Copyright © 2026 Éric Bavu. All rights reserved.
+```
+
+## Apps & routing
+
+| Command | What it does |
+|---|---|
+| `jackmoebius apps` | List CoreAudio apps seen by the driver (per-app state: exposed, channels, capture-capable, blacklisted). |
+| `jackmoebius add <App>` | Expose an app's **output** — its JACK box appears. |
+| `jackmoebius add --in <App> [N]` | Expose an app's **input** card (N channels, default 2), fed from JACK. |
+| `jackmoebius remove <App>` | Hide an app's output box (the channel reservation is kept). |
+| `jackmoebius remove --in <App>` | Hide an app's input card (reservation kept). |
+| `jackmoebius list` | Currently exposed boxes, with per-box **routing status**. |
+
+```bash
+$ jackmoebius add Music
+exposed 'Musique' on channels 2/3
+
+$ jackmoebius add --in Safari
+input card 'Safari' on reverse channels 4,5
+```
+
+The routing status in `list` is `ok` / `mismatch` / `idle` / `absent` — whether the
+app actually uses the right JackMoebius device (see the [IPC protocol](ipc.qmd#routing-status)).
+
+## Reservations
+
+Channel reservations are **persistent** — an app keeps its channels across restarts, so
+a saved patchbay restores itself. `remove` hides a box but keeps the reservation;
+`clear` frees it.
+
+| Command | What it does |
+|---|---|
+| `jackmoebius assignments` | Show the persistent channel reservations (output). |
+| `jackmoebius clear <App>` | Drop an app's output reservation (frees its channels). |
+| `jackmoebius clear --in <App>` | Drop an app's input reservation. |
+
+## Volume
+
+Per-app **output volume**, with a "cadenas" (lock): locked = follows the master
+*JackMoebius Out* level; unlocked = its own independent gain.
+
+| Command | What it does |
+|---|---|
+| `jackmoebius volume <App>` | Show the app's `{locked, gain}`. |
+| `jackmoebius volume <App> lock` \| `unlock` | Lock to master, or take independent control. |
+| `jackmoebius volume <App> <gain>` | Set an independent linear gain (`1.0` = unity, `0.0` = mute). |
+
+## Master box
+
+The system-mix **monitor** box (`monitor_L`/`R`, auto-wired to `system:playback`).
+
+| Command | What it does |
+|---|---|
+| `jackmoebius master on` \| `off` | Register / unregister the master box in the JACK graph. |
+| `jackmoebius master status` | Show whether it's on. |
+
+## Blacklist
+
+Apps you never want proposed for routing (hidden from `add` and from the selector).
+Ships with Audio MIDI Setup and [JackMate](https://zinc75.github.io/JackMate); fully revertable.
+
+| Command | What it does |
+|---|---|
+| `jackmoebius blacklist --show` | List the blacklist. |
+| `jackmoebius blacklist --add <App>` | Blacklist an app (refused if it's currently exposed). |
+| `jackmoebius blacklist --remove <App>` | Un-blacklist. |
+| `jackmoebius blacklist --reset` | Restore the shipped defaults. |
+
+## Shell completion
+
+The installer ships **zsh** and **bash** completions (commands, and live app names for
+`add` / `remove` / `blacklist`).

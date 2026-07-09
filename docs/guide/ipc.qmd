@@ -1,0 +1,114 @@
+---
+title: "IPC protocol"
+---
+
+`jackmoebiusd` exposes a small JSON protocol over a local Unix-domain socket. It's the
+same contract the `jackmoebius` CLI and the [JackMate](https://zinc75.github.io/JackMate) GUI use — you can drive JackMoebius
+from any language that can open a socket.
+
+## Transport
+
+- **Socket** — `/tmp/jackmoebius.sock`, mode `0600` (owner only).
+- **Request / response** — send one JSON line, read one JSON line, the connection closes:
+
+```json
+→ {"command":"status"}
+← {"status":"ok","data":{ … }}
+```
+
+Every reply is `{"status":"ok","data":…}` or `{"status":"error","message":"…"}`.
+
+- **Event stream** — a `subscribe` connection stays **open** and streams invalidation
+  events (see [Event stream](#event-stream)).
+
+## Health — `status`
+
+```json
+→ {"command":"status"}
+← {"status":"ok","data":{
+     "version":"0.12.3","device_acquired":true,"jack_connected":true,
+     "exposed_out":2,"exposed_in":1,"master_on":false,"uptime_s":1234, … }}
+```
+
+Always present: `version`, `device_acquired`, `jack_connected`, `exposed_out`,
+`exposed_in`, `uptime_s`. `version` is the installed JackMoebius version (handy for an
+"About" box — and it answers even before the audio device is acquired).
+
+## App state — `apps`
+
+Returns one entry per app the driver knows about, both directions in one call:
+
+```json
+← {"status":"ok","data":[
+     {"name":"Music","key":"com.apple.Music","pid":606,
+      "out_exposed":true,"out_channels":[2,3],
+      "in_exposed":false,"in_channels":[],
+      "can_capture":false,"blacklisted":false}, … ]}
+```
+
+- `key` — bundle ID (stable persistence key) · `name` — display name · `pid`.
+- `out_exposed` / `in_exposed` — whether the box is exposed (the state `add` / `add --in`
+  set), per direction.
+- `out_channels` / `in_channels` — the **reserved** bus channels (persistent), or `[]`.
+- `can_capture` — the app can be routed on the input side.
+- `blacklisted` — hidden from routing selectors.
+
+## Expose & hide
+
+| Command | Effect | Reply |
+|---|---|---|
+| `{"command":"jack_add","app":"<key>"}` | expose output | `{name,key,channel_offset}` |
+| `{"command":"jack_remove","app":"<key>"}` | hide output (reservation kept) | `null` |
+| `{"command":"jack_add_in","app":"<key>","n":2}` | expose input card (N ch) | `{name,key,channels, …}` |
+| `{"command":"jack_remove_in","app":"<key>"}` | hide input card (reservation kept) | `null` |
+
+## Listings
+
+- `{"command":"jack_list"}` → exposed **output** boxes, each with `out_status` (+
+  `current_device` on a mismatch).
+- `{"command":"jack_list_in"}` → exposed **input** cards, each with `in_status`.
+- `{"command":"jack_assignments"}` / `jack_assignments_in` → the persistent reservations.
+
+## Volume, master, blacklist
+
+- `{"command":"set_volume","app":"<name>","locked":false,"gain":0.5}` → per-app output
+  volume (locked = follows master; unlocked = independent linear gain). Reply
+  `{app,key,locked,gain}`.
+- `{"command":"jack_master","enabled":true}` → the system-mix monitor box → `{master_on}`.
+- `{"command":"blacklist_show|blacklist_add|blacklist_remove|blacklist_reset", …}`.
+
+## Event stream {#event-stream}
+
+Send `{"command":"subscribe"}` on a dedicated connection. The daemon keeps it open and
+streams one event line per change — **invalidations**, never full state:
+
+```json
+→ {"command":"subscribe"}
+← {"event":"exposure_changed"}   # a box was added/removed (out or in)
+← {"event":"apps_changed"}       # app launched/quit, capture-capability, blacklist
+← {"event":"routing_changed"}    # an app's device usage may have changed
+← {"event":"master_changed"}     # master box toggled
+← {"event":"jack_changed"}       # JACK came up / went down
+← {"event":"stopping"}           # clean shutdown, just before the socket closes
+```
+
+On each event, **re-fetch the matching query** (single source of truth). Ordering matters:
+`subscribe` **then** your first fetch, so nothing slips through the gap.
+
+**Liveness is free**: while the connection is open, the daemon is alive. An `EOF`
+preceded by `stopping` = a clean stop; a **bare EOF** = a crash.
+
+## Routing status {#routing-status}
+
+`jack_list` / `jack_list_in` report, per box, whether the app actually uses the right
+JackMoebius device:
+
+| value | meaning |
+|---|---|
+| `ok` | the app reads/writes the right JackMoebius device |
+| `mismatch` | the app uses **another** device (also returns `current_device` + `current_device_uid`) |
+| `idle` | the app uses no device of that direction yet |
+| `absent` | the app is not running |
+
+The colour is the front-end's choice — a GUI shows a green / red / amber indicator, and
+raises an alert only for boxes it knows are wired.

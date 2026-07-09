@@ -1,0 +1,70 @@
+---
+title: "How it works"
+---
+
+## The problem
+
+Most macOS apps speak **CoreAudio**, not **JACK**. There is no supported way to take
+Safari's playback, a video call's microphone, or a DAW's helper process and route it
+through a JACK graph — CoreAudio apps and JACK live in separate worlds.
+
+JackMoebius bridges the two, **per application** and **in both directions**, without
+touching the app itself.
+
+## The pieces
+
+JackMoebius is two components (plus a CLI):
+
+- **The driver** — an [`AudioServerPlugIn`](https://developer.apple.com/documentation/coreaudio/creating_an_audio_server_driver_plug-in)
+  virtual audio device (`JackMoebius`). It runs inside `coreaudiod`, in **userspace** —
+  no kernel extension, no SIP changes. It presents the routing endpoints that apps and
+  the daemon attach to.
+- **The daemon** — `jackmoebiusd`, a Swift process that captures the driver's audio,
+  registers per-app clients in JACK, and keeps everything in sync. It runs **only while
+  a JACK server is up** and self-stops when JACK goes away.
+- **The CLI** — `jackmoebius`, a control tool that talks to the daemon over a local
+  socket (the same [IPC protocol](ipc.qmd) a GUI like [JackMate](https://zinc75.github.io/JackMate) uses).
+
+## The forward path — an app's output into JACK
+
+When you **expose** an app:
+
+1. The app's CoreAudio output is routed onto the JackMoebius device.
+2. The daemon captures it and publishes a **JACK client box** for that app, with output
+   ports on a reserved pair of channels.
+3. Anything in your JACK graph can now read the app's audio — patch it into a recorder,
+   an effect, a DAW, another app.
+
+The channel reservation is **persistent**: an app that stops and restarts audio comes
+back on the *same* channels, so a saved patchbay restores itself.
+
+### The system monitor mix
+
+Alongside the per-app boxes, the device's **system mix** (everything playing through
+JackMoebius) is exposed as `monitor_L` / `monitor_R`, auto-connected to
+`system:playback` so you still **hear** your Mac normally while its audio also flows
+into JACK.
+
+## The reverse path — JACK into an app's input
+
+The bridge is **bidirectional**. Exposing an app's **input** creates a dedicated
+capture device — *JackMoebius In (App)* — fed by JACK. The app selects it as its
+microphone, and now **JACK audio becomes the app's input**: process a live instrument
+through your JACK effects and send the result straight into a video call.
+
+## Event-driven, no polling
+
+The daemon watches CoreAudio (apps launching/quitting, starting/stopping audio,
+switching devices) and JACK, and reconciles the graph as things change. It exposes a
+persistent **subscribe** channel over the IPC socket that pushes *invalidations* when
+something moves — so a front-end stays in sync **without polling**, and knows instantly
+if the daemon stops (the connection closes).
+
+## Lifecycle
+
+**Daemon running ⟺ JACK up.** Start a JACK server (via [JackMate](https://zinc75.github.io/JackMate)), activate JackMoebius,
+and the devices appear in the system selectors; stop JACK and they vanish. The daemon
+is normally launched through a per-user **LaunchAgent** (which [JackMate](https://zinc75.github.io/JackMate) kick-starts),
+so it runs in the right session with its own identity.
+
+→ Next: the [IPC protocol](ipc.qmd) and the [CLI reference](cli.qmd).

@@ -1,0 +1,117 @@
+---
+title: "JackMoebius"
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="hero">
+  <div class="hero-inner">
+    <img src="assets/icon.png" alt="JackMoebius" class="hero-icon" />
+    <div class="hero-text">
+      <h1>JackMoebius</h1>
+      <p class="subtitle">Route any macOS CoreAudio app to and from JACK — per app, bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI.</p>
+      <div class="hero-pills">
+        <a href="https://github.com/zinc75/JackMoebius/releases/latest" class="hero-pill hero-pill-primary">
+          <i class="fa-solid fa-arrow-down-to-bracket"></i> Download trial
+        </a>
+        <a href="https://STORE_URL" class="hero-pill hero-pill-buy">
+          <i class="fa-solid fa-key"></i> Buy a license
+        </a>
+        <a href="guide/how-it-works.html" class="hero-pill hero-pill-secondary">
+          <i class="fa-solid fa-book-open"></i> Getting started
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## What it does
+
+```{=html}
+<style>
+.jm-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; margin:2rem 0 3rem; }
+.jm-card { border:1px solid var(--jm-border-med); border-radius:16px; background:var(--jm-bg-card); padding:1.6rem 1.5rem; }
+.jm-card .ic { width:2.8rem; height:2.8rem; border-radius:13px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:1rem; font-size:1.1rem; }
+.jm-card .ic i { color:#fff !important; }
+.jm-card h3 { font-size:1.1rem; font-weight:700; margin:0 0 .5rem; color:var(--jm-text); }
+.jm-card p  { font-size:.9rem; color:var(--jm-text-dim); line-height:1.65; margin:0; }
+</style>
+
+<div class="jm-grid">
+  <div class="jm-card">
+    <span class="ic icon-bg-cyan"><i class="fa-solid fa-right-left"></i></span>
+    <h3>Bidirectional</h3>
+    <p>An app's <strong>output</strong> flows into JACK, and JACK can feed an app's <strong>input</strong> — process a live instrument and send it straight back into a call.</p>
+  </div>
+  <div class="jm-card">
+    <span class="ic icon-bg-orange"><i class="fa-solid fa-boxes-stacked"></i></span>
+    <h3>Per application</h3>
+    <p>One JACK box per exposed app. Output and input are independent, each with its own persistent channel reservation.</p>
+  </div>
+  <div class="jm-card">
+    <span class="ic icon-bg-violet"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+    <h3>Transparent</h3>
+    <p>No plug-in, no reconfiguration inside the app. Its audio simply appears in the JACK graph — Safari, Music, FaceTime, a DAW helper, anything CoreAudio.</p>
+  </div>
+  <div class="jm-card">
+    <span class="ic icon-bg-green"><i class="fa-solid fa-microchip"></i></span>
+    <h3>Universal &amp; native</h3>
+    <p>An AudioServerPlugIn driver + a Swift daemon. Apple Silicon and Intel, macOS 15+. No kernel extension, no SIP changes.</p>
+  </div>
+  <div class="jm-card">
+    <span class="ic icon-bg-amber"><i class="fa-solid fa-terminal"></i></span>
+    <h3>Scriptable</h3>
+    <p>A <code>jackmoebius</code> command-line tool and a documented, event-driven IPC protocol — automate routing or build your own front-end.</p>
+  </div>
+  <div class="jm-card">
+    <span class="ic icon-bg-red"><i class="fa-solid fa-sliders"></i></span>
+    <h3>Studio-ready</h3>
+    <p>Per-app volumes, live routing status, persistent reservations — a <a href="https://zinc75.github.io/JackMate">JackMate</a> studio restores your whole wiring in one click.</p>
+  </div>
+</div>
+```
+
+## Controlled from JackMate
+
+```{=html}
+<figure class="jm-shot">
+  <img src="assets/screenshots/jackmate.png" alt="JackMoebius routing inside the JackMate GUI"
+       onerror="this.closest('figure').classList.add('is-empty')">
+  <div class="jm-shot-ph"><i class="fa-solid fa-image"></i> <a href="https://zinc75.github.io/JackMate">JackMate</a> — the JackMoebius panel <em>(screenshot to add)</em></div>
+  <figcaption>Expose apps, patch them, set per-app volumes and watch the routing status — visually, in <a href="https://zinc75.github.io/JackMate">JackMate</a>.</figcaption>
+</figure>
+<style>
+.jm-shot { margin:1.5rem 0 3rem; text-align:center; }
+.jm-shot img { max-width:100%; border-radius:14px; border:1px solid var(--jm-border-med); box-shadow:0 24px 60px rgba(0,0,0,.5); }
+.jm-shot figcaption { margin-top:.9rem; font-size:.9rem; color:var(--jm-text-dim); }
+.jm-shot-ph { display:none; padding:4rem 1rem; border:1px dashed var(--jm-border-hi); border-radius:14px; color:var(--jm-muted); }
+.jm-shot.is-empty img { display:none; }
+.jm-shot.is-empty .jm-shot-ph { display:block; }
+</style>
+```
+
+## How it works
+
+JackMoebius installs a per-app **AudioServerPlugIn** virtual device. When you expose
+an app, its CoreAudio stream is captured by the **`jackmoebiusd`** daemon and bridged
+into JACK as a dedicated client — and the reverse path lets JACK feed the app's input.
+The daemon keeps the JACK graph and the routing in sync, event-driven, with no polling.
+
+→ Read the full explanation in **[How it works](guide/how-it-works.html)**, the
+**[IPC protocol](guide/ipc.html)**, and the **[CLI reference](guide/cli.html)**.
+
+## Requirements
+
+| | Minimum |
+|---|---|
+| macOS | 15.0 (Sequoia) |
+| Architecture | Apple Silicon or Intel |
+| JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
+| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) |
+
+::: {.callout-note}
+JackMoebius is **proprietary software** with a **14-day free trial**. One purchase
+covers all future versions. [Buy a license](https://STORE_URL).
+:::
