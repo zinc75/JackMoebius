@@ -6,7 +6,7 @@
   ![License](https://img.shields.io/badge/license-Proprietary-red)
   ![Trial](https://img.shields.io/badge/trial-14%20days-informational)
 
-  <img src="https://raw.githubusercontent.com/zinc75/JackMoebius/main/docs/assets/picto.png" width="128" alt="JackMoebius icon">
+  <img src="docs/assets/favicon.png" width="128" alt="JackMoebius icon">
   <h1>JackMoebius</h1>
   <p>The modern bridge between macOS audio apps and JACK.<br>
   Route any CoreAudio application into JACK — and JACK back into any app — <strong>per application, bidirectionally</strong>.</p>
