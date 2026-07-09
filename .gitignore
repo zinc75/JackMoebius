@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Quarto
+/_site/
+/.quarto/
+/docs/_site/
+/docs/.quarto/
+
+# The global ~/.gitignore_global ignores every dot-directory (pattern ".**/"),
+# which would silently drop the CI workflow. Force-include .github/ here.
+!.github/
+!.github/**
