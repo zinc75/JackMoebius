@@ -903,6 +903,16 @@ body { padding-bottom: 3rem !important; }
     line-height: 1.3 !important;
     min-height: 0 !important;
   }
+  /* The real height came from Quarto stacking the 3 footer regions vertically on
+     mobile: the empty left/right rows (flex:100% + margin-bottom:1em) and the
+     center's margin-top:3em + min-height:3em. Collapse it to the centered text. */
+  .nav-footer-left,
+  .nav-footer-right { display: none !important; }
+  .nav-footer-center {
+    margin: 0 !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+  }
   body { padding-bottom: 2.4rem !important; }
 }
 /* ── Navbar — Buy Me A Coffee icon ───────────────────── */
