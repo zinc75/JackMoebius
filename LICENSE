@@ -1,0 +1,216 @@
+# JackMoebius — End-User License Agreement
+
+**Effective date:** 10 July 2026
+**Licensor:** Éric Bavu, France ("Licensor")
+**Support:** https://github.com/zinc75/JackMoebius/discussions
+**Software:** **JackMoebius** — the product name used to identify the Software —
+  is a macOS CoreAudio↔JACK bridge comprising the AudioServerPlugIn driver
+  (`JackMoebius.driver`), the `jackmoebiusd` daemon, the `jackmoebius` CLI,
+  their installer, documentation, and any updates (the "Software").
+
+---
+
+This JackMoebius ("Software") End-User License Agreement ("EULA" or
+"Agreement") is a legal agreement between you (either an individual or, if
+ obtained for an entity, that entity) and the licensor. READ IT CAREFULLY
+ BEFORE COMPLETING THE INSTALLATION PROCESS AND USING THIS SOFTWARE. It
+ provides a license to use this Software and contains warranty and liability
+ disclaimers. 
+
+**BY DOWNLOADING OR INSTALLING THE SOFTWARE YOU ARE INDICATING YOUR FULL AND
+  VOLUNTARY ASSENT TO THE TERMS OF THIS AGREEMENT.** 
+
+If you do not agree to all of the following terms, do not download or install
+the Software, or discontinue use immediately and delete all copies on your
+computer.
+
+---
+
+## 1. Acceptance
+
+By downloading, installing, copying or using the Software you ("you") agree to
+this Agreement. If you do not agree, do not download or install the Software,
+or discontinue use immediately and delete all copies.
+
+## 2. License grant
+
+Subject to your compliance with this Agreement and payment of the applicable fee
+after the trial, the Licensor grants you a personal, non-exclusive,
+non-transferable, non-sublicensable, worldwide license to install and use the
+Software for your own use on multiple macOS computers that you personally own
+or use. Each license covers one individual user.
+
+This is a license, **not a sale** of the Software (see Section 7).
+
+## 3. Trial period
+
+The Software is offered with a **fully functional, free evaluation period of 14
+days** from first use ("Trial Period"). During the Trial Period the Licensor
+grants you a limited, non-exclusive, non-transferable license to use the
+Software for evaluation purposes. Please evaluate it carefully during this
+period. During evaluation the Software is provided on the same "AS IS" basis as
+set out below. At the end of the Trial Period, continued use requires the
+purchase of a license.
+
+## 4. Installation and system components
+
+The Software may install system-level components, including audio drivers and
+background services, which may require administrative privileges on your
+computer.
+
+By installing the Software, you authorize the installation and operation of
+these components.
+
+You are responsible for ensuring that you have the necessary permissions to
+install and use the Software on your computer.
+
+## 5. License after the trial; fee
+
+If you continue to use the Software after the Trial Period, a license must be
+purchased. The applicable license fee is the amount displayed at the time of
+purchase. To purchase, visit [purchase URL]. For private matters related to
+purchases, payments or personal information, please use the private support
+channel provided by the licensing platform during the purchase process.
+
+## 6. Versions and updates
+
+Your purchased license applies to the current version of the Software and
+includes updates and improvements provided by the Licensor for that version.
+
+The Licensor may offer separate licenses or upgrades for future major versions
+of the Software.
+
+The license terms applicable to future major versions may differ from those of
+the current version.
+
+## 7. Ownership
+
+The Software is **licensed, not sold**. The Licensor and applicable third-party
+rights holders retain all right, title and interest in and to the Software,
+including all intellectual-property rights and the structure, organization and
+code of the Software (valuable trade secrets). No rights are granted except as
+expressly stated here.
+
+## 8. Restrictions
+
+Except to the extent applicable law expressly permits notwithstanding this
+clause, you may not: (a) sell, rent, lease, lend, sublicense, transfer, resell
+or otherwise redistribute the Software, its documentation or any part thereof;
+(b) reverse engineer, decompile or disassemble the Software, except for
+interoperability to the extent permitted by Directive 2009/24/EC and applicable
+law; (c) modify, translate, adapt or create derivative works of the Software —
+however, you may develop, distribute and use software that interoperates with
+the Software through its documented inter-process (IPC) interface (e.g. patchbay
+or control applications), provided you comply with the rest of this Agreement;
+(d) remove, alter or obscure any copyright, proprietary or third-party notices,
+or any license-enforcement mechanism; (e) use the Software to build a competing
+product.
+
+## 9. Third-party components
+
+The Software incorporates or interoperates with third-party components under
+their own licenses, which continue to apply and prevail over this Agreement to
+the extent of any conflict (full list in `THIRD-PARTY-NOTICES.md`):
+- portions of the Software based on or inspired by prism and spectrum
+  (© petitstrawberry), used under the MIT License;
+- the JACK client library (`libjack`), loaded dynamically at runtime under the
+  GNU LGPL; the JACK server is separate software under the GNU GPL and is not
+  distributed with the Software. Nothing here limits your rights in those
+  components under their respective licenses. 
+
+## 10. Updates and support
+
+The Licensor may, but is not obliged to, provide updates, which are governed by
+this Agreement unless delivered with a separate license. Support, if provided,
+is available through the JackMoebius support channels.
+
+
+## 11. Consumer rights 
+
+If you are a consumer, you retain all mandatory statutory rights under the law
+applicable to your country of residence, including applicable legal guarantees
+and withdrawal rights.
+
+Nothing in this Agreement limits or excludes any consumer right that cannot
+legally be limited or excluded.
+
+## 12. Disclaimer
+
+To the maximum extent permitted by applicable law, and without limiting Section
+11, the Software is provided **"AS IS"** and **"AS AVAILABLE"**, with all
+faults and without warranties of any kind, whether express, implied or
+statutory, including merchantability, fitness for a particular purpose and
+non-infringement. The Licensor does not warrant that the Software will be
+uninterrupted or error-free. Should the Software prove defective, you assume
+the cost of all necessary servicing, repair or correction. Some jurisdictions
+do not allow the exclusion of implied warranties, so parts of this section may
+not apply to you.
+
+## 13. Audio safety
+
+The Software routes and processes audio and can produce unexpected or loud
+output (e.g. feedback loops or misconfiguration). **You are responsible for
+protecting your hearing and your equipment** (monitor levels, limiters, speaker
+protection). To the extent permitted by law, the Licensor is not liable for
+damage resulting from such output.
+
+## 14. Limitation of liability
+
+To the maximum extent permitted by applicable law, the Licensor will not be
+liable for any indirect, incidental, special, consequential or punitive
+damages, or for loss of data, audio, profits or goodwill, arising out of or
+relating to the Software or the provision of (or failure to provide) support.
+The Licensor's total aggregate liability will not exceed the amount you paid
+for the Software. Some jurisdictions do not allow the exclusion of
+consequential damages, so parts of this section may not apply to you. Nothing
+excludes liability that cannot be excluded by law (e.g. death or personal
+injury caused by negligence, or fraud). This section states the Licensor's
+entire liability and your exclusive remedy regarding the Software.
+
+## 15. Refunds and purchases
+
+Sales are processed by FastSpring as merchant of record for the transaction.
+
+Purchases, payments, taxes, invoices, refunds and any applicable withdrawal
+rights are handled according to FastSpring's terms and policies and applicable
+consumer law.
+
+The Software includes a fully functional 14-day evaluation period, allowing
+users to evaluate the Software before purchase. The existence of this
+evaluation period does not affect any mandatory consumer rights.
+
+## 16. Termination
+
+This Agreement applies until terminated. It terminates automatically if you fail
+to comply with any term or condition. On termination you must stop using and
+delete all copies of the Software. Sections 7 to 9 and 12 to 19 survive
+termination.
+
+## 17. Governing law
+
+This Agreement is governed by the laws of France, without regard to
+conflict-of-laws rules. The competent courts of France have jurisdiction —
+except that, if you are a consumer, you may also rely on the mandatory
+provisions and the courts of your country of residence.
+
+## 18. Acceptable use
+
+The Software is a general-purpose audio-routing tool. **You are solely
+responsible** for your use of it and for ensuring that your use complies with
+all applicable laws and the rights of third parties. In particular, you must
+not use the Software to infringe copyright or other intellectual-property
+rights, to circumvent any technological protection measure, or in violation of
+the terms of any third-party service. The Licensor does not endorse, and
+assumes no responsibility for, any unlawful use of the Software.
+
+## 19. General
+
+You may not assign this Agreement; any attempt to do so is void. This is the
+entire agreement regarding the Software and supersedes prior understandings
+about it. If a provision is unenforceable, it is modified to the minimum extent
+necessary to make it enforceable, and the rest remains in effect. Failure to
+enforce a provision is not a waiver of it.
+
+---
+
+© 2026 Éric Bavu
