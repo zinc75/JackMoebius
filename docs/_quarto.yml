@@ -55,6 +55,7 @@ format:
     theme: slate
     css: assets/custom.css
     include-in-header: assets/head.html   # Font Awesome via CDN (no extension needed)
+    include-after-body: assets/after-body.html   # platform-aware download modals
     toc: true
     toc-depth: 3
     toc-title: "On this page"
