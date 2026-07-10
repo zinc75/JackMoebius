@@ -893,6 +893,16 @@ body { padding-bottom: 3rem !important; }
   .hero { padding: 3rem 1.75rem 2.5rem; border-radius: 18px; }
   .feature-grid { grid-template-columns: 1fr; }
   .feature-card:nth-child(n) { grid-column: span 1; }
+  /* Footer flows with the content instead of a fixed glass bar: the fixed
+     footer floated too high (big empty gap) on mobile's dynamic viewport. */
+  .nav-footer {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 1rem 0 !important;
+  }
+  body { padding-bottom: 0 !important; }
 }
 /* ── Navbar — Buy Me A Coffee icon ───────────────────── */
 .navbar-bmc-icon {
