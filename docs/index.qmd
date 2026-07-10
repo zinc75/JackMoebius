@@ -117,7 +117,9 @@ toc: false
 
 ```{=html}
 <style>
-.jm-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; margin:2rem 0 3rem; }
+.jm-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin:2rem 0 3rem; }
+@media (max-width:900px){ .jm-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:600px){ .jm-grid{ grid-template-columns:1fr; } }
 .jm-card { border:1px solid var(--jm-border-med); border-radius:16px; background:var(--jm-bg-card); padding:1.6rem 1.5rem; }
 .jm-card .ic { width:2.8rem; height:2.8rem; border-radius:13px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:1rem; font-size:1.1rem; }
 .jm-card .ic i { color:#fff !important; }
