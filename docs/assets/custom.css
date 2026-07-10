@@ -893,18 +893,17 @@ body { padding-bottom: 3rem !important; }
   .hero { padding: 3rem 1.75rem 2.5rem; border-radius: 18px; }
   .feature-grid { grid-template-columns: 1fr; }
   .feature-card:nth-child(n) { grid-column: span 1; }
-  /* Keep the fixed glass footer, just make it a thinner strip on mobile
-     (its physical height ate too much of the small screen). */
+  /* Slimmer fixed footer on mobile — glass + fixed position kept, just less
+     height (tighter padding + smaller text) so it stops eating the viewport.
+     Aligned with the JackMate site's footer treatment. */
   .nav-footer {
     padding-top: 0.3rem !important;
     padding-bottom: 0.3rem !important;
-    min-height: 0 !important;
+    font-size: 0.7rem !important;
     line-height: 1.3 !important;
+    min-height: 0 !important;
   }
-  .nav-footer .nav-footer-center,
-  .nav-footer .nav-footer-left,
-  .nav-footer .nav-footer-right { min-height: 0 !important; padding: 0 !important; margin: 0 !important; }
-  body { padding-bottom: 2rem !important; }
+  body { padding-bottom: 2.4rem !important; }
 }
 /* ── Navbar — Buy Me A Coffee icon ───────────────────── */
 .navbar-bmc-icon {
