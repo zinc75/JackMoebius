@@ -61,52 +61,25 @@ toc: false
   </div>
 </div>
 
-<!-- Modal: macOS — download started + Gatekeeper (beta, not yet notarized) -->
+<!-- Modal: macOS — download started + clean install (signed & notarized) -->
 <div id="download-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-title">
   <div class="dm-dialog">
     <div class="dm-header">
       <div class="dm-header-icon icon-bg-cyan"><i class="fa-solid fa-arrow-down-to-bracket"></i></div>
       <div>
         <h2 id="dm-title" class="dm-title">Your download has started</h2>
-        <p class="dm-intro">During the beta, JackMoebius isn't notarized yet — macOS will block the installer. Here's how to run it anyway:</p>
+        <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
       </div>
     </div>
 
-    <div class="dm-prestep">
-      <span class="dm-prestep-icon"><i class="fa-solid fa-circle-arrow-right"></i></span>
-      <span>First, open the downloaded <strong>.dmg</strong> — it contains <strong>Install JackMoebius.pkg</strong>. Then choose one of the methods below:</span>
-    </div>
-
-    <div class="dm-tabs" role="tablist">
-      <button class="dm-tab is-active" role="tab" aria-selected="true"  aria-controls="dm-panel-terminal"  id="dm-tab-terminal">
-        <i class="fa-solid fa-terminal"></i> Terminal
-        <span class="dm-tab-badge">recommended</span>
-      </button>
-      <button class="dm-tab"            role="tab" aria-selected="false" aria-controls="dm-panel-settings"  id="dm-tab-settings">
-        <i class="fa-solid fa-gear"></i> System Settings
-      </button>
-    </div>
-
-    <div class="dm-panel is-active" id="dm-panel-terminal" role="tabpanel" aria-labelledby="dm-tab-terminal">
-      <div class="dm-code-wrap">
-        <pre class="dm-pre"><code>sudo installer -pkg "/Volumes/JackMoebius/Install JackMoebius.pkg" -target /</code></pre>
-        <button class="dm-copy" id="dm-copy-btn" aria-label="Copy command" onclick="dmCopyCommand(this)">
-          <i class="fa-solid fa-copy"></i>
-        </button>
-      </div>
-      <p class="dm-code-hint">Open the .dmg, then paste this in Terminal and enter your password — it installs directly, bypassing the block.</p>
-    </div>
-
-    <div class="dm-panel" id="dm-panel-settings" role="tabpanel" aria-labelledby="dm-tab-settings">
-      <ol class="dm-steps">
-        <li>Double-click <strong>Install JackMoebius.pkg</strong> — macOS blocks it; click <strong>Done</strong>.</li>
-        <li>Open <strong>System Settings &rsaquo; Privacy &amp; Security</strong>, scroll down, click <strong>"Open Anyway"</strong>, then re-run the installer.</li>
-      </ol>
-      <p class="dm-warning"><i class="fa-solid fa-triangle-exclamation"></i> "Right-click &rarr; Open" no longer works on macOS Sequoia and later.</p>
-    </div>
+    <ol class="dm-steps">
+      <li>Open the downloaded <strong>.dmg</strong>.</li>
+      <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer (you'll accept the license).</li>
+      <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+    </ol>
 
     <div class="dm-footer">
-      <p class="dm-bmac-note"><strong>Restart required</strong> after install — the driver loads at boot. JackMoebius is free to try for 14 days; a license unlocks it afterwards.</p>
+      <p class="dm-bmac-note"><i class="fa-solid fa-shield-halved"></i> Signed &amp; notarized by Apple. Free to try for 14 days; a license unlocks it afterwards.</p>
       <button class="dm-close-btn" id="modal-close-bottom">Got it</button>
     </div>
   </div>
@@ -146,7 +119,7 @@ toc: false
   <div class="jm-card">
     <span class="ic icon-bg-green"><i class="fa-solid fa-microchip"></i></span>
     <h3>Universal &amp; native</h3>
-    <p>An AudioServerPlugIn driver + a Swift daemon. Apple Silicon and Intel, macOS 15+. No kernel extension, no SIP changes.</p>
+    <p>An AudioServerPlugIn driver + a Swift daemon, <strong>signed and notarized by Apple</strong>. Apple Silicon and Intel, macOS 15+. No kernel extension, no SIP changes.</p>
   </div>
   <div class="jm-card">
     <span class="ic icon-bg-amber"><i class="fa-solid fa-terminal"></i></span>

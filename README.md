@@ -44,6 +44,9 @@ runs standalone from the CLI too.
    **asked to reboot** at the end.
 3. Start a **JACK** server (via [JackMate](https://zinc75.github.io/JackMate)), then activate JackMoebius.
 
+> 🛡️ **Signed and notarized by Apple.** The driver and daemon are Developer ID signed and
+> the installer is notarized + stapled, so it opens with **no Gatekeeper warnings**.
+>
 > Requires a running **JACK** server. Designed to be driven by **[JackMate](https://zinc75.github.io/JackMate)**.
 
 ## Documentation
