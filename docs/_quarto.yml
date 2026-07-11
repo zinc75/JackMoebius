@@ -46,7 +46,7 @@ website:
           - changelog.qmd
 
   page-footer:
-    center: "JackMoebius · © 2026 Éric Bavu · Proprietary software"
+    center: "JackMoebius · © 2026 Éric Bavu · [Proprietary software](/eula.qmd)"
 
   back-to-top-navigation: true
 

@@ -1,0 +1,11 @@
+---
+toc: true
+toc-depth: 2
+toc-title: "Sections"
+---
+
+<!-- Not listed in the navbar/sidebar on purpose — reached via "Proprietary software"
+     in the page footer. Single source of truth: includes the repo LICENSE, so this
+     page never drifts from the shipped EULA. -->
+
+{{< include ../LICENSE >}}
