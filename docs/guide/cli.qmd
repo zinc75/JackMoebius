@@ -98,3 +98,23 @@ Ships with Audio MIDI Setup and [JackMate](https://zinc75.github.io/JackMate); f
 
 The installer ships **zsh** and **bash** completions (commands, and live app names for
 `add` / `remove` / `blacklist`).
+
+The zsh completion file is installed on the completion path
+(`/usr/local/share/zsh/site-functions`), but zsh only activates completions once your
+shell has initialized its completion system. If `jackmoebius `<kbd>Tab</kbd> does nothing
+(typically on a fresh account with no `~/.zshrc`), add this line to your `~/.zshrc` and
+open a new terminal:
+
+```zsh
+autoload -Uz compinit && compinit
+```
+
+Most setups (Oh My Zsh, a customized `~/.zshrc`, …) already do this. It's the standard
+step for **every** tool's zsh completion — the installer deliberately does not edit your
+shell configuration.
+
+For **bash** (a minority on macOS, whose default shell is zsh), the completion is
+installed in the standard Homebrew directory `/usr/local/etc/bash_completion.d`. It
+activates automatically once you have `bash-completion` installed and sourced
+(`brew install bash-completion`, then source it from your `~/.bash_profile`) — again, a
+shell-config step the installer leaves to you.
