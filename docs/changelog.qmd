@@ -7,6 +7,19 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
+## 0.13.0 — 2026-07-11
+
+**Added**
+
+- **Signed and notarized by Apple.** The installer is code-signed and notarized, so
+  it installs cleanly with no Gatekeeper warnings.
+- The license agreement is shown during installation.
+
+**Changed**
+
+- In System Settings ▸ Login Items & Extensions, the background item is now clearly
+  labeled **JackMoebius**.
+
 ## 0.12.3 — 2026-07-07
 
 **Added**
