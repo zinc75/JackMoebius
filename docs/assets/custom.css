@@ -222,7 +222,7 @@ nav.quarto-secondary-nav { display: none !important; }
   padding-bottom: 1.25rem;
 }
 #title-block-header .quarto-title h1.title {
-  font-size: 1.9rem; font-weight: 700; letter-spacing: -0.035em;
+  font-size: 2.3rem; font-weight: 700; letter-spacing: -0.035em;
   color: #ffffff; margin-bottom: 0.3rem;
 }
 #title-block-header .description,
@@ -303,10 +303,10 @@ div.sidebar.sidebar-navigation.rollup.quarto-sidebar-toggle-contents,
    TYPOGRAPHY
    ═══════════════════════════════════════════════════ */
 
-h1 { font-weight: 700; letter-spacing: -0.035em; font-size: 2.1rem; color: #ffffff; }
+h1 { font-weight: 700; letter-spacing: -0.035em; font-size: 2.4rem; color: #ffffff; }
 
 h2 {
-  font-weight: 600; letter-spacing: -0.025em; font-size: 1.2rem;
+  font-weight: 600; letter-spacing: -0.025em; font-size: 1.55rem;
   margin-top: 2.75rem; margin-bottom: 0.8rem;
   color: var(--jm-text); padding-bottom: 0.55rem;
   border-bottom: 1px solid;
@@ -317,7 +317,7 @@ h2 {
   scroll-margin-top: 5rem;
 }
 h3 {
-  font-weight: 500; font-size: 0.95rem; margin-top: 1.5rem;
+  font-weight: 500; font-size: 1.2rem; margin-top: 1.5rem;
   color: rgba(255,255,255,0.72); letter-spacing: -0.01em;
   scroll-margin-top: 5rem;
 }
@@ -820,7 +820,7 @@ figcaption, .figure-caption {
 
 /* ── Page title banner ────────────────────────────── */
 .quarto-title-banner { background: var(--jm-bg) !important; padding-top: 1.5rem !important; padding-bottom: 0.5rem !important; }
-.quarto-title h1.title { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.035em; color: #fff; }
+.quarto-title h1.title { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.035em; color: #fff; }
 .quarto-title .description { color: var(--jm-muted); font-size: 0.92rem; }
 
 /* ── Back to top ──────────────────────────────────── */
