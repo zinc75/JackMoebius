@@ -2,7 +2,7 @@
 
 **Effective date:** 10 July 2026
 **Licensor:** Éric Bavu, France ("Licensor")
-**Support:** https://github.com/zinc75/JackMoebius/discussions
+**Support:** <https://github.com/zinc75/JackMoebius/discussions>
 **Software:** **JackMoebius** — the product name used to identify the Software —
   is a macOS CoreAudio↔JACK bridge comprising the AudioServerPlugIn driver
   (`JackMoebius.driver`), the `jackmoebiusd` daemon, the `jackmoebius` CLI,
