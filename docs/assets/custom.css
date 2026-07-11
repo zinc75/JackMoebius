@@ -607,6 +607,20 @@ figcaption, .figure-caption {
 }
 .hero-text .hero-pills { display: flex; gap: 0.65rem; flex-wrap: wrap; }
 
+/* Trust badge — "Signed & notarized by Apple" with a green verified seal + check */
+.hero-trust {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--jm-text-dim);
+}
+.hero-seal { font-size: 0.72rem; }                          /* sizes the fa-stack seal */
+.hero-seal .fa-certificate { color: #fbbf24; }              /* golden seal */
+.hero-seal .fa-check { color: #241a02; }                    /* dark check on the gold seal */
+
 .hero-pill {
   display: inline-flex; align-items: center; gap: 0.45rem;
   font-size: 0.85rem; font-weight: 500; padding: 0.5rem 1.15rem;
