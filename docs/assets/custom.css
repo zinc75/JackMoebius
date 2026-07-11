@@ -306,7 +306,7 @@ div.sidebar.sidebar-navigation.rollup.quarto-sidebar-toggle-contents,
 h1 { font-weight: 700; letter-spacing: -0.035em; font-size: 2.4rem; color: #ffffff; }
 
 h2 {
-  font-weight: 600; letter-spacing: -0.025em; font-size: 1.55rem;
+  font-weight: 600; letter-spacing: -0.025em; font-size: 1.8rem;
   margin-top: 2.75rem; margin-bottom: 0.8rem;
   color: var(--jm-text); padding-bottom: 0.55rem;
   border-bottom: 1px solid;
@@ -317,7 +317,7 @@ h2 {
   scroll-margin-top: 5rem;
 }
 h3 {
-  font-weight: 500; font-size: 1.2rem; margin-top: 1.5rem;
+  font-weight: 500; font-size: 1.5rem; margin-top: 1.5rem;
   color: rgba(255,255,255,0.72); letter-spacing: -0.01em;
   scroll-margin-top: 5rem;
 }
@@ -618,7 +618,7 @@ figcaption, .figure-caption {
   color: var(--jm-text-dim);
 }
 .hero-seal { font-size: 0.72rem; }                          /* sizes the fa-stack seal */
-.hero-seal .fa-certificate { color: #fbbf24; }              /* golden seal */
+.hero-seal .fa-certificate { color: #fbbf24; }              /* vivid golden seal */
 .hero-seal .fa-check { color: #241a02; }                    /* dark check on the gold seal */
 
 .hero-pill {
