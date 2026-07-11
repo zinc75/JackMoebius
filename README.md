@@ -11,7 +11,7 @@
   <p>The modern bridge between macOS audio apps and JACK.<br>
   Route any CoreAudio application into JACK — and JACK back into any app — <strong>per application, bidirectionally</strong>.</p>
 
-    <p>
+  <p>
     <img src="docs/assets/notarized-badge.png" width="15" alt="">
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
