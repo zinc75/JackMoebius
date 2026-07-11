@@ -121,7 +121,7 @@ toc: false
   <div class="jm-card">
     <span class="ic icon-bg-violet"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
     <h3>Transparent</h3>
-    <p>No plug-in, no reconfiguration inside the app. Its audio simply appears in the JACK graph — Safari, Music, FaceTime, a DAW helper, anything CoreAudio.</p>
+    <p>No plug-in, no reconfiguration inside the app, no aggregate devices needed. Its audio simply appears in the JACK graph — Safari, Music, FaceTime, a DAW helper, anything CoreAudio.</p>
   </div>
   <div class="jm-card">
     <span class="ic icon-bg-green"><i class="fa-solid fa-microchip"></i></span>
