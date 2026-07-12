@@ -7,6 +7,13 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
+## 0.13.2 — 2026-07-12
+
+**Added**
+
+- The bundled command-line tool can report the trial status offline (without a
+  running daemon), so a front-end can show the days remaining at any time.
+
 ## 0.13.1 — 2026-07-12
 
 Internal groundwork for the upcoming trial and license system. No change to how
