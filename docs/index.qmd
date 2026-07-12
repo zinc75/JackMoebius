@@ -180,6 +180,6 @@ The daemon keeps the JACK graph and the routing in sync, event-driven, with no p
 | GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) |
 
 ::: {.callout-note}
-JackMoebius is **proprietary software** with a **14-day free trial**. One purchase
-covers all future versions. [Buy a license](https://STORE_URL).
+JackMoebius is **proprietary software** with a **14-day free trial**. A **one-time
+purchase**, no subscription, with all updates included. [Buy a license](https://STORE_URL).
 :::

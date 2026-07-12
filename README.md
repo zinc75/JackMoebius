@@ -71,7 +71,7 @@ Full documentation — how it works, the IPC protocol, and the CLI reference —
 ## License
 
 JackMoebius is **proprietary software**, distributed with a **14-day free trial**.
-Continued use requires a license — **one purchase covers all future versions**
-(see the EULA). Buy a license: **[STORE_URL](https://STORE_URL)**.
+Continued use requires a license — a **one-time purchase**, no subscription, with
+**all updates included** (see the EULA). Buy a license: **[STORE_URL](https://STORE_URL)**.
 
 Copyright © 2026 Éric Bavu. All rights reserved.
