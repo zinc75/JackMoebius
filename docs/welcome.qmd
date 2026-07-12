@@ -1,0 +1,115 @@
+---
+page-layout: full
+toc: false
+---
+
+<!-- Post-purchase welcome page. Not in the navbar/sidebar — reached from the Lemon
+     Squeezy confirmation modal + email receipt buttons (…/welcome.html#[license_key]).
+     Auto-downloads the current DMG (URL built from the `jackmoebius-version` variable,
+     no manual upkeep), shows install steps, and fills the activation command with the
+     buyer's key (read from the URL fragment, client-side). -->
+
+```{=html}
+<div class="dl-page">
+  <img src="assets/icon.png" alt="JackMoebius" class="dl-icon">
+  <h1>Your download is starting…</h1>
+
+  <a class="hero-pill hero-pill-primary dl-btn" id="dl-link"
+     href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
+    <i class="fa-solid fa-arrow-down-to-bracket"></i>
+    Download JackMoebius {{< var jackmoebius-version >}}
+  </a>
+  <p class="dl-lead">If it doesn't begin automatically, click the button above.</p>
+
+  <div class="dl-trust">
+    <span class="fa-stack hero-seal" aria-hidden="true">
+      <i class="fa-solid fa-certificate fa-stack-2x"></i>
+      <i class="fa-solid fa-check fa-stack-1x"></i>
+    </span>
+    Signed &amp; notarized by Apple
+  </div>
+
+  <p class="dl-note dl-reinstall"><strong>Already installed JackMoebius during the trial?</strong>
+    No need to reinstall — skip straight to activation below.</p>
+
+  <p class="dl-heading">Installing for the first time</p>
+  <ol class="dl-steps">
+    <li>Open the downloaded <strong>.dmg</strong>.</li>
+    <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer.</li>
+    <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+    <li>Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>).</li>
+  </ol>
+
+  <div class="dl-note dl-activate">
+    <p class="dl-actg"><strong>Activate your license</strong></p>
+    <p id="dl-key-line" class="dl-keyline">Your license key: <code id="dl-key"></code></p>
+    <p>Unlock JackMoebius in <a href="https://zinc75.github.io/JackMate">JackMate</a>, or run:</p>
+    <div class="dl-cmd">
+      <code id="dl-cmd">jackmoebius license activate YOUR-KEY</code>
+      <button id="dl-copy" type="button">Copy</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dl-page { max-width: 660px; margin: 3rem auto; text-align: center; }
+  .dl-icon { width: 96px; height: 96px; border-radius: 22px; }
+  .dl-page h1 { margin: 1.2rem 0 1.4rem; }
+  .dl-btn { display: inline-flex; align-items: center; gap: .55rem; }
+  .dl-lead { color: var(--jm-text-dim); margin: .9rem 0 0; font-size: .92rem; }
+  .dl-trust { display: inline-flex; align-items: center; gap: .5rem; margin: 1.6rem 0;
+              color: var(--jm-text-dim); font-weight: 500; }
+  .dl-heading { font-weight: 700; color: var(--jm-text); margin: .4rem 0 .6rem; }
+  .dl-steps { display: inline-block; text-align: left; margin: 0 auto 1.4rem; line-height: 1.85; }
+  .dl-note { color: var(--jm-text-dim); background: var(--jm-bg-card); text-align: left;
+             border: 1px solid var(--jm-border-med); border-radius: 14px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .dl-note p { margin: 0 0 .6rem; }
+  .dl-reinstall { border-left: 3px solid #38bdf8; }
+  .dl-actg { font-size: 1.02rem; }
+  .dl-keyline { display: none; }
+  .dl-keyline code { color: var(--jm-text); }
+  .dl-cmd { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .dl-cmd code { flex: 1 1 auto; background: rgba(0,0,0,.25); padding: .45rem .65rem;
+                 border-radius: 8px; word-break: break-all; }
+  #dl-copy { flex: none; cursor: pointer; border: 1px solid var(--jm-border-med);
+             background: transparent; color: var(--jm-text-dim); border-radius: 8px;
+             padding: .45rem .85rem; font-size: .85rem; }
+  #dl-copy:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    // Best-effort auto-start (browsers may require a click; the button above is the
+    // reliable path). GitHub serves the asset with Content-Disposition, so it downloads.
+    var link = document.getElementById('dl-link');
+    if (link) setTimeout(function () {
+      var a = document.createElement('a');
+      a.href = link.href; a.rel = 'noopener';
+      document.body.appendChild(a); a.click(); a.remove();
+    }, 700);
+
+    // If Lemon Squeezy passed the license key in the URL fragment (#[license_key]),
+    // fill it into the activation command. Read from the fragment (not sent to the
+    // server) — falls back to a ?key= query. textContent keeps it XSS-safe.
+    function readKey() {
+      var raw = decodeURIComponent((location.hash || '').replace(/^#(?:key=)?/, '')).trim();
+      if (/^[A-Za-z0-9-]{8,}$/.test(raw)) return raw;
+      var q = new URLSearchParams(location.search).get('key');
+      return (q && /^[A-Za-z0-9-]{8,}$/.test(q)) ? q : null;
+    }
+    var cmdEl = document.getElementById('dl-cmd');
+    var key = readKey();
+    if (key && cmdEl) {
+      document.getElementById('dl-key').textContent = key;
+      document.getElementById('dl-key-line').style.display = 'block';
+      cmdEl.textContent = 'jackmoebius license activate ' + key;
+    }
+    var copyBtn = document.getElementById('dl-copy');
+    if (copyBtn && cmdEl) copyBtn.addEventListener('click', function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(cmdEl.textContent);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    });
+  });
+</script>
+```
