@@ -4,23 +4,17 @@ toc: false
 ---
 
 <!-- Post-purchase welcome page. Not in the navbar/sidebar — reached from the Lemon
-     Squeezy confirmation modal + email receipt buttons (…/welcome.html#[license_key]).
-     Auto-downloads the current DMG (URL built from the `jackmoebius-version` variable,
-     no manual upkeep), shows install steps, and fills the activation command with the
-     buyer's key (read from the URL fragment, client-side). -->
+     Squeezy confirmation modal + email receipt buttons (…/welcome.html?key=[license_key]).
+     Two-step onboarding: (1) first install vs already-have-the-trial → reveals the right
+     block (and triggers the DMG download for first installs, built from the
+     jackmoebius-version variable); (2) the buyer's license key (read from the URL, client
+     side) + the activation methods, each with a Copy button. -->
 
 ```{=html}
 <div class="dl-page">
   <img src="assets/icon.png" alt="JackMoebius" class="dl-icon">
-  <h1>Your download is starting…</h1>
-
-  <a class="hero-pill hero-pill-primary dl-btn" id="dl-link"
-     href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
-    <i class="fa-solid fa-arrow-down-to-bracket"></i>
-    Download JackMoebius {{< var jackmoebius-version >}}
-  </a>
-  <p class="dl-lead">If it doesn't begin automatically, click the button above.</p>
-
+  <h1>Welcome to JackMoebius</h1>
+  <p id="dl-greeting" class="dl-greeting">Thanks for your purchase, <span id="dl-name"></span>&nbsp;!</p>
   <div class="dl-trust">
     <span class="fa-stack hero-seal" aria-hidden="true">
       <i class="fa-solid fa-certificate fa-stack-2x"></i>
@@ -29,87 +23,178 @@ toc: false
     Signed &amp; notarized by Apple
   </div>
 
-  <p class="dl-note dl-reinstall"><strong>Already installed JackMoebius during the trial?</strong>
-    No need to reinstall — skip straight to activation below.</p>
+  <!-- STEP 1 -->
+  <div class="dl-step">
+    <p class="dl-steptitle">1 · Is this a first install, or do you already have it?</p>
+    <div class="dl-choices">
+      <button type="button" class="dl-choice" id="ch-new">Installing for the first time</button>
+      <button type="button" class="dl-choice" id="ch-have">I already have it (from the trial)</button>
+    </div>
 
-  <p class="dl-heading">Installing for the first time</p>
-  <ol class="dl-steps">
-    <li>Open the downloaded <strong>.dmg</strong>.</li>
-    <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer.</li>
-    <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
-    <li>Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>).</li>
-  </ol>
+    <div class="dl-note dl-panel" id="panel-new" hidden>
+      <div class="dl-dl">
+        <a class="hero-pill hero-pill-primary dl-btn" id="download-btn" onclick="openDownloadModal(event)"
+           href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
+          <i class="fa-solid fa-arrow-down-to-bracket"></i>
+          Download JackMoebius {{< var jackmoebius-version >}}
+        </a>
+      </div>
+      <ol class="dl-steps">
+        <li>Open the downloaded <strong>.dmg</strong>.</li>
+        <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer.</li>
+        <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+      </ol>
+    </div>
 
-  <div class="dl-note dl-activate">
-    <p class="dl-actg"><strong>Activate your license</strong></p>
-    <p id="dl-key-line" class="dl-keyline">Your license key: <code id="dl-key"></code></p>
-    <p>Unlock JackMoebius in <a href="https://zinc75.github.io/JackMate">JackMate</a>, or run:</p>
-    <div class="dl-cmd">
-      <code id="dl-cmd">jackmoebius license activate YOUR-KEY</code>
-      <button id="dl-copy" type="button">Copy</button>
+    <div class="dl-note dl-panel dl-reinstall" id="panel-have" hidden>
+      Great — <strong>no need to reinstall</strong>. Just activate below.
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="dl-step">
+    <p class="dl-steptitle">2 · Activate your license</p>
+    <div class="dl-note">
+      <p id="dl-key-line" class="dl-keyline">Your license key:
+        <code id="dl-key"></code>
+        <button id="dl-key-copy" type="button" class="dl-copybtn">Copy</button>
+      </p>
+      <p>Unlock JackMoebius in <a href="https://zinc75.github.io/JackMate">JackMate</a>, or run:</p>
+      <div class="dl-cmd">
+        <code id="dl-cmd">jackmoebius license activate YOUR-KEY</code>
+        <button id="dl-copy" type="button" class="dl-copybtn">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="dl-step">
+    <p class="dl-steptitle">3 · Start using it</p>
+    <div class="dl-note">
+      Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>),
+      then expose your apps in JackMoebius. Enjoy!
+    </div>
+  </div>
+</div>
+
+<!-- Wrong-platform modals — same behaviour as the site's Download button. macOS just
+     downloads (this page already shows the install steps); non-Mac gets a heads-up. -->
+<div id="dm-confirm-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-confirm-title">
+  <div class="dm-dialog dm-dialog-sm">
+    <div class="dm-header">
+      <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
+      <div>
+        <h2 id="dm-confirm-title" class="dm-title">JackMoebius is a macOS driver</h2>
+        <p class="dm-intro">This installer only runs on macOS. Download anyway?</p>
+      </div>
+    </div>
+    <div class="dm-footer">
+      <button class="dm-cancel-btn" id="dm-confirm-cancel">Cancel</button>
+      <button class="dm-close-btn" id="dm-confirm-ok">Download anyway</button>
+    </div>
+  </div>
+</div>
+
+<div id="dm-mobile-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-mobile-title">
+  <div class="dm-dialog dm-dialog-sm">
+    <div class="dm-header">
+      <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
+      <div>
+        <h2 id="dm-mobile-title" class="dm-title">JackMoebius is a macOS driver</h2>
+        <p class="dm-intro">It's a CoreAudio driver for the Mac — it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
+      </div>
+    </div>
+    <div class="dm-footer dm-footer-end">
+      <button class="dm-close-btn" id="dm-mobile-ok">Got it</button>
     </div>
   </div>
 </div>
 
 <style>
-  .dl-page { max-width: 660px; margin: 3rem auto; text-align: center; }
-  .dl-icon { width: 96px; height: 96px; border-radius: 22px; }
-  .dl-page h1 { margin: 1.2rem 0 1.4rem; }
-  .dl-btn { display: inline-flex; align-items: center; gap: .55rem; }
-  .dl-lead { color: var(--jm-text-dim); margin: .9rem 0 0; font-size: .92rem; }
-  .dl-trust { display: inline-flex; align-items: center; gap: .5rem; margin: 1.6rem 0;
+  .dl-page { max-width: 660px; margin: 3rem auto 4rem; text-align: center; }
+  .dl-icon { width: 88px; height: 88px; border-radius: 20px; }
+  .dl-page h1 { margin: 1rem 0 .6rem; }
+  .dl-greeting { display: none; color: var(--jm-text-dim); margin: 0 0 1.1rem; font-size: 1.05rem; }
+  .dl-greeting #dl-name { color: var(--jm-text); font-weight: 600; }
+  .dl-trust { display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 2rem;
               color: var(--jm-text-dim); font-weight: 500; }
-  .dl-heading { font-weight: 700; color: var(--jm-text); margin: .4rem 0 .6rem; }
-  .dl-steps { display: inline-block; text-align: left; margin: 0 auto 1.4rem; line-height: 1.85; }
+  .dl-step { margin: 1.7rem 0; text-align: left; }
+  .dl-steptitle { font-weight: 700; color: var(--jm-text); margin: 0 0 .8rem; font-size: 1.05rem; }
+  .dl-choices { display: flex; gap: .7rem; flex-wrap: wrap; }
+  .dl-choice { flex: 1 1 210px; cursor: pointer; padding: .8rem 1rem; border-radius: 12px;
+               border: 1px solid var(--jm-border-med); background: var(--jm-bg-card);
+               color: var(--jm-text-dim); font-size: .95rem; text-align: center; transition: all .12s; }
+  .dl-choice:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
+  .dl-choice.active { color: var(--jm-text); border-color: #38bdf8; box-shadow: inset 0 0 0 1px #38bdf8; }
+  .dl-panel { margin-top: 1rem; }
+  .dl-dl { text-align: center; margin-bottom: 1.5rem; }
+  .dl-btn { display: inline-flex; align-items: center; gap: .55rem; }
+  .dl-lead { color: var(--jm-text-dim); margin: .8rem 0 0; font-size: .9rem; }
+  .dl-steps { margin: 1rem 0 0; padding-left: 1.4rem; line-height: 1.85; }
   .dl-note { color: var(--jm-text-dim); background: var(--jm-bg-card); text-align: left;
-             border: 1px solid var(--jm-border-med); border-radius: 14px; padding: 1rem 1.2rem; margin: 1rem 0; }
+             border: 1px solid var(--jm-border-med); border-radius: 14px; padding: 1rem 1.2rem; }
   .dl-note p { margin: 0 0 .6rem; }
+  .dl-note p:last-child { margin-bottom: 0; }
   .dl-reinstall { border-left: 3px solid #38bdf8; }
-  .dl-actg { font-size: 1.02rem; }
-  .dl-keyline { display: none; }
-  .dl-keyline code { color: var(--jm-text); }
+  .dl-keyline { display: none; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .dl-keyline code { color: var(--jm-text); background: rgba(0,0,0,.25);
+                     padding: .35rem .55rem; border-radius: 8px; }
   .dl-cmd { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
   .dl-cmd code { flex: 1 1 auto; background: rgba(0,0,0,.25); padding: .45rem .65rem;
                  border-radius: 8px; word-break: break-all; }
-  #dl-copy { flex: none; cursor: pointer; border: 1px solid var(--jm-border-med);
-             background: transparent; color: var(--jm-text-dim); border-radius: 8px;
-             padding: .45rem .85rem; font-size: .85rem; }
-  #dl-copy:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
+  .dl-copybtn { flex: none; cursor: pointer; border: 1px solid var(--jm-border-med);
+                background: transparent; color: var(--jm-text-dim); border-radius: 8px;
+                padding: .35rem .75rem; font-size: .82rem; }
+  .dl-copybtn:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
 </style>
 
 <script>
   window.addEventListener('DOMContentLoaded', function () {
-    // Best-effort auto-start (browsers may require a click; the button above is the
-    // reliable path). GitHub serves the asset with Content-Disposition, so it downloads.
-    var link = document.getElementById('dl-link');
-    if (link) setTimeout(function () {
-      var a = document.createElement('a');
-      a.href = link.href; a.rel = 'noopener';
-      document.body.appendChild(a); a.click(); a.remove();
-    }, 700);
+    // Step 1: reveal the matching block. The Download button handles the download
+    // itself, with the same platform-aware modal as the site's index (openDownloadModal).
+    var chNew = document.getElementById('ch-new'), chHave = document.getElementById('ch-have');
+    var panelNew = document.getElementById('panel-new'), panelHave = document.getElementById('panel-have');
+    function choose(isNew) {
+      panelNew.hidden = !isNew; panelHave.hidden = isNew;
+      chNew.classList.toggle('active', isNew);
+      chHave.classList.toggle('active', !isNew);
+    }
+    chNew.addEventListener('click', function () { choose(true); });
+    chHave.addEventListener('click', function () { choose(false); });
 
-    // If Lemon Squeezy passed the license key in the URL fragment (#[license_key]),
-    // fill it into the activation command. Read from the fragment (not sent to the
-    // server) — falls back to a ?key= query. textContent keeps it XSS-safe.
+    // Step 2: license key from the URL (?key= — Lemon Squeezy's form — or a #fragment).
+    // textContent keeps it XSS-safe.
     function readKey() {
-      var raw = decodeURIComponent((location.hash || '').replace(/^#(?:key=)?/, '')).trim();
-      if (/^[A-Za-z0-9-]{8,}$/.test(raw)) return raw;
       var q = new URLSearchParams(location.search).get('key');
-      return (q && /^[A-Za-z0-9-]{8,}$/.test(q)) ? q : null;
+      if (q && /^[A-Za-z0-9-]{8,}$/.test(q)) return q;
+      var raw = decodeURIComponent((location.hash || '').replace(/^#(?:key=)?/, '')).trim();
+      return /^[A-Za-z0-9-]{8,}$/.test(raw) ? raw : null;
     }
-    var cmdEl = document.getElementById('dl-cmd');
     var key = readKey();
-    if (key && cmdEl) {
+    if (key) {
       document.getElementById('dl-key').textContent = key;
-      document.getElementById('dl-key-line').style.display = 'block';
-      cmdEl.textContent = 'jackmoebius license activate ' + key;
+      document.getElementById('dl-key-line').style.display = 'flex';
+      document.getElementById('dl-cmd').textContent = 'jackmoebius license activate ' + key;
     }
-    var copyBtn = document.getElementById('dl-copy');
-    if (copyBtn && cmdEl) copyBtn.addEventListener('click', function () {
-      if (navigator.clipboard) navigator.clipboard.writeText(cmdEl.textContent);
-      copyBtn.textContent = 'Copied!';
-      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
-    });
+
+    // Optional: greet the buyer by name (Lemon Squeezy's [name] variable). textContent-safe.
+    var nm = new URLSearchParams(location.search).get('name');
+    if (nm && (nm = nm.trim()) && nm.length <= 60) {
+      document.getElementById('dl-name').textContent = nm;
+      document.getElementById('dl-greeting').style.display = 'block';
+    }
+
+    function wireCopy(btnId, srcId) {
+      var btn = document.getElementById(btnId), src = document.getElementById(srcId);
+      if (!btn || !src) return;
+      btn.addEventListener('click', function () {
+        if (navigator.clipboard) navigator.clipboard.writeText(src.textContent);
+        var t = btn.textContent; btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = t; }, 1500);
+      });
+    }
+    wireCopy('dl-key-copy', 'dl-key');
+    wireCopy('dl-copy', 'dl-cmd');
   });
 </script>
 ```
