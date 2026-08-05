@@ -15,7 +15,7 @@ toc: false
         <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg" class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
           <i class="fa-solid fa-arrow-down-to-bracket"></i> Download trial
         </a>
-        <a href="https://STORE_URL" class="hero-pill hero-pill-buy">
+        <a href="{{< var store-url >}}?embed=1" class="hero-pill hero-pill-buy lemonsqueezy-button">
           <i class="fa-solid fa-key"></i> Buy a license
         </a>
         <a href="guide/how-it-works.html" class="hero-pill hero-pill-secondary">
@@ -181,5 +181,5 @@ The daemon keeps the JACK graph and the routing in sync, event-driven, with no p
 
 ::: {.callout-note}
 JackMoebius is **proprietary software** with a **14-day free trial**. A **one-time
-purchase**, no subscription, with all updates included. [Buy a license](https://STORE_URL).
+purchase**, no subscription, with all updates included. [Buy a license]({{< var store-url >}}?embed=1){.lemonsqueezy-button}.
 :::

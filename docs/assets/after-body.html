@@ -37,6 +37,15 @@
 
   // ── Mobile modal ────────────────────────────────────
   document.getElementById('dm-mobile-ok')?.addEventListener('click', function () { closeOverlay('dm-mobile-modal'); });
+
+  // ── Navbar "Buy" → checkout overlay ─────────────────
+  // The navbar link can't carry the lemonsqueezy-button class from Quarto's config,
+  // so upgrade any full-page checkout link to an overlay button. lemon.js delegates
+  // clicks by class, so adding the class (and ?embed=1) here is enough.
+  document.querySelectorAll('a[href*="lemonsqueezy.com/checkout"]:not(.lemonsqueezy-button)').forEach(function (a) {
+    a.classList.add('lemonsqueezy-button');
+    if (a.href.indexOf('embed=1') === -1) a.href += (a.href.indexOf('?') === -1 ? '?' : '&') + 'embed=1';
+  });
 })();
 
 function openDownloadModal(e) {

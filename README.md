@@ -16,7 +16,7 @@
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
 
-  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Download trial](https://github.com/zinc75/JackMoebius/releases/latest)** · **[Buy a license](https://STORE_URL)**
+  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Download trial](https://github.com/zinc75/JackMoebius/releases/latest)** · **[Buy a license](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**
 
 </div>
 
@@ -72,6 +72,6 @@ Full documentation — how it works, the IPC protocol, and the CLI reference —
 
 JackMoebius is **proprietary software**, distributed with a **14-day free trial**.
 Continued use requires a license — a **one-time purchase**, no subscription, with
-**all updates included** (see the EULA). Buy a license: **[STORE_URL](https://STORE_URL)**.
+**all updates included** (see the EULA). Buy a license: **[jackmoebius.lemonsqueezy.com](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**.
 
 Copyright © 2026 Éric Bavu. All rights reserved.
