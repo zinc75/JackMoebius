@@ -29,7 +29,7 @@ without parsing `message`.
 ```json
 → {"command":"status"}
 ← {"status":"ok","data":{
-     "version":"0.14.0","device_acquired":true,"jack_connected":true,
+     "version":"1.0.0","device_acquired":true,"jack_connected":true,
      "exposed_out":2,"exposed_in":1,"master_on":false,"uptime_s":1234,
      "licensing":{"state":"trial","days_remaining":9}, … }}
 ```

@@ -24,7 +24,7 @@ jackmoebius <command> [arguments]
 
 ```bash
 $ jackmoebius version
-JackMoebius 0.14.0
+JackMoebius 1.0.0
 Copyright © 2026 Éric Bavu. All rights reserved.
 ```
 
