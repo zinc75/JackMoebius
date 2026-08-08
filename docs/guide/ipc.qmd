@@ -16,7 +16,10 @@ from any language that can open a socket.
 ← {"status":"ok","data":{ … }}
 ```
 
-Every reply is `{"status":"ok","data":…}` or `{"status":"error","message":"…"}`.
+Every reply is `{"status":"ok","data":…}` or `{"status":"error","message":"…"}`. An error may
+carry an optional **`code`** — a machine-readable marker (e.g. `"licensing"` when a routing
+command is refused because the trial has expired) — so a client can react to a class of error
+without parsing `message`.
 
 - **Event stream** — a `subscribe` connection stays **open** and streams invalidation
   events (see [Event stream](#event-stream)).
@@ -26,13 +29,19 @@ Every reply is `{"status":"ok","data":…}` or `{"status":"error","message":"…
 ```json
 → {"command":"status"}
 ← {"status":"ok","data":{
-     "version":"0.12.3","device_acquired":true,"jack_connected":true,
-     "exposed_out":2,"exposed_in":1,"master_on":false,"uptime_s":1234, … }}
+     "version":"0.14.0","device_acquired":true,"jack_connected":true,
+     "exposed_out":2,"exposed_in":1,"master_on":false,"uptime_s":1234,
+     "licensing":{"state":"trial","days_remaining":9}, … }}
 ```
 
 Always present: `version`, `device_acquired`, `jack_connected`, `exposed_out`,
-`exposed_in`, `uptime_s`. `version` is the installed JackMoebius version (handy for an
-"About" box — and it answers even before the audio device is acquired).
+`exposed_in`, `uptime_s`, `licensing`. `version` is the installed JackMoebius version (handy
+for an "About" box — and it answers even before the audio device is acquired). `licensing`
+carries `{state, days_remaining}` (state ∈ `trial | licensed | expired`; `days_remaining` is
+present for `trial`/`expired`, absent for `licensed`). Reading or changing the license itself
+(status while stopped, activation) is a **CLI** concern — see the
+[CLI reference](cli.qmd#license--trial); the socket only reports the live state here and
+notifies changes via `licensing_changed`.
 
 ## App state — `apps`
 
@@ -89,6 +98,7 @@ streams one event line per change — **invalidations**, never full state:
 ← {"event":"routing_changed"}    # an app's device usage may have changed
 ← {"event":"master_changed"}     # master box toggled
 ← {"event":"jack_changed"}       # JACK came up / went down
+← {"event":"licensing_changed"}  # trial/license state changed (day count, activation, revoke)
 ← {"event":"stopping"}           # clean shutdown, just before the socket closes
 ```
 

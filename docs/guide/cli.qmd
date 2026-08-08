@@ -24,9 +24,32 @@ jackmoebius <command> [arguments]
 
 ```bash
 $ jackmoebius version
-JackMoebius 0.12.3
+JackMoebius 0.14.0
 Copyright © 2026 Éric Bavu. All rights reserved.
 ```
+
+## License & trial
+
+JackMoebius runs as a **14-day trial**, then needs a license. These commands work **while
+the daemon is stopped** (like `version`); reading the status needs no network.
+
+| Command | What it does |
+|---|---|
+| `jackmoebius license` | Show the trial / license status. Add `--json` for a machine-readable form. |
+| `jackmoebius license activate <KEY>` | Activate this Mac with your license key (**needs an internet connection**). |
+| `jackmoebius license refresh` | Re-validate the license online now (e.g. after freeing a slot on another Mac). |
+
+```bash
+$ jackmoebius license
+Trial — 9 day(s) left
+
+$ jackmoebius license activate XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+License activated on this Mac (1/5 machines used).
+```
+
+A license is **perpetual** and, once activated, stays valid **offline indefinitely** — you're
+never locked out for lack of network. A license covers up to its activation limit of Macs
+(shown in the status); to move it to another Mac, contact support.
 
 ## Apps & routing
 
