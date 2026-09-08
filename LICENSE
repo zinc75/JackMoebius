@@ -114,13 +114,22 @@ product.
 
 The Software incorporates or interoperates with third-party components under
 their own licenses, which continue to apply and prevail over this Agreement to
-the extent of any conflict (full list in `THIRD-PARTY-NOTICES.md`):
+the extent of any conflict (full texts in the Third-Party Notices appendix at the
+end of this Agreement):
 - portions of the Software based on or inspired by prism and spectrum
   (© petitstrawberry), used under the MIT License;
-- the JACK client library (`libjack`), loaded dynamically at runtime under the
-  GNU LGPL; the JACK server is separate software under the GNU GPL and is not
-  distributed with the Software. Nothing here limits your rights in those
-  components under their respective licenses. 
+- neither the JACK client library (`libjack`, GNU LGPL) nor the JACK server
+  (GNU GPL) is distributed with the Software: `libjack` is loaded dynamically at
+  runtime from your own JACK installation, and the server is separate software you
+  install and run yourself. Nothing here limits your rights in those components
+  under their respective licenses.
+
+The installer can optionally install **JackMate**, a separate companion
+application by the same author, provided free of charge under the MIT License.
+JackMate is **not** part of the Software licensed under this Agreement and is not
+covered by it; your use of JackMate is governed solely by its own MIT License
+(reproduced in the appendix). Installing it is optional and can be declined in
+the installer.
 
 ## 10. Updates and support
 
@@ -218,3 +227,68 @@ enforce a provision is not a waiver of it.
 ---
 
 © 2026 Éric Bavu
+
+---
+
+## Appendix — Third-Party Notices
+
+The following third-party components are used under the MIT License, whose notices
+are reproduced below. The installer may also bundle **JackMate** (MIT), the optional
+companion GUI.
+
+### prism and spectrum — MIT License
+
+https://github.com/petitstrawberry/prism · https://github.com/petitstrawberry/spectrum
+
+```
+MIT License
+
+Copyright (c) 2025 petitstrawberry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### JackMate — MIT License
+
+The optional companion GUI, bundled by the installer at the user's choice.
+https://github.com/zinc75/JackMate
+
+```
+MIT License
+
+Copyright (c) Éric Bavu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
