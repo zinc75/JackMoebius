@@ -143,6 +143,11 @@ toc: false
 
 ## Controlled from JackMate
 
+**[JackMate](https://zinc75.github.io/JackMate)** — a free, standalone JACK patchbay &
+manager — is the recommended way to drive JackMoebius, and the installer sets it up
+alongside (optional, opt-out at install time). Activate your JackMoebius license, expose
+apps, patch them and set per-app volumes, all visually.
+
 ```{=html}
 <figure class="jm-shot">
   <img src="assets/screenshots/jackmate.png" alt="JackMoebius routing inside the JackMate GUI"
@@ -177,7 +182,7 @@ The daemon keeps the JACK graph and the routing in sync, event-driven, with no p
 | macOS | 15.0 (Sequoia) |
 | Architecture | Apple Silicon or Intel |
 | JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
-| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) |
+| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) — installed alongside |
 
 ::: {.callout-note}
 JackMoebius is **proprietary software** with a **14-day free trial**. A **one-time

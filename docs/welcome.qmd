@@ -5,10 +5,10 @@ toc: false
 
 <!-- Post-purchase welcome page. Not in the navbar/sidebar — reached from the Lemon
      Squeezy confirmation modal + email receipt buttons (…/welcome.html?key=[license_key]).
-     Two-step onboarding: (1) first install vs already-have-the-trial → reveals the right
-     block (and triggers the DMG download for first installs, built from the
-     jackmoebius-version variable); (2) the buyer's license key (read from the URL, client
-     side) + the activation methods, each with a Copy button. -->
+     Sequential wizard carousel: the buyer's license key is shown large and permanently
+     above the steps, then one step at a time — (1) first install vs. already-have-the-trial,
+     (2) activate graphically (JackMate) or in the terminal, (3) start using it. The Next
+     button unlocks only once the current step is answered; Back returns. -->
 
 ```{=html}
 <div class="dl-page">
@@ -23,58 +23,112 @@ toc: false
     Signed &amp; notarized by Apple
   </div>
 
-  <!-- STEP 1 -->
-  <div class="dl-step">
-    <p class="dl-steptitle">1 · Is this a first install, or do you already have it?</p>
-    <div class="dl-choices">
-      <button type="button" class="dl-choice" id="ch-new">Installing for the first time</button>
-      <button type="button" class="dl-choice" id="ch-have">I already have it (from the trial)</button>
-    </div>
-
-    <div class="dl-note dl-panel" id="panel-new" hidden>
-      <div class="dl-dl">
-        <a class="hero-pill hero-pill-primary dl-btn" id="download-btn" onclick="openDownloadModal(event)"
-           href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
-          <i class="fa-solid fa-arrow-down-to-bracket"></i>
-          Download JackMoebius {{< var jackmoebius-version >}}
-        </a>
-      </div>
-      <ol class="dl-steps">
-        <li>Open the downloaded <strong>.dmg</strong>.</li>
-        <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer.</li>
-        <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
-      </ol>
-    </div>
-
-    <div class="dl-note dl-panel dl-reinstall" id="panel-have" hidden>
-      Great — <strong>no need to reinstall</strong>. Just activate below.
-    </div>
+  <!-- License key: shown large and permanently above the steps -->
+  <div id="dl-key-line" class="dl-keybox">
+    <span class="dl-keybox-label">Your license key</span>
+    <span class="dl-keybox-row">
+      <code id="dl-key"></code>
+      <button id="dl-key-copy" type="button" class="dl-copybtn">Copy</button>
+    </span>
   </div>
 
-  <!-- STEP 2 -->
-  <div class="dl-step">
-    <p class="dl-steptitle">2 · Activate your license</p>
-    <div class="dl-note">
-      <p id="dl-key-line" class="dl-keyline">Your license key:
-        <code id="dl-key"></code>
-        <button id="dl-key-copy" type="button" class="dl-copybtn">Copy</button>
-      </p>
-      <p>Unlock JackMoebius in <a href="https://zinc75.github.io/JackMate">JackMate</a>, or run:</p>
-      <div class="dl-cmd">
-        <code id="dl-cmd">jackmoebius license activate YOUR-KEY</code>
-        <button id="dl-copy" type="button" class="dl-copybtn">Copy</button>
-      </div>
-    </div>
-  </div>
+  <!-- Sequential wizard: one step at a time; Next unlocks once the step is answered -->
+  <div class="wiz-card">
+  <div class="wiz">
+    <div class="wiz-track" id="wiz-track">
 
-  <!-- STEP 3 -->
-  <div class="dl-step">
-    <p class="dl-steptitle">3 · Start using it</p>
-    <div class="dl-note">
-      Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>),
-      then expose your apps in JackMoebius. Enjoy!
+      <!-- STEP 1 -->
+      <section class="wiz-slide" data-step="1">
+        <p class="dl-steptitle">Is this a first install, or do you already have it?</p>
+        <div class="dl-choices">
+          <button type="button" class="dl-choice" id="ch-new">Installing for the first time</button>
+          <button type="button" class="dl-choice" id="ch-have">I already have it (from the trial)</button>
+        </div>
+
+        <div class="dl-note dl-panel" id="panel-new" hidden>
+          <div class="dl-dl">
+            <a class="hero-pill hero-pill-primary dl-btn" id="download-btn" onclick="openDownloadModal(event)"
+               href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
+              <i class="fa-solid fa-arrow-down-to-bracket"></i>
+              Download JackMoebius {{< var jackmoebius-version >}}
+            </a>
+          </div>
+          <ol class="dl-steps">
+            <li>Open the downloaded <strong>.dmg</strong>.</li>
+            <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer — it also
+                offers <strong>JackMate</strong> (the free JACK patchbay &amp; manager) as an
+                optional component; keeping it ticked is the easiest way to drive JackMoebius.</li>
+            <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+          </ol>
+        </div>
+
+        <div class="dl-note dl-panel dl-reinstall" id="panel-have" hidden>
+          Great — <strong>no need to reinstall</strong>. Move on to activation.
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="wiz-slide" data-step="2">
+        <p class="dl-steptitle">Activate your license</p>
+        <div class="dl-choices">
+          <button type="button" class="dl-choice dl-choice-2" id="act-gui">
+            <span class="dl-choice-t"><i class="fa-solid fa-hand-pointer"></i> I'd rather click</span>
+            <span class="dl-choice-s">Graphically, in JackMate</span>
+          </button>
+          <button type="button" class="dl-choice dl-choice-2" id="act-cli">
+            <span class="dl-choice-t"><i class="fa-solid fa-terminal"></i> I'd rather type</span>
+            <span class="dl-choice-s">One command in Terminal</span>
+          </button>
+        </div>
+
+        <div class="dl-note dl-panel" id="panel-act-gui" hidden>
+          <p>In <a href="https://zinc75.github.io/JackMate">JackMate</a>, open the
+             <strong>License</strong> panel, paste your key above, and click
+             <strong>Activate</strong>.</p>
+          <!-- VIDEO: short muted clip (a few seconds, looping) showing where to click in
+               JackMate's License panel. Drop it at assets/video/activate-jackmate.mp4 and it
+               replaces the placeholder automatically (onloadeddata removes .is-empty). -->
+          <figure class="dl-vid is-empty">
+            <video src="assets/video/activate-jackmate.mp4" muted autoplay loop playsinline
+                   onloadeddata="this.closest('figure').classList.remove('is-empty'); if(window.wizFit) window.wizFit();"></video>
+            <figcaption class="dl-vid-ph"><i class="fa-solid fa-clapperboard"></i>
+              Short walkthrough coming soon.</figcaption>
+          </figure>
+        </div>
+
+        <div class="dl-note dl-panel" id="panel-act-cli" hidden>
+          <p>Open <strong>Terminal</strong> and run:</p>
+          <div class="dl-cmd">
+            <code id="dl-cmd">jackmoebius license activate YOUR-KEY</code>
+            <button id="dl-copy" type="button" class="dl-copybtn">Copy</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="wiz-slide" data-step="3">
+        <p class="dl-steptitle">Start using it</p>
+        <div class="dl-note">
+          Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>),
+          then expose your apps in JackMoebius. Enjoy!
+        </div>
+      </section>
+
+    </div><!-- /wiz-track -->
+  </div><!-- /wiz -->
+
+  <div class="wiz-nav">
+    <button type="button" class="wiz-btn wiz-back" id="wiz-back" hidden>
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    <div class="wiz-dots" id="wiz-dots" aria-hidden="true">
+      <span class="wiz-dot"></span><span class="wiz-dot"></span><span class="wiz-dot"></span>
     </div>
+    <button type="button" class="wiz-btn wiz-next" id="wiz-next" disabled>
+      Next <i class="fa-solid fa-arrow-right"></i>
+    </button>
   </div>
+  </div><!-- /wiz-card -->
 </div>
 
 <!-- Wrong-platform modals — same behaviour as the site's Download button. macOS just
@@ -118,27 +172,43 @@ toc: false
   .dl-greeting #dl-name { color: var(--jm-text); font-weight: 600; }
   .dl-trust { display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 2rem;
               color: var(--jm-text-dim); font-weight: 500; }
-  .dl-step { margin: 1.7rem 0; text-align: left; }
-  .dl-steptitle { font-weight: 700; color: var(--jm-text); margin: 0 0 .8rem; font-size: 1.05rem; }
+
+  /* License key box — always above the steps */
+  .dl-keybox { display: none; margin: 0 auto 2.2rem; padding: 1rem 1.2rem; max-width: 540px;
+               background: var(--jm-bg-card); border: 1px solid var(--jm-border-med); border-radius: 14px; }
+  .dl-keybox-label { display: block; color: var(--jm-text-dim); font-size: .78rem;
+                     text-transform: uppercase; letter-spacing: .07em; margin-bottom: .55rem; }
+  .dl-keybox-row { display: inline-flex; align-items: center; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+  .dl-keybox code { color: var(--jm-text); background: rgba(0,0,0,.28); padding: .5rem .8rem;
+                    border-radius: 10px; font-size: 1.15rem; letter-spacing: .02em; word-break: break-all; }
+
+  /* Wizard carousel */
+  .wiz-card { border: 1px solid var(--jm-border-med); border-radius: 16px; padding: 1.6rem 1.6rem 1.3rem; }
+  .wiz { overflow: hidden; transition: height .3s ease; }
+  .wiz-track { display: flex; align-items: flex-start; transition: transform .35s ease; }
+  .wiz-slide { flex: 0 0 100%; min-width: 100%; box-sizing: border-box; padding: .2rem; text-align: left; }
+
+  .dl-steptitle { font-weight: 700; color: var(--jm-text); margin: 0 0 .9rem; font-size: 1.05rem; text-align: center; }
   .dl-choices { display: flex; gap: .7rem; flex-wrap: wrap; }
   .dl-choice { flex: 1 1 210px; cursor: pointer; padding: .8rem 1rem; border-radius: 12px;
                border: 1px solid var(--jm-border-med); background: var(--jm-bg-card);
                color: var(--jm-text-dim); font-size: .95rem; text-align: center; transition: all .12s; }
   .dl-choice:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
   .dl-choice.active { color: var(--jm-text); border-color: #38bdf8; box-shadow: inset 0 0 0 1px #38bdf8; }
+  .dl-choice-2 { display: flex; flex-direction: column; gap: .15rem; }
+  .dl-choice-2 .dl-choice-t { font-weight: 600; color: var(--jm-text); font-size: .95rem; }
+  .dl-choice-2 .dl-choice-s { font-size: .8rem; color: var(--jm-text-dim); }
+
   .dl-panel { margin-top: 1rem; }
   .dl-dl { text-align: center; margin-bottom: 1.5rem; }
   .dl-btn { display: inline-flex; align-items: center; gap: .55rem; }
-  .dl-lead { color: var(--jm-text-dim); margin: .8rem 0 0; font-size: .9rem; }
   .dl-steps { margin: 1rem 0 0; padding-left: 1.4rem; line-height: 1.85; }
   .dl-note { color: var(--jm-text-dim); background: var(--jm-bg-card); text-align: left;
              border: 1px solid var(--jm-border-med); border-radius: 14px; padding: 1rem 1.2rem; }
   .dl-note p { margin: 0 0 .6rem; }
   .dl-note p:last-child { margin-bottom: 0; }
   .dl-reinstall { border-left: 3px solid #38bdf8; }
-  .dl-keyline { display: none; align-items: center; gap: .5rem; flex-wrap: wrap; }
-  .dl-keyline code { color: var(--jm-text); background: rgba(0,0,0,.25);
-                     padding: .35rem .55rem; border-radius: 8px; }
+
   .dl-cmd { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
   .dl-cmd code { flex: 1 1 auto; background: rgba(0,0,0,.25); padding: .45rem .65rem;
                  border-radius: 8px; word-break: break-all; }
@@ -146,23 +216,122 @@ toc: false
                 background: transparent; color: var(--jm-text-dim); border-radius: 8px;
                 padding: .35rem .75rem; font-size: .82rem; }
   .dl-copybtn:hover { color: var(--jm-text); border-color: var(--jm-border-hi); }
+
+  .dl-vid { margin: .2rem 0 0; }
+  .dl-vid video { display: block; width: 100%; border-radius: 10px; border: 1px solid var(--jm-border-med); }
+  .dl-vid-ph { display: none; padding: 1.4rem 1rem; border: 1px dashed var(--jm-border-hi);
+               border-radius: 10px; color: var(--jm-muted); text-align: center; font-size: .85rem; }
+  .dl-vid.is-empty video { display: none; }
+  .dl-vid.is-empty .dl-vid-ph { display: block; }
+
+  /* Wizard nav */
+  .wiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.6rem; }
+  .wiz-btn { cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+             border: 1px solid var(--jm-border-med); background: var(--jm-bg-card); color: var(--jm-text);
+             border-radius: 10px; padding: .55rem 1.1rem; font-size: .95rem; transition: all .12s; }
+  .wiz-btn[hidden] { display: none; }
+  .wiz-btn:hover:not(:disabled) { border-color: var(--jm-border-hi); }
+  .wiz-btn:disabled { opacity: .4; cursor: not-allowed; }
+  .wiz-next { background: #38bdf8; border-color: #38bdf8; color: #051016; font-weight: 600; }
+  .wiz-next:hover:not(:disabled) { filter: brightness(1.07); }
+  .wiz-dots { display: inline-flex; gap: .45rem; flex: 1; justify-content: center; }
+  .wiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--jm-border-hi); transition: all .2s; }
+  .wiz-dot.active { background: #38bdf8; transform: scale(1.25); }
 </style>
 
 <script>
   window.addEventListener('DOMContentLoaded', function () {
-    // Step 1: reveal the matching block. The Download button handles the download
-    // itself, with the same platform-aware modal as the site's index (openDownloadModal).
+    var track = document.getElementById('wiz-track');
+    var wiz = track.parentElement;
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.wiz-slide'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.wiz-dot'));
+    var btnBack = document.getElementById('wiz-back'), btnNext = document.getElementById('wiz-next');
+    var current = 0;                        // 0-based slide index
+    var answered = [false, false, true];    // step 3 asks nothing
+
+    // Fit the carousel height to the current slide (content grows as panels reveal).
+    window.wizFit = function () { wiz.style.height = slides[current].offsetHeight + 'px'; };
+
+    // Tiny self-contained confetti burst for the final step (no dependency).
+    function burstConfetti() {
+      var c = document.createElement('canvas');
+      c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999';
+      document.body.appendChild(c);
+      var ctx = c.getContext('2d');
+      c.width = innerWidth; c.height = innerHeight;
+      var colors = ['#38bdf8', '#a78bfa', '#34d399', '#fbbf24', '#f472b6', '#f87171'];
+      var parts = [];
+      for (var i = 0; i < 140; i++) parts.push({
+        x: innerWidth / 2 + (Math.random() - 0.5) * 140,
+        y: innerHeight * 0.34 + (Math.random() - 0.5) * 40,
+        vx: (Math.random() - 0.5) * 11, vy: Math.random() * -9 - 3,
+        g: 0.22 + Math.random() * 0.12, s: 5 + Math.random() * 6,
+        rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.3,
+        col: colors[i % colors.length]
+      });
+      var t0 = performance.now();
+      (function frame(now) {
+        ctx.clearRect(0, 0, c.width, c.height);
+        var fade = Math.max(0, 1 - (now - t0) / 2200);
+        parts.forEach(function (p) {
+          p.vy += p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+          ctx.globalAlpha = fade; ctx.fillStyle = p.col;
+          ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6); ctx.restore();
+        });
+        if (now - t0 < 2400) requestAnimationFrame(frame); else c.remove();
+      })(t0);
+    }
+
+    function render() {
+      track.style.transform = 'translateX(' + (-current * 100) + '%)';
+      slides.forEach(function (s, i) {
+        if (i === current) s.removeAttribute('inert'); else s.setAttribute('inert', '');
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+      btnBack.hidden = current === 0;
+      var last = current === slides.length - 1;
+      btnNext.hidden = last;
+      btnNext.disabled = !answered[current];
+      window.wizFit();
+    }
+    var confettiDone = false;
+    function go(i) {
+      current = Math.max(0, Math.min(slides.length - 1, i));
+      render();
+      if (current === slides.length - 1 && !confettiDone &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        confettiDone = true; burstConfetti();
+      }
+    }
+    btnNext.addEventListener('click', function () { if (answered[current]) go(current + 1); });
+    btnBack.addEventListener('click', function () { go(current - 1); });
+
+    // Step 1: first install vs. already have it.
     var chNew = document.getElementById('ch-new'), chHave = document.getElementById('ch-have');
     var panelNew = document.getElementById('panel-new'), panelHave = document.getElementById('panel-have');
     function choose(isNew) {
       panelNew.hidden = !isNew; panelHave.hidden = isNew;
       chNew.classList.toggle('active', isNew);
       chHave.classList.toggle('active', !isNew);
+      answered[0] = true; btnNext.disabled = false; window.wizFit();
     }
     chNew.addEventListener('click', function () { choose(true); });
     chHave.addEventListener('click', function () { choose(false); });
 
-    // Step 2: license key from the URL (?key= — Lemon Squeezy's form — or a #fragment).
+    // Step 2: activate graphically (JackMate) vs. the terminal.
+    var actGui = document.getElementById('act-gui'), actCli = document.getElementById('act-cli');
+    var panelActGui = document.getElementById('panel-act-gui'), panelActCli = document.getElementById('panel-act-cli');
+    function chooseAct(gui) {
+      panelActGui.hidden = !gui; panelActCli.hidden = gui;
+      actGui.classList.toggle('active', gui);
+      actCli.classList.toggle('active', !gui);
+      answered[1] = true; btnNext.disabled = false; window.wizFit();
+    }
+    actGui.addEventListener('click', function () { chooseAct(true); });
+    actCli.addEventListener('click', function () { chooseAct(false); });
+
+    // License key from the URL (?key= — Lemon Squeezy's form — or a #fragment).
     // textContent keeps it XSS-safe.
     function readKey() {
       var q = new URLSearchParams(location.search).get('key');
@@ -173,7 +342,7 @@ toc: false
     var key = readKey();
     if (key) {
       document.getElementById('dl-key').textContent = key;
-      document.getElementById('dl-key-line').style.display = 'flex';
+      document.getElementById('dl-key-line').style.display = 'block';
       document.getElementById('dl-cmd').textContent = 'jackmoebius license activate ' + key;
     }
 
@@ -195,6 +364,10 @@ toc: false
     }
     wireCopy('dl-key-copy', 'dl-key');
     wireCopy('dl-copy', 'dl-cmd');
+
+    window.addEventListener('resize', function () { window.wizFit(); });
+    window.addEventListener('load', function () { window.wizFit(); });  // late fonts/icons
+    render();  // initial paint
   });
 </script>
 ```
