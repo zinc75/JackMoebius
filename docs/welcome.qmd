@@ -82,9 +82,16 @@ toc: false
         </div>
 
         <div class="dl-note dl-panel" id="panel-act-gui" hidden>
-          <p>In <a href="https://zinc75.github.io/JackMate">JackMate</a>, open the
-             <strong>License</strong> panel, paste your key above, and click
-             <strong>Activate</strong>.</p>
+          <p>One click and JackMate opens with your key ready:</p>
+          <div class="dl-dl">
+            <a class="hero-pill hero-pill-primary dl-btn" id="open-jackmate" href="jackmate://activate">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Open in JackMate
+            </a>
+          </div>
+          <p class="dl-lead">Nothing happens? Activate manually: in
+             <a href="https://zinc75.github.io/JackMate">JackMate</a>, open the
+             <strong>License</strong> panel, paste your key above, and click <strong>Activate</strong>.</p>
           <!-- VIDEO: short muted clip (a few seconds, looping) showing where to click in
                JackMate's License panel. Drop it at assets/video/activate-jackmate.mp4 and it
                replaces the placeholder automatically (onloadeddata removes .is-empty). -->
@@ -344,6 +351,10 @@ toc: false
       document.getElementById('dl-key').textContent = key;
       document.getElementById('dl-key-line').style.display = 'block';
       document.getElementById('dl-cmd').textContent = 'jackmoebius license activate ' + key;
+      // Deep-link the graphical button into JackMate with the key prefilled (best-effort;
+      // if JackMate isn't installed, the video + manual steps below are the fallback).
+      var openJM = document.getElementById('open-jackmate');
+      if (openJM) openJM.href = 'jackmate://activate?key=' + encodeURIComponent(key);
     }
 
     // Optional: greet the buyer by name (Lemon Squeezy's [name] variable). textContent-safe.
