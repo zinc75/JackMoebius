@@ -108,7 +108,8 @@ The system-mix **monitor** box (`monitor_L`/`R`, auto-wired to `system:playback`
 ## Blacklist
 
 Apps you never want proposed for routing (hidden from `add` and from the selector).
-Ships with Audio MIDI Setup and [JackMate](https://zinc75.github.io/JackMate); fully revertable.
+Ships with Audio MIDI Setup, [JackMate](https://zinc75.github.io/JackMate), and Zoom
+(see the note below); fully revertable.
 
 | Command | What it does |
 |---|---|
@@ -116,6 +117,14 @@ Ships with Audio MIDI Setup and [JackMate](https://zinc75.github.io/JackMate); f
 | `jackmoebius blacklist --add <App>` | Blacklist an app (refused if it's currently exposed). |
 | `jackmoebius blacklist --remove <App>` | Un-blacklist. |
 | `jackmoebius blacklist --reset` | Restore the shipped defaults. |
+
+::: {.callout-note title="Zoom is not supported"}
+**Zoom is blacklisted by default and does not work with JackMoebius.** On macOS, Zoom
+rejects virtual audio devices — even when wrapped in an Aggregate Device, unlike most
+apps. This is a Zoom limitation (its handling of virtual devices is undocumented), not
+a JackMoebius bug: every other app we tested — Microsoft Teams, Audacity, OBS,
+browsers… — works normally.
+:::
 
 ## Shell completion
 

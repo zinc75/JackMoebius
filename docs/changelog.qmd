@@ -7,6 +7,26 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
+## 1.0.0 — first commercial release
+
+JackMoebius is now a commercial product: a **14-day free trial**, then a one-time
+license unlocks it for good — all updates included. This release also brings a
+smoother onboarding and UX polish gathered since 0.13.
+
+**Added**
+
+- **14-day free trial**, then activate a license to keep routing. Activate in
+  JackMate, or with `jackmoebius license activate`.
+- Guided post-purchase onboarding and a GUI-first activation guide. JackMate — the
+  free JACK patchbay & manager — is installed alongside JackMoebius (optional) and
+  is the recommended way to drive it.
+
+**Known limitations**
+
+- **Zoom is not compatible.** Zoom rejects virtual audio devices on macOS (even via
+  an Aggregate Device), so it is skipped by default. Every other tested app —
+  Microsoft Teams, Audacity, OBS, browsers… — works normally.
+
 ## 0.13.2 — 2026-07-12
 
 **Added**
