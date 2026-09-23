@@ -1359,3 +1359,32 @@ code:not(.sourceCode) {
   box-shadow: 0 0 26px rgba(251,191,36,0.55) !important;
   transform: translateY(-1px) !important;
 }
+
+/* Replay pill for non-looping scroll-videos — created by assets/after-body.html,
+   shown once the clip ends so the viewer can watch it again without scrolling. */
+.scroll-video-replay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(14, 14, 16, 0.6);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  backdrop-filter: blur(3px);
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+  z-index: 3;
+}
+.scroll-video-replay:hover {
+  background: rgba(14, 14, 16, 0.8);
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
+}
+.scroll-video-replay[hidden] { display: none; }

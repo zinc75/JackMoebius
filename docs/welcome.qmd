@@ -92,11 +92,11 @@ toc: false
           <p class="dl-lead">Nothing happens? Activate manually: in
              <a href="https://zinc75.github.io/JackMate">JackMate</a>, open the
              <strong>License</strong> panel, paste your key above, and click <strong>Activate</strong>.</p>
-          <!-- VIDEO: short muted clip (a few seconds, looping) showing where to click in
-               JackMate's License panel. Drop it at assets/video/activate-jackmate.mp4 and it
-               replaces the placeholder automatically (onloadeddata removes .is-empty). -->
+          <!-- VIDEO: short muted clip showing where to click in JackMate's License panel.
+               Lives at assets/video/activate-jackmoebius-from-jackmate.mp4; the src below wires
+               it in and onloadedmetadata removes the .is-empty placeholder automatically. -->
           <figure class="dl-vid is-empty">
-            <video class="scroll-video" src="assets/video/activate-jackmate.mp4" muted loop playsinline preload="metadata"
+            <video class="scroll-video" src="assets/video/activate-jackmoebius-from-jackmate.mp4" muted playsinline preload="metadata"
                    onloadedmetadata="this.closest('figure').classList.remove('is-empty'); if(window.wizFit) window.wizFit();"></video>
             <figcaption class="dl-vid-ph"><i class="fa-solid fa-clapperboard"></i>
               Short walkthrough coming soon.</figcaption>

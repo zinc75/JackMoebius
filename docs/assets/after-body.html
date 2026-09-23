@@ -68,17 +68,47 @@ function openDownloadModal(e) {
 // controls). Mark a video with class="scroll-video" (muted playsinline
 // preload="metadata"; add loop for a GIF-like clip). No `autoplay` attribute —
 // the observer drives playback; muted is required for autoplay to be allowed.
+// For a non-looping clip, a Replay pill appears once it ends so the viewer can
+// watch it again without scrolling.
 (function () {
+  // Add a centered Replay button to a clip's figure; shown on `ended`, hidden
+  // whenever it plays. Clicking it rewinds to 0 and plays.
+  function setupReplay(v) {
+    var fig = v.closest('figure') || v.parentElement;
+    if (!fig) return;
+    if (getComputedStyle(fig).position === 'static') fig.style.position = 'relative';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'scroll-video-replay';
+    btn.setAttribute('aria-label', 'Replay');
+    btn.innerHTML = '<i class="fa-solid fa-rotate-right" aria-hidden="true"></i>';
+    btn.hidden = true;
+    btn.addEventListener('click', function () {
+      btn.hidden = true;
+      try { v.currentTime = 0; } catch (e) {}
+      v.play && v.play().catch(function () {});
+    });
+    fig.appendChild(btn);
+    v.addEventListener('ended', function () { btn.hidden = false; });
+    v.addEventListener('play',  function () { btn.hidden = true; });
+  }
+
+  function play(v) {
+    if (v.ended) { try { v.currentTime = 0; } catch (e) {} }  // replay a finished clip
+    v.play && v.play().catch(function () {});
+  }
+
   function init() {
     var vids = document.querySelectorAll('video.scroll-video');
     if (!vids.length) return;
+    vids.forEach(setupReplay);
     if (!('IntersectionObserver' in window)) {          // old browsers: just play
       vids.forEach(function (v) { try { v.play(); } catch (e) {} });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.play && e.target.play().catch(function () {}); }
+        if (e.isIntersecting) { play(e.target); }
         else { e.target.pause && e.target.pause(); }
       });
     }, { threshold: 0.35 });
