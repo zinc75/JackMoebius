@@ -96,8 +96,8 @@ toc: false
                JackMate's License panel. Drop it at assets/video/activate-jackmate.mp4 and it
                replaces the placeholder automatically (onloadeddata removes .is-empty). -->
           <figure class="dl-vid is-empty">
-            <video src="assets/video/activate-jackmate.mp4" muted autoplay loop playsinline
-                   onloadeddata="this.closest('figure').classList.remove('is-empty'); if(window.wizFit) window.wizFit();"></video>
+            <video class="scroll-video" src="assets/video/activate-jackmate.mp4" muted loop playsinline preload="metadata"
+                   onloadedmetadata="this.closest('figure').classList.remove('is-empty'); if(window.wizFit) window.wizFit();"></video>
             <figcaption class="dl-vid-ph"><i class="fa-solid fa-clapperboard"></i>
               Short walkthrough coming soon.</figcaption>
           </figure>

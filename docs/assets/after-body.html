@@ -62,3 +62,29 @@ function openDownloadModal(e) {
   }
 }
 </script>
+
+<script>
+// Demo videos play while on screen and pause when scrolled away (seamless, no
+// controls). Mark a video with class="scroll-video" (muted playsinline
+// preload="metadata"; add loop for a GIF-like clip). No `autoplay` attribute —
+// the observer drives playback; muted is required for autoplay to be allowed.
+(function () {
+  function init() {
+    var vids = document.querySelectorAll('video.scroll-video');
+    if (!vids.length) return;
+    if (!('IntersectionObserver' in window)) {          // old browsers: just play
+      vids.forEach(function (v) { try { v.play(); } catch (e) {} });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.play && e.target.play().catch(function () {}); }
+        else { e.target.pause && e.target.pause(); }
+      });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
