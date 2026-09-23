@@ -2,6 +2,8 @@
 title: "JackMoebius"
 page-layout: full
 toc: false
+filters:
+  - easycarousel
 ---
 
 ```{=html}
@@ -148,22 +150,36 @@ manager — is the recommended way to drive JackMoebius, and the installer sets 
 alongside (optional, opt-out at install time). Activate your JackMoebius license, expose
 apps, patch them and set per-app volumes, all visually.
 
-```{=html}
-<figure class="jm-shot">
-  <img src="assets/screenshots/jackmate.png" alt="JackMoebius routing inside the JackMate GUI"
-       onerror="this.closest('figure').classList.add('is-empty')">
-  <div class="jm-shot-ph"><i class="fa-solid fa-image"></i> <a href="https://zinc75.github.io/JackMate">JackMate</a> — the JackMoebius panel <em>(screenshot to add)</em></div>
-  <figcaption>Expose apps, patch them, set per-app volumes and watch the routing status — visually, in <a href="https://zinc75.github.io/JackMate">JackMate</a>.</figcaption>
-</figure>
-<style>
-.jm-shot { margin:1.5rem 0 3rem; text-align:center; }
-.jm-shot img { max-width:100%; border-radius:14px; border:1px solid var(--jm-border-med); box-shadow:0 24px 60px rgba(0,0,0,.5); }
-.jm-shot figcaption { margin-top:.9rem; font-size:.9rem; color:var(--jm-text-dim); }
-.jm-shot-ph { display:none; padding:4rem 1rem; border:1px dashed var(--jm-border-hi); border-radius:14px; color:var(--jm-muted); }
-.jm-shot.is-empty img { display:none; }
-.jm-shot.is-empty .jm-shot-ph { display:block; }
-</style>
-```
+::: {.carousel effect="coverflow" thumbs="false" lazy="true" dots="true" autoplay="3000"}
+![Expose apps, patch them, and watch the routing status — visually, in JackMate.](assets/screenshots/jackmoebius-routing-in-jackmate.png)
+
+![Flexible Per-app configuration : select the attributed number of channels, and which apps to expose](assets/screenshots/jackmoebius-panel.png)
+
+![Per-app volume configuration](assets/screenshots/jackmoebius-volumes.png)
+
+![Expose apps, patch them, and watch the routing status — visually, in JackMate.](assets/screenshots/jackmoebius-routing-in-jackmate.png)
+
+![Flexible Per-app configuration : select the attributed number of channels, and which apps to expose](assets/screenshots/jackmoebius-panel.png)
+
+![Per-app volume configuration](assets/screenshots/jackmoebius-volumes.png)
+
+:::
+
+<!-- Screenshot carousel — EmilHvitfeldt/quarto-easycarousel.
+     Install once (vendors into _extensions/, commit it):
+         quarto add EmilHvitfeldt/quarto-easycarousel
+     Each ![alt](path) INSIDE the ::: {.carousel} block above is one slide; clicking a
+     slide is reachable via the thumbnail strip below. PNGs under assets/screenshots/
+     are auto-copied into _site (Markdown image refs + the resources glob).
+     Add slides by pasting these lines inside the block, one per screenshot, blank line
+     between each (drop the matching PNG in assets/screenshots/ first):
+
+     ![Per-app JACK boxes in the patchbay.](assets/screenshots/jackmate-patchbay.png)
+
+     ![The License panel — activation and slots.](assets/screenshots/jackmate-license.png)
+
+     ![Per-app volumes and routing status.](assets/screenshots/jackmate-volumes.png)
+-->
 
 ## How it works
 

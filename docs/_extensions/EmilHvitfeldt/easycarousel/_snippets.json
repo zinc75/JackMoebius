@@ -1,0 +1,67 @@
+{
+  "Image carousel": {
+    "prefix": "carousel",
+    "body": [
+      "```carousel",
+      "![${1:caption}](${2:image1.png})",
+      "![${3:caption}](${4:image2.png})",
+      "```",
+      "$0"
+    ],
+    "description": "Carousel from a fenced block of markdown images."
+  },
+  "Carousel with options": {
+    "prefix": "carousel-options",
+    "body": [
+      "```{.carousel autoplay=\"${1:3000}\" slides=\"${2:1}\" gap=\"${3:1rem}\"}",
+      "![](${4:image1.png})",
+      "![](${5:image2.png})",
+      "```",
+      "$0"
+    ],
+    "description": "Image carousel with options set as attributes."
+  },
+  "Executable cell carousel": {
+    "prefix": "carousel-cell",
+    "body": [
+      "```{${1:r}}",
+      "#| classes: carousel",
+      "${0:plot(mpg ~ disp, data = mtcars)}",
+      "```"
+    ],
+    "description": "Every plot the cell produces becomes a slide."
+  },
+  "Thumbnail carousel": {
+    "prefix": "carousel-thumbs",
+    "body": [
+      "```{.carousel thumbs=\"true\" dots=\"false\"}",
+      "![](${1:image1.png})",
+      "![](${2:image2.png})",
+      "```",
+      "$0"
+    ],
+    "description": "Carousel with a synced thumbnail strip."
+  },
+  "Before/after comparison": {
+    "prefix": "carousel-compare",
+    "body": [
+      "```{.carousel compare=\"true\"}",
+      "![](${1:before.png})",
+      "![](${2:after.png})",
+      "```",
+      "$0"
+    ],
+    "description": "Draggable before/after comparison slider."
+  },
+  "Referenceable carousel figure": {
+    "prefix": "carousel-figure",
+    "body": [
+      "```{#fig-${1:name} .carousel caption=\"${2:Caption text.}\"}",
+      "![](${3:image1.png})",
+      "![](${4:image2.png})",
+      "```",
+      "$0"
+    ],
+    "description": "Carousel as a cross-referenceable figure (@fig-...)."
+  }
+}

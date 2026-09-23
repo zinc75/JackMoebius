@@ -1,0 +1,113 @@
+$schema: https://m.canouil.dev/quarto-wizard/assets/schema/v2/extension-schema.json
+
+classes:
+  carousel:
+    description: >-
+      Turns a fenced block of markdown images, an executable cell's plots
+      (via `classes: carousel`), or a div into a swipeable carousel.
+
+attributes:
+  carousel:
+    autoplay:
+      type: number
+      description: "Milliseconds between auto-advances; unset means no autoplay."
+    dots:
+      type: boolean
+      default: true
+      description: "Show the dot indicators."
+    arrows:
+      type: boolean
+      default: true
+      description: "Show the previous/next arrows."
+    fade:
+      type: boolean
+      default: false
+      description: "Crossfade between slides instead of sliding."
+    loop:
+      type: boolean
+      default: true
+      description: "Cycle continuously instead of stopping at the ends."
+    slides:
+      type: number
+      default: 1
+      description: "Number of slides visible at once."
+    slides-sm:
+      type: number
+      description: "Slides per view from 576px viewport width up."
+    slides-md:
+      type: number
+      description: "Slides per view from 768px viewport width up."
+    slides-lg:
+      type: number
+      description: "Slides per view from 992px viewport width up."
+    slides-xl:
+      type: number
+      description: "Slides per view from 1200px viewport width up."
+    gap:
+      type: string
+      default: 1rem
+      description: "Space between slides, any CSS length."
+    align:
+      type: string
+      enum: [center, start, end]
+      default: center
+      description: "Snap alignment of slides in the viewport."
+    thumbs:
+      type: boolean
+      default: false
+      description: "Synced, clickable thumbnail strip below the carousel."
+    vertical:
+      type: boolean
+      default: false
+      description: "Vertical carousel; set the viewport height with `height`."
+    height:
+      type: string
+      default: 20rem
+      description: "Viewport height for vertical carousels."
+    drag-free:
+      type: boolean
+      default: false
+      description: "Momentum scrolling without snapping."
+    effect:
+      type: string
+      enum: [scale, opacity, parallax, coverflow]
+      description: "Scroll-linked visual effect."
+    lazy:
+      type: boolean
+      default: false
+      description: "Add loading=\"lazy\" to slide images."
+    lightbox:
+      type: boolean
+      default: false
+      description: "Slide images open in Quarto's lightbox."
+    caption:
+      type: string
+      description: "Figure caption; with a #fig- id enables cross-references."
+    compare:
+      type: boolean
+      default: false
+      description: "Before/after comparison slider (requires exactly two images)."
+    marquee:
+      type: boolean
+      default: false
+      description: "Continuously scrolling strip (a logo ticker) instead of a carousel."
+    speed:
+      type: string
+      default: 40s
+      description: "Seconds for one full loop of a marquee."
+    direction:
+      type: string
+      enum: [left, right]
+      default: left
+      description: "Marquee scroll direction."
+    pause:
+      type: boolean
+      default: true
+      description: "Pause a marquee while the pointer is over it."
+    edges:
+      type: boolean
+      default: true
+      description: "Fade out a marquee's left and right edges."
+    fragment:
+      type: boolean
+      description: "reveal.js only: step through slides as fragments (default true)."

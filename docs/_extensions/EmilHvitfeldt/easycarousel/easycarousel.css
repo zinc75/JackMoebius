@@ -1,0 +1,475 @@
+.easycarousel {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.easycarousel *,
+.easycarousel *::before,
+.easycarousel *::after,
+.easycarousel-compare * {
+  box-sizing: border-box;
+}
+
+.easycarousel__viewport {
+  overflow: hidden;
+}
+
+.easycarousel__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--ec-gap, 1rem) / -2);
+  margin-right: calc(var(--ec-gap, 1rem) / -2);
+}
+
+.easycarousel__slide {
+  position: relative;
+  flex: 0 0 calc(100% / var(--ec-slides, 1));
+  min-width: 0;
+  padding-left: calc(var(--ec-gap, 1rem) / 2);
+  padding-right: calc(var(--ec-gap, 1rem) / 2);
+}
+
+.easycarousel__slide img {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+  max-height: var(--ec-img-max-height, none);
+}
+
+.easycarousel__slide p {
+  margin: 0;
+}
+
+.easycarousel__slide--content {
+  align-self: stretch;
+}
+
+.easycarousel__slide--content > * {
+  height: 100%;
+  margin: 0;
+}
+
+.easycarousel__viewport:focus-visible {
+  outline: 2px solid rgba(128, 128, 128, 0.8);
+  outline-offset: 2px;
+}
+
+/* vertical variant */
+.easycarousel--vertical .easycarousel__container {
+  flex-direction: column;
+  height: var(--ec-height, 20rem);
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: calc(var(--ec-gap, 1rem) / -2);
+  margin-bottom: calc(var(--ec-gap, 1rem) / -2);
+}
+
+.easycarousel--vertical .easycarousel__slide {
+  flex: 0 0 calc(100% / var(--ec-slides, 1));
+  min-height: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: calc(var(--ec-gap, 1rem) / 2);
+  padding-bottom: calc(var(--ec-gap, 1rem) / 2);
+}
+
+.easycarousel--vertical .easycarousel__slide img {
+  height: 100%;
+}
+
+/* captions */
+.easycarousel__caption {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: 1rem;
+  padding: 0.25rem 1rem;
+  border-radius: 0.375rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  text-align: center;
+}
+
+/* arrows */
+.easycarousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.4rem;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  cursor: pointer;
+}
+
+.easycarousel__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.easycarousel__arrow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.easycarousel__arrow--prev {
+  left: 0.75rem;
+}
+
+.easycarousel__arrow--next {
+  right: 0.75rem;
+}
+
+.easycarousel--vertical .easycarousel__arrow {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.easycarousel--vertical .easycarousel__arrow--prev {
+  top: 0.75rem;
+}
+
+.easycarousel--vertical .easycarousel__arrow--next {
+  top: auto;
+  bottom: 0.75rem;
+}
+
+/* dots */
+.easycarousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.easycarousel__dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0.45);
+  cursor: pointer;
+}
+
+.easycarousel__dot--selected {
+  background-color: rgba(128, 128, 128, 0.95);
+}
+
+/* thumbnails */
+.easycarousel__thumbs {
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.easycarousel__thumbs-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.easycarousel__thumb {
+  flex: 0 0 6rem;
+  min-width: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 0.25rem;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  overflow: hidden;
+}
+
+.easycarousel__thumb--selected {
+  opacity: 1;
+  border-color: rgba(128, 128, 128, 0.9);
+}
+
+.easycarousel__thumb img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+/* parallax needs the image cropped inside the slide */
+.easycarousel__slide img[style*="translateX"] {
+  will-change: transform;
+}
+
+.easycarousel__slide {
+  overflow: hidden;
+}
+
+/* 3D coverflow: the active card sits in front, neighbours recede into a
+   stack. The viewport is inset so those neighbours stay in view, and the
+   per-slide transforms are set from JS. */
+.easycarousel--coverflow {
+  overflow: hidden;   /* clips the fan to the carousel window (safe now: 3D is per-slide, not a shared preserve-3d context) */
+  padding: 1rem 0;
+}
+
+.easycarousel--coverflow .easycarousel__viewport {
+  overflow: visible;
+  margin: 0 var(--ec-coverflow-inset, 20%);
+  /* JS overrides this with a value proportional to the slide width */
+  perspective: 500px;
+}
+
+.easycarousel--coverflow .easycarousel__container {
+  /* per-slide perspective() (see easycarousel.js) → no shared 3D context; the flex
+     container stays flat, which is what makes the 3D survive in Safari */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.easycarousel--coverflow .easycarousel__slide {
+  padding-left: 0;
+  padding-right: 0;
+  overflow: visible;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+}
+
+/* content slides need a card surface, or there is nothing for the 3D stack to
+   act on; images bring their own */
+.easycarousel--coverflow .easycarousel__slide--content {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--bs-body-bg, #fff);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+/* text-heavy slides read better when only the active card shows its content */
+.easycarousel--coverflow .easycarousel__slide--content > * {
+  opacity: var(--ec-active, 1);
+  transition: opacity 0.3s ease-out;
+}
+
+/* marquee: a strip that scrolls forever. The slides are in the document
+   twice; translating the track by half its width lands copy two where copy
+   one began, so the animation restarts invisibly. */
+.easycarousel-marquee {
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0;
+  /* fade the edges with a mask rather than a gradient overlay, so it works on
+     any page background, light or dark */
+  -webkit-mask-image: linear-gradient(to right, transparent,
+    #000 var(--ec-marquee-fade, 8%),
+    #000 calc(100% - var(--ec-marquee-fade, 8%)), transparent);
+  mask-image: linear-gradient(to right, transparent,
+    #000 var(--ec-marquee-fade, 8%),
+    #000 calc(100% - var(--ec-marquee-fade, 8%)), transparent);
+}
+
+.easycarousel-marquee--no-fade {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.easycarousel-marquee *,
+.easycarousel-marquee *::before,
+.easycarousel-marquee *::after {
+  box-sizing: border-box;
+}
+
+.easycarousel-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: ec-marquee var(--ec-marquee-speed, 40s) linear infinite;
+}
+
+.easycarousel-marquee--reverse .easycarousel-marquee__track {
+  animation-direction: reverse;
+}
+
+/* let readers stop the strip to look at something, by hovering or by tabbing
+   into a link inside it */
+.easycarousel-marquee--pause:hover .easycarousel-marquee__track,
+.easycarousel-marquee__track:focus-within {
+  animation-play-state: paused;
+}
+
+.easycarousel-marquee__group {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.easycarousel-marquee__item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0 calc(var(--ec-gap, 1rem) / 2);
+}
+
+.easycarousel-marquee__item img {
+  display: block;
+  /* the height drives the size; width follows, so undo Quarto's .img-fluid */
+  width: auto;
+  max-width: none;
+  height: var(--ec-marquee-height, 4rem);
+  margin: 0;
+  object-fit: contain;
+}
+
+.easycarousel-marquee__item p {
+  margin: 0;
+}
+
+@keyframes ec-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* reveal.js PDF export: no animation to capture, so wrap the first copy into
+   rows and drop the duplicate */
+.easycarousel-marquee--print {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.easycarousel-marquee--print .easycarousel-marquee__track {
+  animation: none;
+  width: auto;
+}
+
+.easycarousel-marquee--print .easycarousel-marquee__group {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ec-gap, 1rem);
+}
+
+.easycarousel-marquee--print .easycarousel-marquee__group[aria-hidden] {
+  display: none;
+}
+
+.reveal .easycarousel-marquee__item img {
+  max-width: none;
+  margin: 0;
+}
+
+/* before/after comparison slider */
+.easycarousel-compare {
+  position: relative;
+  margin: 1rem 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: col-resize;
+  --ec-pos: 50%;
+}
+
+.easycarousel-compare img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.easycarousel-compare__before p,
+.easycarousel-compare__after p {
+  margin: 0;
+}
+
+.easycarousel-compare__after {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--ec-pos));
+}
+
+.easycarousel-compare__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--ec-pos);
+  width: 2px;
+  margin-left: -1px;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.easycarousel-compare__grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  cursor: col-resize;
+}
+
+/* reveal.js PDF export (?print-pdf): static grid of all slides */
+.easycarousel--print .easycarousel__viewport {
+  overflow: visible;
+}
+
+.easycarousel--print .easycarousel__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  height: auto;
+  margin: 0;
+}
+
+.easycarousel--print .easycarousel__slide {
+  padding: 0;
+}
+
+.easycarousel--print .easycarousel__container > .easycarousel__slide:only-child {
+  grid-column: span 2;
+}
+
+.reveal .easycarousel--print .easycarousel__slide img {
+  max-height: 28vh;
+}
+
+.easycarousel-compare--print {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  cursor: default;
+}
+
+.easycarousel-compare--print .easycarousel-compare__after {
+  position: static;
+  clip-path: none;
+}
+
+/* reveal.js */
+.reveal .easycarousel {
+  margin: 0.5em 0;
+}
+
+.reveal .easycarousel__step {
+  display: none;
+}
+
+.reveal .easycarousel__slide img,
+.reveal .easycarousel__thumb img {
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: var(--ec-img-max-height, 60vh);
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .easycarousel__container {
+    scroll-behavior: auto;
+  }
+
+  /* an endlessly moving strip is exactly what this setting asks us to stop */
+  .easycarousel-marquee__track {
+    animation: none;
+  }
+}
