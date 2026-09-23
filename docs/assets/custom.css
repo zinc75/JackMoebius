@@ -1388,3 +1388,96 @@ code:not(.sourceCode) {
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
 }
 .scroll-video-replay[hidden] { display: none; }
+
+/* Enlarge affordance on scroll-videos — reveals on hover, opens the lightbox. */
+.scroll-video-expand {
+  position: absolute;
+  top: .55rem;
+  right: .55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(14, 14, 16, 0.55);
+  color: #fff;
+  font-size: .9rem;
+  cursor: zoom-in;
+  opacity: 0;
+  backdrop-filter: blur(3px);
+  transition: opacity .15s ease, background .15s ease;
+  z-index: 3;
+}
+figure:hover > .scroll-video-expand,
+.scroll-video-expand:focus-visible { opacity: 1; }
+.scroll-video-expand:hover { background: rgba(14, 14, 16, 0.85); }
+/* Touch devices can't hover — keep the button visible so the clip reads as tappable. */
+@media (hover: none) { .scroll-video-expand { opacity: 1; } }
+
+/* Fullscreen lightbox for scroll-videos (created by assets/after-body.html).
+   Styling inspired by martinomagnifico's quarto-multimodal: white hairline
+   frame, rounded corners, soft shadow, and a fade + scale-in on open. */
+.sv-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;                 /* always in flow; shown via opacity/visibility */
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, visibility .3s ease;
+}
+.sv-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.sv-lightbox video {
+  max-width: 92vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border: 2px solid rgba(255, 255, 255, 0.9);   /* white liseré */
+  border-radius: 14px;
+  background: #000;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  transform: scale(0.92);
+  transition: transform .3s cubic-bezier(.2, .7, .3, 1);
+}
+.sv-lightbox.is-open video { transform: scale(1); }
+.sv-lightbox-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(3px);
+  transition: background .15s ease, transform .15s ease, border-color .15s ease;
+  z-index: 2;
+}
+.sv-lightbox-close:hover {
+  background: rgba(0, 0, 0, 0.65);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-lightbox, .sv-lightbox video { transition: none; }
+  .sv-lightbox video { transform: none; }
+}

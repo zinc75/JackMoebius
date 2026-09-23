@@ -68,29 +68,96 @@ function openDownloadModal(e) {
 // controls). Mark a video with class="scroll-video" (muted playsinline
 // preload="metadata"; add loop for a GIF-like clip). No `autoplay` attribute —
 // the observer drives playback; muted is required for autoplay to be allowed.
-// For a non-looping clip, a Replay pill appears once it ends so the viewer can
-// watch it again without scrolling.
+// For a non-looping clip a Replay pill appears once it ends; an Enlarge (⤢)
+// button (and clicking the clip) opens it big in a fullscreen lightbox.
 (function () {
-  // Add a centered Replay button to a clip's figure; shown on `ended`, hidden
-  // whenever it plays. Clicking it rewinds to 0 and plays.
-  function setupReplay(v) {
+  // ── Shared lightbox (one per page, created lazily) ───────────────────
+  var box, boxVid, opener;   // opener = the inline clip currently enlarged
+  function ensureLightbox() {
+    if (box) return;
+    box = document.createElement('div');
+    box.className = 'sv-lightbox';
+    boxVid = document.createElement('video');
+    boxVid.setAttribute('playsinline', '');
+    boxVid.controls = true;
+    boxVid.addEventListener('ended', function () {   // videoautohide: linger on the last frame, then close
+      setTimeout(function () { if (boxVid.ended) closeLightbox(); }, 700);
+    });
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'sv-lightbox-close';
+    close.setAttribute('aria-label', 'Close');
+    close.innerHTML = '&times;';
+    box.appendChild(boxVid);
+    box.appendChild(close);
+    document.body.appendChild(box);
+    close.addEventListener('click', closeLightbox);
+    box.addEventListener('click', function (e) { if (e.target === box) closeLightbox(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && box.classList.contains('is-open')) closeLightbox();
+    });
+  }
+  function openLightbox(v) {
+    ensureLightbox();
+    opener = v;
+    try { v.pause(); } catch (e) {}
+    boxVid.src = v.currentSrc || v.src;   // same file, already cached
+    boxVid.muted = false;                 // user gesture → sound allowed (this clip has none)
+    box.classList.add('is-open');
+    document.body.style.overflow = 'hidden';   // lock the page behind
+    try { boxVid.currentTime = 0; } catch (e) {}
+    boxVid.play && boxVid.play().catch(function () {});
+  }
+  function closeLightbox() {
+    if (!box) return;
+    box.classList.remove('is-open');
+    document.body.style.overflow = '';
+    try { boxVid.pause(); } catch (e) {}
+    // Clear the source only after the fade-out, so the frame doesn't blank mid-animation.
+    setTimeout(function () {
+      if (box && !box.classList.contains('is-open')) {
+        boxVid.removeAttribute('src');
+        boxVid.load && boxVid.load();
+      }
+    }, 320);
+    if (opener) { play(opener); opener = null; }   // resume the inline clip we paused
+  }
+
+  // ── Per-clip controls: Replay pill + Enlarge button ──────────────────
+  function setupControls(v) {
     var fig = v.closest('figure') || v.parentElement;
     if (!fig) return;
     if (getComputedStyle(fig).position === 'static') fig.style.position = 'relative';
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'scroll-video-replay';
-    btn.setAttribute('aria-label', 'Replay');
-    btn.innerHTML = '<i class="fa-solid fa-rotate-right" aria-hidden="true"></i>';
-    btn.hidden = true;
-    btn.addEventListener('click', function () {
-      btn.hidden = true;
-      try { v.currentTime = 0; } catch (e) {}
+
+    // Replay pill — shown on `ended`, hidden whenever it plays.
+    var replay = document.createElement('button');
+    replay.type = 'button';
+    replay.className = 'scroll-video-replay';
+    replay.setAttribute('aria-label', 'Replay');
+    replay.innerHTML = '<i class="fa-solid fa-rotate-right" aria-hidden="true"></i>';
+    replay.hidden = true;
+    replay.addEventListener('click', function (e) {
+      e.stopPropagation();                // don't open the lightbox
+      replay.hidden = true;
+      try { v.currentTime = 0; } catch (err) {}
       v.play && v.play().catch(function () {});
     });
-    fig.appendChild(btn);
-    v.addEventListener('ended', function () { btn.hidden = false; });
-    v.addEventListener('play',  function () { btn.hidden = true; });
+    fig.appendChild(replay);
+    v.addEventListener('ended', function () { replay.hidden = false; });
+    v.addEventListener('play',  function () { replay.hidden = true; });
+
+    // Enlarge affordance — reveals on hover; opens the lightbox.
+    var expand = document.createElement('button');
+    expand.type = 'button';
+    expand.className = 'scroll-video-expand';
+    expand.setAttribute('aria-label', 'Enlarge');
+    expand.innerHTML = '<i class="fa-solid fa-expand" aria-hidden="true"></i>';
+    expand.addEventListener('click', function (e) { e.stopPropagation(); openLightbox(v); });
+    fig.appendChild(expand);
+
+    // Clicking the clip itself also enlarges it.
+    v.style.cursor = 'zoom-in';
+    v.addEventListener('click', function (e) { e.stopPropagation(); openLightbox(v); });
   }
 
   function play(v) {
@@ -101,7 +168,7 @@ function openDownloadModal(e) {
   function init() {
     var vids = document.querySelectorAll('video.scroll-video');
     if (!vids.length) return;
-    vids.forEach(setupReplay);
+    vids.forEach(setupControls);
     if (!('IntersectionObserver' in window)) {          // old browsers: just play
       vids.forEach(function (v) { try { v.play(); } catch (e) {} });
       return;
