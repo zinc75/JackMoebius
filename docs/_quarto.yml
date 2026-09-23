@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    # Media referenced only from raw HTML blocks (<video>/<img src>) — Quarto
+    # doesn't auto-detect these, so copy them into _site explicitly.
+    - assets/video/**
+    - assets/screenshots/**
 
 website:
   title: "JackMoebius"
