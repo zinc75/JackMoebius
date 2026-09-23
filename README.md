@@ -59,6 +59,8 @@ runs standalone from the CLI too.
 Full documentation — how it works, the IPC protocol, and the CLI reference — lives at
 **[zinc75.github.io/JackMoebius](https://zinc75.github.io/JackMoebius/)**.
 
+Release notes: **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)**.
+
 ## Requirements
 
 | | Minimum |
