@@ -1,0 +1,74 @@
+---
+title: "Download JackMoebius"
+description: "Download and install JackMoebius — signed and notarized for macOS."
+---
+
+Thanks for your purchase! Download **JackMoebius** below, install it, then activate it with the
+license key from your email.
+
+```{=html}
+<div style="text-align:center; margin:1.8rem 0 1.2rem;">
+  <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg"
+     class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
+    <i class="fa-solid fa-arrow-down-to-bracket"></i> Download JackMoebius {{< var jackmoebius-version >}}
+  </a>
+</div>
+
+<!-- Modal: Windows / Linux confirmation -->
+<div id="dm-confirm-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-confirm-title">
+  <div class="dm-dialog dm-dialog-sm">
+    <div class="dm-header">
+      <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
+      <div>
+        <h2 id="dm-confirm-title" class="dm-title">JackMoebius is a macOS driver</h2>
+        <p class="dm-intro">This installer only runs on macOS. Download anyway?</p>
+      </div>
+    </div>
+    <div class="dm-footer">
+      <button class="dm-cancel-btn" id="dm-confirm-cancel">Cancel</button>
+      <button class="dm-close-btn" id="dm-confirm-ok">Download anyway</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: iOS / Android -->
+<div id="dm-mobile-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-mobile-title">
+  <div class="dm-dialog dm-dialog-sm">
+    <div class="dm-header">
+      <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
+      <div>
+        <h2 id="dm-mobile-title" class="dm-title">JackMoebius is a macOS driver</h2>
+        <p class="dm-intro">It's a CoreAudio driver for the Mac — it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
+      </div>
+    </div>
+    <div class="dm-footer dm-footer-end">
+      <button class="dm-close-btn" id="dm-mobile-ok">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: macOS — download started + clean install (signed & notarized) -->
+<div id="download-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-title">
+  <div class="dm-dialog">
+    <div class="dm-header">
+      <div class="dm-header-icon icon-bg-cyan"><i class="fa-solid fa-arrow-down-to-bracket"></i></div>
+      <div>
+        <h2 id="dm-title" class="dm-title">Your download has started</h2>
+        <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
+      </div>
+    </div>
+
+    <ol class="dm-steps">
+      <li>Open the downloaded <strong>.dmg</strong>.</li>
+      <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer (you'll accept the license).</li>
+      <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+    </ol>
+
+    <div class="dm-footer">
+      <p class="dm-bmac-note"><i class="fa-solid fa-shield-halved"></i> Signed &amp; notarized by Apple. Free to try for 14 days; a license unlocks it afterwards.</p>
+      <button class="dm-close-btn" id="modal-close-bottom">Got it</button>
+    </div>
+  </div>
+</div>
+```
+
