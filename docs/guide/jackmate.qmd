@@ -14,6 +14,11 @@ lightbox: auto
 @keyframes jm-beat { 0%,100%{transform:scale(1);} 14%{transform:scale(1.22);} 28%{transform:scale(1);} 42%{transform:scale(1.15);} 56%{transform:scale(1);} }
 @media (prefers-reduced-motion: reduce){ .jm-pair-heart{ animation:none; } }
 .jm-pair-cap { text-align:center; color:var(--jm-text-dim,#a1a1aa); font-size:.95rem; margin:0 0 2rem; }
+@media (max-width:520px){
+  .jm-pair { gap:1.1rem; flex-wrap:nowrap; }
+  .jm-pair-icon { width:92px; height:92px; border-radius:21px; }
+  .jm-pair-heart { font-size:2rem; }
+}
 </style>
 <div class="jm-pair">
   <img class="jm-pair-icon" src="../assets/icon.png" alt="JackMoebius">
