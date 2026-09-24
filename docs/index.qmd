@@ -155,13 +155,16 @@ apps, patch them and set per-app volumes, all visually.
 
 ![Flexible Per-app configuration : select the attributed number of channels, and which apps to expose](assets/screenshots/jackmoebius-panel.png)
 
-![Per-app volume configuration](assets/screenshots/jackmoebius-volumes.png)
+![Route any way you want between Core Audio Apps and native Jack clients and realtime effects](assets/screenshots/jackmoebius_routing_coreaudio_jack.png)
 
-![Expose apps, patch them, and watch the routing status — visually, in JackMate.](assets/screenshots/jackmoebius-routing-in-jackmate.png)
-
-![Flexible Per-app configuration : select the attributed number of channels, and which apps to expose](assets/screenshots/jackmoebius-panel.png)
 
 ![Per-app volume configuration](assets/screenshots/jackmoebius-volumes.png)
+
+![Persistent channel reservations](assets/screenshots/jackmoebius_persistent_channel_reservations.png)
+
+![Exclude apps from Jack graph](assets/screenshots/jackmoebius_configurable_blacklisting.png)
+
+![JackMoebius license management from JackMate](assets/screenshots/jackmoebius_license_management.png)
 
 :::
 

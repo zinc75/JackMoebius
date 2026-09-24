@@ -1,5 +1,5 @@
 ---
-title: "CLI reference"
+title: "Advanced Command Line documentation"
 ---
 
 `jackmoebius` is the command-line control tool. It talks to the `jackmoebiusd` daemon

@@ -1,5 +1,5 @@
 ---
-title: "IPC protocol"
+title: "IPC protocol documentation"
 ---
 
 `jackmoebiusd` exposes a small JSON protocol over a local Unix-domain socket. It's the

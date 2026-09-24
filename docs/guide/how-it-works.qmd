@@ -1,15 +1,20 @@
 ---
 title: "How it works"
+lightbox: auto
 ---
 
 ## The problem
 
-Most macOS apps speak **CoreAudio**, not **JACK**. There is no supported way to take
-Safari's playback, a video call's microphone, or a DAW's helper process and route it
-through a JACK graph — CoreAudio apps and JACK live in separate worlds.
+Most macOS apps speak **CoreAudio**, not **JACK**. And ever since macOS Catalina removed
+the old `AudioHardwarePlugIn` API in October 2019 — the change that broke the original
+*JackRouter* and left it abandoned on modern macOS — there has been **no supported way**
+to take Safari's playback, a video call's microphone, or a DAW's helper process and route
+it through a JACK graph. CoreAudio apps and JACK have lived in separate worlds.
 
-JackMoebius bridges the two, **per application** and **in both directions**, without
-touching the app itself.
+**JackMoebius changes that** — it bridges the two, **per application** and **in both
+directions**, without touching the app itself.
+
+![JackMoebius bridges each app's CoreAudio stream into the JACK graph — and back.](../assets/screenshots/jackmoebius_routing_coreaudio_jack.png)
 
 ## The pieces
 

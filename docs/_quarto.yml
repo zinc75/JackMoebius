@@ -6,6 +6,8 @@ project:
     # doesn't auto-detect these, so copy them into _site explicitly.
     - assets/video/**
     - assets/screenshots/**
+    - assets/icon.png            # hero icon, also paired on guide/jackmate.qmd
+    - assets/jackmate-icon.png   # JackMate icon for the pairing on guide/jackmate.qmd
 
 website:
   title: "JackMoebius"
@@ -25,10 +27,12 @@ website:
         menu:
           - href: guide/how-it-works.qmd
             text: How it works
+          - href: guide/jackmate.qmd
+            text: Use JackMoebius in JackMate
           - href: guide/ipc.qmd
-            text: IPC protocol
+            text: IPC protocol documentation
           - href: guide/cli.qmd
-            text: CLI reference
+            text: Advanced Command Line documentation
       - href: changelog.qmd
         text: Changelog
     right:
@@ -44,6 +48,7 @@ website:
       - section: "Guide"
         contents:
           - guide/how-it-works.qmd
+          - guide/jackmate.qmd
           - guide/ipc.qmd
           - guide/cli.qmd
       - section: "Reference"

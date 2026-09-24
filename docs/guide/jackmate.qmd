@@ -1,0 +1,62 @@
+---
+title: "Use JackMoebius in JackMate"
+description: "JackMate is the reference front-end for JackMoebius — expose, wire and mix your apps visually."
+lightbox: auto
+---
+
+```{=html}
+<style>
+.jm-pair { display:flex; align-items:center; justify-content:center; gap:2.2rem; margin:1.8rem 0 .6rem; flex-wrap:wrap; }
+.jm-pair-icon { width:132px; height:132px; object-fit:contain; border-radius:30px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 12px 40px rgba(34,211,238,.40), 0 4px 12px rgba(0,0,0,.55); }
+.jm-pair-icon.jm-mate { box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 12px 40px rgba(239,68,68,.40), 0 4px 12px rgba(0,0,0,.55); }
+.jm-pair-heart { color:var(--jm-red,#ef4444); font-size:2.6rem; filter:drop-shadow(0 0 12px rgba(239,68,68,.45)); animation:jm-beat 1.7s ease-in-out infinite; }
+@keyframes jm-beat { 0%,100%{transform:scale(1);} 14%{transform:scale(1.22);} 28%{transform:scale(1);} 42%{transform:scale(1.15);} 56%{transform:scale(1);} }
+@media (prefers-reduced-motion: reduce){ .jm-pair-heart{ animation:none; } }
+.jm-pair-cap { text-align:center; color:var(--jm-text-dim,#a1a1aa); font-size:.95rem; margin:0 0 2rem; }
+</style>
+<div class="jm-pair">
+  <img class="jm-pair-icon" src="../assets/icon.png" alt="JackMoebius">
+  <span class="jm-pair-heart" aria-hidden="true"><i class="fa-solid fa-heart"></i></span>
+  <img class="jm-pair-icon jm-mate" src="../assets/jackmate-icon.png" alt="JackMate">
+</div>
+<p class="jm-pair-cap">JackMoebius and JackMate — made to work together.</p>
+```
+
+The most natural way to use JackMoebius is the **[JackMate](https://zinc75.github.io/JackMate)**
+GUI — a free, standalone JACK patchbay and manager, and the visual way to drive it: one box per
+exposed app, per-app **Output / Input**, per-app volumes, live routing-status alerts, and
+**studios** that save and restore your whole setup in one click. JackMate detects the installed
+JackMoebius daemon automatically, with no path to configure.
+
+::: {.callout-tip appearance="simple"}
+## <i class="fa-solid fa-up-right-from-square"></i> See it all in JackMate
+
+JackMate's own guide walks through every JackMate ↔ JackMoebius interaction — exposing apps,
+per-app Output / Input and channel counts, per-app volumes, the wrong-device routing alerts,
+and studios that restore your whole setup.
+
+[**Open the JackMate guide to JackMoebius →**](https://zinc75.github.io/JackMate/guide/jackmoebius.html)
+:::
+
+::: {layout-ncol="2"}
+![Apps exposed as JACK boxes, wired in JackMate's patchbay.](../assets/screenshots/jackmoebius-routing-in-jackmate.png)
+
+![The JackMoebius panel — choose which apps to expose, their Output / Input and channel counts.](../assets/screenshots/jackmoebius-panel.png)
+
+![Per-app volumes — follow the master, or set each app independently.](../assets/screenshots/jackmoebius-volumes.png)
+
+![Persistent per-app channel reservations.](../assets/screenshots/jackmoebius_persistent_channel_reservations.png)
+
+![Configurable blacklist — hide apps you never want to route.](../assets/screenshots/jackmoebius_configurable_blacklisting.png)
+
+![License management, right inside JackMate.](../assets/screenshots/jackmoebius_license_management.png)
+:::
+
+JackMate is the **reference** front-end — but it isn't the only way in:
+
+- **Any JACK patchbay or tool** — JackMoebius is driven entirely through a documented
+  **[IPC protocol](ipc.qmd)** over a local socket. Nothing about it is JackMate-specific, so
+  other developers are free to build JackMoebius support into their own tools.
+- **The command line** — the `jackmoebius` CLI does everything the daemon can (see the
+  **[CLI reference](cli.qmd)**): script it, automate it, or run it headless with no GUI at all.
