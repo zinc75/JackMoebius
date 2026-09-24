@@ -1,0 +1,43 @@
+---
+title: "JackMoebius license activation in JackMate"
+description: "Watch the walkthrough and open JackMate's License panel to activate JackMoebius."
+---
+
+**Opening JackMate…** its **License** panel should appear in a moment — paste your license key
+(it's in your purchase email) and click **Activate**. Here's the walkthrough:
+
+```{=html}
+<figure style="max-width:720px; margin:1.4rem auto 0;">
+  <video class="scroll-video" src="assets/video/activate-jackmoebius-from-jackmate.mp4"
+         muted playsinline preload="metadata"
+         style="width:100%; display:block; border-radius:12px; border:1px solid rgba(255,255,255,0.12);"></video>
+</figure>
+<div style="text-align:center; margin:1.3rem 0 .4rem;">
+  <a id="open-jm" class="hero-pill hero-pill-primary" href="jackmate://activate">
+    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in JackMate
+  </a>
+</div>
+<p id="jm-key" style="text-align:center; display:none; color:var(--jm-text-dim);">Your license key: <code></code></p>
+<script>
+(function () {
+  // A ?key= (passed from the purchase email) pre-fills activation; the PDF link
+  // carries no key, so this just opens JackMate's License panel — paste it there.
+  var key = new URLSearchParams(location.search).get('key');
+  var btn = document.getElementById('open-jm');
+  if (key) {
+    btn.href = 'jackmate://activate?key=' + encodeURIComponent(key);
+    var box = document.getElementById('jm-key');
+    box.querySelector('code').textContent = key;
+    box.style.display = '';
+  }
+  // Best-effort: try to open JackMate automatically shortly after load; the button
+  // stays for a manual retry.
+  setTimeout(function () { try { window.location.href = btn.href; } catch (e) {} }, 900);
+})();
+</script>
+```
+
+::: {.callout-note appearance="simple"}
+**Nothing happens?** JackMate may not be installed. [Get JackMate](https://zinc75.github.io/JackMate)
+(it's free), then open it, go to the **License** panel, and paste your key.
+:::
