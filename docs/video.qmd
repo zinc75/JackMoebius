@@ -19,4 +19,4 @@ through live effects — in both directions — and save the whole setup as a st
 <script src="https://player.vimeo.com/api/player.js"></script>
 ```
 
-Ready to try it? **[Download the free trial](download.html)** or read **[How it works](guide/how-it-works.html)**.
+Ready to try it? **[Download the free trial](https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg)** or read **[How it works](guide/how-it-works.html)**.
