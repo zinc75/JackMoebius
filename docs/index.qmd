@@ -12,7 +12,7 @@ filters:
     <img src="assets/icon.png" alt="JackMoebius" class="hero-icon" />
     <div class="hero-text">
       <h1>JackMoebius</h1>
-      <p class="subtitle">Route any macOS CoreAudio app to and from JACK — per app, bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI.</p>
+      <p class="subtitle">Route any macOS CoreAudio app to and from JACK — per app, bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI. <a href="video.html" onclick="openVideoLightbox(event)"><i class="fa-solid fa-circle-play"></i> See it in action</a>.</p>
       <div class="hero-pills">
         <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg" class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
           <i class="fa-solid fa-arrow-down-to-bracket"></i> Download trial
@@ -34,6 +34,40 @@ filters:
     </div>
   </div>
 </div>
+
+<!-- Video lightbox — opened from the "See it in action" link; the Vimeo iframe
+     is injected on open (page stays light) and removed on close (stops playback). -->
+<div id="video-lightbox" class="vlb-overlay" role="dialog" aria-modal="true" aria-label="JackMoebius video">
+  <button class="vlb-close" type="button" aria-label="Close">&times;</button>
+  <div class="vlb-frame" id="vlb-frame"></div>
+</div>
+<style>
+.vlb-overlay { position:fixed; inset:0; z-index:99999; display:none; align-items:center; justify-content:center; padding:4vh 4vw; background:rgba(0,0,0,.85); backdrop-filter:blur(4px); }
+.vlb-overlay.is-open { display:flex; }
+.vlb-frame { position:relative; width:100%; max-width:1000px; aspect-ratio:16/9; }
+.vlb-frame iframe { position:absolute; inset:0; width:100%; height:100%; box-sizing:border-box; border:1px solid rgba(255,255,255,.9); border-radius:12px; box-shadow:0 24px 80px rgba(0,0,0,.6); }
+.vlb-close { position:absolute; top:1rem; right:1.25rem; z-index:3; display:flex; align-items:center; justify-content:center; width:44px; height:44px; border:1px solid rgba(255,255,255,.55); border-radius:50%; background:rgba(0,0,0,.65); color:#fff; font-size:1.6rem; line-height:1; cursor:pointer; backdrop-filter:blur(2px); }
+.vlb-close:hover { background:rgba(0,0,0,.75); }
+</style>
+<script>
+(function () {
+  var SRC = "https://player.vimeo.com/video/1230395347?badge=0&autopause=0&autoplay=1";
+  var ov = document.getElementById('video-lightbox');
+  var frame = document.getElementById('vlb-frame');
+  if (!ov || !frame) return;
+  document.body.appendChild(ov);          // out of the content stacking context, so it covers the navbar
+  window.openVideoLightbox = function (e) {
+    if (e) e.preventDefault();
+    frame.innerHTML = '<iframe src="' + SRC + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="JackMoebius — See it in action"></iframe>';
+    ov.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+  function close() { ov.classList.remove('is-open'); frame.innerHTML = ''; document.body.style.overflow = ''; }
+  ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+  ov.querySelector('.vlb-close').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('is-open')) close(); });
+})();
+</script>
 ```
 
 ```{=html}

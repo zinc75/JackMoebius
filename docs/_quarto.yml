@@ -23,6 +23,9 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: video.qmd
+        text: See it in action
+        icon: play-btn
       - text: Guide
         menu:
           - href: guide/how-it-works.qmd
@@ -45,6 +48,7 @@ website:
     style: floating
     search: true
     contents:
+      - video.qmd
       - section: "Guide"
         contents:
           - guide/how-it-works.qmd
