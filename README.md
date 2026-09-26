@@ -18,6 +18,11 @@
 
   **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://github.com/zinc75/JackMoebius/releases/latest)** · **[Buy a license](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**
 
+  <a href="https://zinc75.github.io/JackMoebius/#video">
+    <img src="docs/assets/video-poster.jpg" width="640" alt="Watch JackMoebius in action — a short guided tour">
+  </a>
+  <br><sub>▶ <strong>See it in action</strong> — a short guided tour</sub>
+
 </div>
 
 ---

@@ -62,10 +62,17 @@ filters:
     ov.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
-  function close() { ov.classList.remove('is-open'); frame.innerHTML = ''; document.body.style.overflow = ''; }
+  function close() {
+    ov.classList.remove('is-open'); frame.innerHTML = ''; document.body.style.overflow = '';
+    if (location.hash === '#video') history.replaceState(null, '', location.pathname + location.search);
+  }
   ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
   ov.querySelector('.vlb-close').addEventListener('click', close);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov.classList.contains('is-open')) close(); });
+  // Deep link: opening the home at /#video (e.g. from the GitHub README thumbnail) auto-plays.
+  function openIfHash() { if (location.hash === '#video') window.openVideoLightbox(); }
+  openIfHash();
+  window.addEventListener('hashchange', openIfHash);
 })();
 </script>
 ```
