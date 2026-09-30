@@ -185,3 +185,23 @@ function openDownloadModal(e) {
   else init();
 })();
 </script>
+
+<script>
+// Deep link: opening a page at /#download (e.g. from the GitHub README download
+// link) replays a real click on the hero download button — so it reuses the same
+// versioned .dmg URL and the same platform-aware modal as a manual click, with
+// no version to keep in sync anywhere else. No-op on pages without the button.
+(function () {
+  function downloadFromHash() {
+    if (location.hash !== '#download') return;
+    var btn = document.getElementById('download-btn');
+    if (!btn) return;
+    btn.click();
+    // Clear the hash so a refresh doesn't re-trigger the download.
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', downloadFromHash);
+  else downloadFromHash();
+  window.addEventListener('hashchange', downloadFromHash);
+})();
+</script>

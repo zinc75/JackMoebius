@@ -16,7 +16,7 @@
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
 
-  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://github.com/zinc75/JackMoebius/releases/latest)** · **[Buy a license](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**
+  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**
 
   <a href="https://zinc75.github.io/JackMoebius/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action — a short guided tour">
@@ -49,7 +49,7 @@ runs standalone from the CLI too.
 
 ## Download & install
 
-1. **[Download the latest `.dmg`](https://github.com/zinc75/JackMoebius/releases/latest)** and open it.
+1. **[Download the latest `.dmg`](https://zinc75.github.io/JackMoebius/#download)** and open it.
 2. Run **Install JackMoebius.pkg**. macOS installs a system audio driver, so you'll be
    **asked to reboot** at the end.
 3. Start a **JACK** server (via [JackMate](https://zinc75.github.io/JackMate)), then activate JackMoebius.
