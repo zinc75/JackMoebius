@@ -188,18 +188,35 @@ function openDownloadModal(e) {
 
 <script>
 // Deep links: opening a page at /#download or /#buy (e.g. from the GitHub README,
-// a PDF, or the JSON-LD offer URL) replays a real click on the matching hero
-// button. #download reuses the versioned .dmg URL + platform-aware modal; #buy
-// opens the Lemon Squeezy checkout overlay. The version and the checkout URL then
-// live only in the site — a single source of truth. No-op on pages without the button.
+// a PDF, or the JSON-LD offer URL) triggers the matching hero action. #download
+// clicks the download button (versioned .dmg URL + platform-aware modal); #buy
+// opens the Lemon Squeezy checkout overlay via lemon.js's own API — a synthetic
+// click is NOT intercepted by lemon.js, so it would just navigate to the full
+// checkout page. The version and the checkout URL then live only in the site — a
+// single source of truth. No-op on pages without the button.
 (function () {
-  var MAP = { '#download': 'download-btn', '#buy': 'buy-btn' };
+  function openCheckout(url, tries) {
+    tries = tries || 0;
+    if (window.LemonSqueezy && LemonSqueezy.Url && typeof LemonSqueezy.Url.Open === 'function') {
+      LemonSqueezy.Url.Open(url);
+    } else if (tries < 25) {
+      setTimeout(function () { openCheckout(url, tries + 1); }, 120);   // wait for lemon.js (~3s max)
+    } else {
+      window.location.href = url;                                        // give up → full-page checkout
+    }
+  }
   function fromHash() {
-    var id = MAP[location.hash];
-    if (!id) return;
-    var btn = document.getElementById(id);
-    if (!btn) return;
-    btn.click();
+    if (location.hash === '#download') {
+      var d = document.getElementById('download-btn');
+      if (!d) return;
+      d.click();                                        // a plain navigation to the .dmg
+    } else if (location.hash === '#buy') {
+      var b = document.getElementById('buy-btn');
+      if (!b) return;
+      openCheckout(b.getAttribute('href'));             // Lemon Squeezy overlay via its JS API
+    } else {
+      return;
+    }
     // Clear the hash so a refresh doesn't re-trigger the action.
     history.replaceState(null, '', location.pathname + location.search);
   }
