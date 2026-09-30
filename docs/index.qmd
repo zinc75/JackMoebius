@@ -1,5 +1,7 @@
 ---
 title: "JackMoebius"
+description: "Route any macOS app to and from JACK, per application and bidirectionally — a modern, signed and notarized replacement for JackRouter on macOS 15+."
+image: https://zinc75.github.io/JackMoebius/assets/og-banner.png   # force the social card (not the hero icon Quarto would auto-pick)
 page-layout: full
 toc: false
 filters:
@@ -17,7 +19,7 @@ filters:
         <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg" class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
           <i class="fa-solid fa-arrow-down-to-bracket"></i> Download trial
         </a>
-        <a href="{{< var store-url >}}?embed=1" class="hero-pill hero-pill-buy lemonsqueezy-button">
+        <a href="{{< var store-url >}}?embed=1" class="hero-pill hero-pill-buy lemonsqueezy-button" id="buy-btn">
           <i class="fa-solid fa-key"></i> Buy a license
         </a>
         <a href="guide/how-it-works.html" class="hero-pill hero-pill-secondary">

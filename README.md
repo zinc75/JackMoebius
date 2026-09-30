@@ -16,7 +16,7 @@
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
 
-  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**
+  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)**
 
   <a href="https://zinc75.github.io/JackMoebius/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action — a short guided tour">
@@ -79,6 +79,6 @@ Release notes: **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html
 
 JackMoebius is **proprietary software**, distributed with a **14-day free trial**.
 Continued use requires a license — a **one-time purchase**, no subscription, with
-**all updates included** (see the EULA). Buy a license: **[jackmoebius.lemonsqueezy.com](https://jackmoebius.lemonsqueezy.com/checkout/buy/8fe2de5a-5bb2-4c3d-b620-bd4b9ee2986c)**.
+**all updates included** (see the EULA). **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)**.
 
 Copyright © 2026 Éric Bavu. All rights reserved.

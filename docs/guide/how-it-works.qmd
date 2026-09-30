@@ -1,5 +1,6 @@
 ---
 title: "How it works"
+description: "How JackMoebius works: a per-app AudioServerPlugIn virtual driver plus a daemon bridging CoreAudio to JACK — the modern successor to JackRouter, broken on macOS since Catalina."
 lightbox: auto
 ---
 

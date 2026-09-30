@@ -1,5 +1,6 @@
 ---
 title: "Advanced Command Line documentation"
+description: "Command-line reference for the jackmoebius CLI — expose apps, manage routing and channel reservations, and script JackMoebius from the terminal."
 ---
 
 `jackmoebius` is the command-line control tool. It talks to the `jackmoebiusd` daemon

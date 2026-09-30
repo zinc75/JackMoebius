@@ -12,9 +12,12 @@ project:
 website:
   title: "JackMoebius"
   description: "Route macOS CoreAudio apps to and from JACK — per app, bidirectionally."
+  site-url: https://zinc75.github.io/JackMoebius       # enables sitemap.xml + canonical links + absolute OG URLs
+  repo-url: https://github.com/zinc75/JackMoebius
   favicon: assets/favicon.png
   open-graph: true
   twitter-card: true
+  image: https://zinc75.github.io/JackMoebius/assets/og-banner.png   # default social card; absolute so subdir pages resolve it
 
   navbar:
     pinned: true

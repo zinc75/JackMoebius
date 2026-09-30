@@ -187,21 +187,24 @@ function openDownloadModal(e) {
 </script>
 
 <script>
-// Deep link: opening a page at /#download (e.g. from the GitHub README download
-// link) replays a real click on the hero download button — so it reuses the same
-// versioned .dmg URL and the same platform-aware modal as a manual click, with
-// no version to keep in sync anywhere else. No-op on pages without the button.
+// Deep links: opening a page at /#download or /#buy (e.g. from the GitHub README,
+// a PDF, or the JSON-LD offer URL) replays a real click on the matching hero
+// button. #download reuses the versioned .dmg URL + platform-aware modal; #buy
+// opens the Lemon Squeezy checkout overlay. The version and the checkout URL then
+// live only in the site — a single source of truth. No-op on pages without the button.
 (function () {
-  function downloadFromHash() {
-    if (location.hash !== '#download') return;
-    var btn = document.getElementById('download-btn');
+  var MAP = { '#download': 'download-btn', '#buy': 'buy-btn' };
+  function fromHash() {
+    var id = MAP[location.hash];
+    if (!id) return;
+    var btn = document.getElementById(id);
     if (!btn) return;
     btn.click();
-    // Clear the hash so a refresh doesn't re-trigger the download.
+    // Clear the hash so a refresh doesn't re-trigger the action.
     history.replaceState(null, '', location.pathname + location.search);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', downloadFromHash);
-  else downloadFromHash();
-  window.addEventListener('hashchange', downloadFromHash);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fromHash);
+  else fromHash();
+  window.addEventListener('hashchange', fromHash);
 })();
 </script>

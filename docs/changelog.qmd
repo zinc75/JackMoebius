@@ -1,5 +1,6 @@
 ---
 title: "Changelog"
+description: "JackMoebius release notes and version history — what changed in each release."
 ---
 
 Notable changes to JackMoebius.
