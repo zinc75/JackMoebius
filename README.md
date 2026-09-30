@@ -16,7 +16,7 @@
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
 
-  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)**
+  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
 
   <a href="https://zinc75.github.io/JackMoebius/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action — a short guided tour">
@@ -74,6 +74,12 @@ Release notes: **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html
 | Architecture | Apple Silicon or Intel |
 | JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
 | GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) |
+
+## Support
+
+Questions, ideas, or feedback? Join the conversation in
+**[GitHub Discussions](https://github.com/zinc75/JackMoebius/discussions)**. Found a bug?
+Open an **[issue](https://github.com/zinc75/JackMoebius/issues)**.
 
 ## License
 
