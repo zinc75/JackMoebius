@@ -1360,6 +1360,27 @@ code:not(.sourceCode) {
   transform: translateY(-1px) !important;
 }
 
+/* Navbar "Star on GitHub" — outlined pill with a gold star that pops on hover */
+.navbar-nav .nav-link:has(.nav-star) {
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  border-radius: 999px !important;
+  padding: 0.24rem 0.85rem !important;
+  margin: 0 0.2rem !important;
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease !important;
+}
+.nav-star { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; }
+.nav-star .nav-star-ic { color: #fbbf24; transition: transform .2s ease, filter .2s ease; }
+.navbar-nav .nav-link:has(.nav-star):hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(251,191,36,0.65) !important;
+  box-shadow: 0 0 20px rgba(251,191,36,0.28) !important;
+  transform: translateY(-1px) !important;
+}
+.navbar-nav .nav-link:has(.nav-star):hover .nav-star-ic {
+  transform: scale(1.15) rotate(-8deg);
+  filter: drop-shadow(0 0 6px rgba(251,191,36,0.7));
+}
+
 /* Replay pill for non-looping scroll-videos — created by assets/after-body.html,
    shown once the clip ends so the viewer can watch it again without scrolling. */
 .scroll-video-replay {
