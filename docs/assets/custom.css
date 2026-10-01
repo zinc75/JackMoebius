@@ -976,9 +976,9 @@ body { padding-bottom: 3rem !important; }
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   align-items: center;
   justify-content: center;
   padding: 1rem;
@@ -994,10 +994,12 @@ body { padding-bottom: 3rem !important; }
 
 .dm-dialog {
   position: relative;
-  background: var(--jm-bg-elevated);
-  border: 1px solid var(--jm-border-med);
+  background: linear-gradient(145deg, rgba(30,28,46,0.58), rgba(18,16,28,0.52));
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: none;
   border-radius: 20px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.80), 0 0 0 1px rgba(255,255,255,0.04);
+  box-shadow: var(--glass-shadow), 0 32px 80px rgba(0,0,0,0.80);   /* liquid-glass rim + float shadow */
   max-width: 560px;
   width: 100%;
   padding: 2rem 2rem 1.5rem;
@@ -1526,3 +1528,105 @@ figure:hover > .scroll-video-expand,
 @media (max-width: 600px) {
   .easycarousel--coverflow .easycarousel__caption { display: none; }
 }
+
+/* ═══════════════════════════════════════════════════
+   LIQUID GLASS — reusable multi-layer inset bevel (adapted from the CodePen
+   "liquid glass" box-shadow trick). Any glass surface uses box-shadow: var(--glass-shadow).
+   ═══════════════════════════════════════════════════ */
+:root {
+  --c-light: #fff; --c-dark: #000;
+  --glass-reflex-light: 0.35; --glass-reflex-dark: 1.0;   /* softer rim (was 0.6 / 1.4) */
+  --glass-shadow:
+    /* hairline edge */
+    inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 14%), transparent),
+    /* light mostly from the TOP-LEFT: bright inner highlight + soft glow */
+    inset 2px 2px 1px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent),
+    inset 3px 4px 10px -4px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 55%), transparent),
+    /* ...with a faint catch on the top-right edge (slightly off-axis / "de travers") */
+    inset -2px 2px 2px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 42%), transparent),
+    /* shadow on the BOTTOM-RIGHT (away from the light) */
+    inset -2px -2px 2px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 24%), transparent),
+    inset -4px -5px 10px -6px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 16%), transparent),
+    /* ambient drop */
+    0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+
+/* ── SOCIAL SHARE — a glass "Share" pill that morphs into a bigger glass card ── */
+.jm-share-wrap { display: flex; justify-content: flex-end; margin: 0 0 1.5rem; padding-right: 3rem; }
+.jm-share-pop { position: relative; display: inline-flex; }
+
+/* the glass "Share" pill (toggle) */
+.jm-share-toggle {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1.1rem; border-radius: 999px; border: none;
+  background-color: color-mix(in srgb, #cfd6e2 10%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.6); backdrop-filter: blur(10px) saturate(1.6);
+  box-shadow: var(--glass-shadow);
+  color: #cfd6e2; font-weight: 600; font-size: 0.95rem; cursor: pointer;
+  transition: color .18s ease, transform .18s ease, opacity .25s ease;
+}
+.jm-share-toggle:hover { color: #fff; transform: translateY(-1px); }
+.jm-share-pop.is-open .jm-share-toggle { opacity: 0; pointer-events: none; }  /* the pill "becomes" the card */
+
+/* the morphed card — grows from the pill's top-right corner, overlays content below */
+.jm-share-card {
+  position: absolute; top: 0; right: 0; z-index: 60;
+  width: min(360px, 86vw);
+  padding: 1.1rem 1.2rem 1.25rem;
+  border-radius: 20px; border: none;
+  background: linear-gradient(145deg, rgba(40,38,60,0.14), rgba(26,24,40,0.10));
+  -webkit-backdrop-filter: blur(20px) saturate(1.7); backdrop-filter: blur(20px) saturate(1.7);
+  box-shadow: var(--glass-shadow), 0 24px 60px rgba(0,0,0,0.6);   /* glass rim + float shadow */
+  transform: scale(0.82); transform-origin: top right;
+  opacity: 0; pointer-events: none;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1.2), opacity .24s ease;
+}
+.jm-share-card::before {   /* glass sheen */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(120% 45% at 25% 0%, rgba(255,255,255,0.16), transparent 60%);
+}
+.jm-share-pop.is-open .jm-share-card { transform: scale(1); opacity: 1; pointer-events: auto; }
+.jm-share-card > * { position: relative; z-index: 1; }
+.jm-share-card .dm-header { margin-bottom: 0.9rem; }
+.jm-share-card-x {
+  position: absolute; top: 0.55rem; right: 0.7rem; z-index: 2;
+  width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; color: var(--jm-muted);
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+  transition: color .15s ease, background .15s ease;
+}
+.jm-share-card-x:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+/* icons row inside the card */
+.jm-share-icons { display: flex; justify-content: center; align-items: center; gap: 0.5rem; }
+
+/* icons — plain coloured glyphs (desaturated at rest, brand colour on hover) */
+.jm-pop-ic {
+  --glyph: #cfd6e2; --glow: rgba(255,255,255,0.16);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  color: var(--glyph) !important; text-decoration: none !important;
+  font-size: 1.15rem;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0,0,0,0.30);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+  transition: color .18s ease, transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+  animation: jm-float 4s ease-in-out infinite;
+}
+.jm-pop-ic:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.1);
+  border-color: rgba(255,255,255,0.42);
+  background: rgba(0,0,0,0.20);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px var(--glow);
+}
+.jm-pop-ic.x      { --glyph:#c3cad4; --glow:rgba(255,255,255,0.22); }                     .jm-pop-ic.x:hover      { color:#ffffff !important; }
+.jm-pop-ic.bsky   { --glyph:#8198b2; --glow:rgba(17,133,254,0.40); animation-delay:.2s; } .jm-pop-ic.bsky:hover   { color:#4aa8ff !important; }
+.jm-pop-ic.masto  { --glyph:#9496b8; --glow:rgba(99,100,255,0.40); animation-delay:.4s; } .jm-pop-ic.masto:hover  { color:#9aa0ff !important; }
+.jm-pop-ic.reddit { --glyph:#c58b76; --glow:rgba(255,69,0,0.40);   animation-delay:.6s; } .jm-pop-ic.reddit:hover { color:#ff6a3d !important; }
+.jm-pop-ic.hn     { --glyph:#c39a75; --glow:rgba(255,102,0,0.40);  animation-delay:.8s; } .jm-pop-ic.hn:hover     { color:#ff9148 !important; }
+.jm-pop-ic.mail   { --glyph:#83ac9b; --glow:rgba(52,211,153,0.40); animation-delay:1s; }  .jm-pop-ic.mail:hover   { color:#34d399 !important; }
+
+@keyframes jm-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .jm-pop-ic { animation: none; } }
