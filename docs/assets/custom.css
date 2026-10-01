@@ -488,6 +488,7 @@ code:not(.sourceCode) {
   transform: translate(-50%, -50%) !important;
   margin: 0 !important; padding: 0 !important;
   line-height: 0 !important;
+  filter: brightness(0) invert(1) !important;   /* white glyph — visible on the tinted badge */
 }
 
 /* ── Figures / screenshots ────────────────────────── */
