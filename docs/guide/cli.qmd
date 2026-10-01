@@ -119,7 +119,7 @@ Ships with Audio MIDI Setup, [JackMate](https://zinc75.github.io/JackMate), and 
 | `jackmoebius blacklist --remove <App>` | Un-blacklist. |
 | `jackmoebius blacklist --reset` | Restore the shipped defaults. |
 
-::: {.callout-note title="Zoom is not supported"}
+::: {.callout-warning title="Zoom is not supported"}
 **Zoom is blacklisted by default and does not work with JackMoebius.** On macOS, Zoom
 rejects virtual audio devices — even when wrapped in an Aggregate Device, unlike most
 apps. This is a Zoom limitation (its handling of virtual devices is undocumented), not

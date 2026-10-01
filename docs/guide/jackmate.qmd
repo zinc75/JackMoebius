@@ -34,7 +34,7 @@ exposed app, per-app **Output / Input**, per-app volumes, live routing-status al
 **studios** that save and restore your whole setup in one click. JackMate detects the installed
 JackMoebius daemon automatically, with no path to configure.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-tip}
 ## <i class="fa-solid fa-up-right-from-square"></i> See it all in JackMate
 
 JackMate's own guide walks through every JackMate ↔ JackMoebius interaction — exposing apps,
