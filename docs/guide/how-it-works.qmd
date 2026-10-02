@@ -1,44 +1,44 @@
 ---
 title: "How it works"
-description: "How JackMoebius works: a per-app AudioServerPlugIn virtual driver plus a daemon bridging CoreAudio to JACK — the modern successor to JackRouter, broken on macOS since Catalina."
+description: "How JackMoebius works: a per-app AudioServerPlugIn virtual driver plus a daemon bridging CoreAudio to JACK. The modern successor to JackRouter, broken on macOS since Catalina."
 lightbox: auto
 ---
 
 ## The problem
 
 Most macOS apps speak **CoreAudio**, not **JACK**. And ever since macOS Catalina removed
-the old `AudioHardwarePlugIn` API in October 2019 — the change that broke the original
-*JackRouter* and left it abandoned on modern macOS — there has been **no supported way**
+the old `AudioHardwarePlugIn` API in October 2019 (the change that broke the original
+*JackRouter* and left it abandoned on modern macOS), there has been **no supported way**
 to take Safari's playback, a video call's microphone, or a DAW's helper process and route
 it through a JACK graph. CoreAudio apps and JACK have lived in separate worlds.
 
-**JackMoebius changes that** — it bridges the two, **per application** and **in both
+**JackMoebius changes that**: it bridges the two, **per application** and **in both
 directions**, without touching the app itself.
 
-![JackMoebius bridges each app's CoreAudio stream into the JACK graph — and back.](../assets/screenshots/jackmoebius_routing_coreaudio_jack.png)
+![JackMoebius bridges each app's CoreAudio stream into the JACK graph, and back.](../assets/screenshots/jackmoebius_routing_coreaudio_jack.png)
 
 ## The pieces
 
 JackMoebius is two components (plus a CLI):
 
-- **The driver** — an [`AudioServerPlugIn`](https://developer.apple.com/documentation/coreaudio/creating_an_audio_server_driver_plug-in)
-  virtual audio device (`JackMoebius`). It runs inside `coreaudiod`, in **userspace** —
+- **The driver**: an [`AudioServerPlugIn`](https://developer.apple.com/documentation/coreaudio/creating_an_audio_server_driver_plug-in)
+  virtual audio device (`JackMoebius`). It runs inside `coreaudiod`, in **userspace**:
   no kernel extension, no SIP changes. It presents the routing endpoints that apps and
   the daemon attach to.
-- **The daemon** — `jackmoebiusd`, a Swift process that captures the driver's audio,
+- **The daemon**: `jackmoebiusd`, a Swift process that captures the driver's audio,
   registers per-app clients in JACK, and keeps everything in sync. It runs **only while
   a JACK server is up** and self-stops when JACK goes away.
-- **The CLI** — `jackmoebius`, a control tool that talks to the daemon over a local
+- **The CLI**: `jackmoebius`, a control tool that talks to the daemon over a local
   socket (the same [IPC protocol](ipc.qmd) a GUI like [JackMate](https://zinc75.github.io/JackMate) uses).
 
-## The forward path — an app's output into JACK
+## The forward path: an app's output into JACK
 
 When you **expose** an app:
 
 1. The app's CoreAudio output is routed onto the JackMoebius device.
 2. The daemon captures it and publishes a **JACK client box** for that app, with output
    ports on a reserved pair of channels.
-3. Anything in your JACK graph can now read the app's audio — patch it into a recorder,
+3. Anything in your JACK graph can now read the app's audio: patch it into a recorder,
    an effect, a DAW, another app.
 
 The channel reservation is **persistent**: an app that stops and restarts audio comes
@@ -51,26 +51,26 @@ JackMoebius) is exposed as `monitor_L` / `monitor_R`, auto-connected to
 `system:playback` so you still **hear** your Mac normally while its audio also flows
 into JACK.
 
-## Volume — two gain stages that stack
+## Volume: two gain stages that stack
 
 Loudness in a JackMoebius chain runs through **two independent gain stages**, and they
 **multiply**:
 
-1. **JackMoebius Out** — each exposed app plays into a JackMoebius output device that
+1. **JackMoebius Out**: each exposed app plays into a JackMoebius output device that
    carries its own CoreAudio volume.
-2. **The output JACK feeds** — `system:playback` drives your real output device (interface
+2. **The output JACK feeds**: `system:playback` drives your real output device (interface
    or speakers), which has its own volume too.
 
-Turn either one down and the app gets quieter — easy to mistake for a routing problem.
+Turn either one down and the app gets quieter, which is easy to mistake for a routing problem.
 That's why [JackMate](https://zinc75.github.io/JackMate) puts these volumes on screen: a
 slider for the output JACK feeds **plus a per-app slider** for every exposed app, so you
-balance both stages finely and fast, in one place — no trip to System Settings or Audio
+balance both stages finely and fast, in one place, with no trip to System Settings or Audio
 MIDI Setup.
 
-## The reverse path — JACK into an app's input
+## The reverse path: JACK into an app's input
 
 The bridge is **bidirectional**. Exposing an app's **input** creates a dedicated
-capture device — *JackMoebius In (App)* — fed by JACK. The app selects it as its
+capture device, *JackMoebius In (App)*, fed by JACK. The app selects it as its
 microphone, and now **JACK audio becomes the app's input**: process a live instrument
 through your JACK effects and send the result straight into a video call.
 
@@ -79,7 +79,7 @@ through your JACK effects and send the result straight into a video call.
 The daemon watches CoreAudio (apps launching/quitting, starting/stopping audio,
 switching devices) and JACK, and reconciles the graph as things change. It exposes a
 persistent **subscribe** channel over the IPC socket that pushes *invalidations* when
-something moves — so a front-end stays in sync **without polling**, and knows instantly
+something moves, so a front-end stays in sync **without polling**, and knows instantly
 if the daemon stops (the connection closes).
 
 ## Lifecycle
