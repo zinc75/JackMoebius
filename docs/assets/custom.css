@@ -952,6 +952,32 @@ body { padding-bottom: 3rem !important; }
   background: rgba(167,139,250,0.28) !important; color: inherit !important;
   border-radius: 4px !important; padding: 0 2px !important;
 }
+/* The IN-PAGE highlight after clicking a result: Quarto wraps the term in a bare <mark> (no
+   class) inside the article, so it otherwise inherits Bootstrap's beige `mark`. Override with
+   the brand violet, made clearly legible with a crisp rim + bold light text. */
+main mark {
+  /* No !important here: `main mark` (0,0,2) already beats Bootstrap/theme `mark` (0,0,1), and
+     staying !important-free lets the attention animation below drive background & box-shadow. */
+  background: rgba(167,139,250,0.32);
+  color: #ece7ff;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 0 3px;
+  box-shadow: inset 0 0 0 1px rgba(167,139,250,0.80);
+  /* Quarto scrolls the match to the viewport CENTRE (scrollIntoView block:"center"); on iOS
+     the dynamic toolbar + fixed navbar make it land a touch low. A bottom scroll-margin shifts
+     that centring upward, so the page scrolls a bit further. Tune on-device (bigger = higher). */
+  scroll-margin-bottom: 8rem;
+  /* Draw the eye on arrival: two quick violet pulses (glow + fill), then settle to the pill. */
+  animation: search-hit 0.95s ease-out 4;
+}
+@keyframes search-hit {
+  0%   { background: rgba(167,139,250,0.72); box-shadow: inset 0 0 0 1px rgba(167,139,250,0.95), 0 0 0 0 rgba(167,139,250,0.55); }
+  55%  { background: rgba(167,139,250,0.50); box-shadow: inset 0 0 0 1px rgba(167,139,250,0.90), 0 0 18px 4px rgba(167,139,250,0.55); }
+  100% { background: rgba(167,139,250,0.32); box-shadow: inset 0 0 0 1px rgba(167,139,250,0.80), 0 0 0 0 rgba(167,139,250,0); }
+}
+/* respect reduced-motion: no pulse, just the resting pill */
+@media (prefers-reduced-motion: reduce) { main mark { animation: none; } }
 /* On phones the detached search overflowed the screen on real iOS: a fixed/absolute
    overlay there inherits the LAYOUT viewport, which grows past the visible width as soon
    as anything on the page overflows horizontally. Clamp the page to the screen so layout
