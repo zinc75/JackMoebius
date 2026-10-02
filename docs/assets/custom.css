@@ -925,8 +925,14 @@ body { padding-bottom: 3rem !important; }
   .hero-icon   { width: 82px; height: 82px; }
   .hero-text h1 { font-size: 2.5rem; }
   .hero { padding: 3rem 1.75rem 2.5rem; border-radius: 18px; }
-  /* Share: smaller right offset on phones (the card already sizes to its content, so it can't overflow). */
+  /* Share on phones: the expanded card is anchored to the pill's right edge, which is
+     itself inset from the screen. The 6-icon row (~300px) + padding made the card ~338px,
+     so its left edge bled off-screen. Tighten the icon row + padding here so the card
+     lands ~270px — comfortably clear of the left edge whatever the exact anchor. */
   .jm-share-wrap { padding-right: 0.75rem; }
+  .jm-share-card { padding: 1rem 0.9rem 1.1rem; }
+  .jm-share-icons { gap: 0.4rem; }
+  .jm-pop-ic { width: 2.2rem; height: 2.2rem; font-size: 1rem; }
   .feature-grid { grid-template-columns: 1fr; }
   .feature-card:nth-child(n) { grid-column: span 1; }
   /* Slimmer fixed footer on mobile — glass + fixed position kept, just less
