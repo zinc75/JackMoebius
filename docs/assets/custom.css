@@ -947,9 +947,9 @@ body { padding-bottom: 3rem !important; }
 .aa-Panel .search-result-text { background: transparent !important; }
 /* the hover/selected highlight is a soft rounded inset pill, not a full-width hard block */
 .aa-Panel .aa-Item { border-radius: 11px !important; margin: 2px 6px !important; overflow: hidden !important; }
-/* the matched term: a subtle brand-tinted pill instead of a grey box */
+/* the matched term: a subtle violet pill (the same violet as the "important" info callout) */
 .aa-Panel mark.search-match {
-  background: rgba(239,68,68,0.20) !important; color: inherit !important;
+  background: rgba(167,139,250,0.28) !important; color: inherit !important;
   border-radius: 4px !important; padding: 0 2px !important;
 }
 /* On phones the detached search overflowed the screen on real iOS: a fixed/absolute
