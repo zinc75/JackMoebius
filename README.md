@@ -9,7 +9,7 @@
   <img src="docs/assets/favicon.png" width="128" alt="JackMoebius icon">
   <h1>JackMoebius</h1>
   <p>The modern bridge between macOS audio apps and JACK.<br>
-  Route any CoreAudio application into JACK — and JACK back into any app — <strong>per application, bidirectionally</strong>.</p>
+  Route any CoreAudio application into JACK, and JACK back into any app, <strong>per application and bidirectionally</strong>.</p>
 
   <p>
     <img src="docs/assets/notarized-badge.png" width="15" alt="">
@@ -19,9 +19,9 @@
   **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
 
   <a href="https://zinc75.github.io/JackMoebius/#video">
-    <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action — a short guided tour">
+    <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action: a short guided tour">
   </a>
-  <br><sub>▶ <strong>See it in action</strong> — a short guided tour</sub>
+  <br><sub>▶ <strong>See it in action</strong>: a short guided tour</sub>
 
 </div>
 
@@ -34,17 +34,17 @@ back the idea of the historical *JackRouter* for modern macOS (15+), built on a
 per-app **AudioServerPlugIn** virtual driver plus a Swift daemon that bridges
 CoreAudio to JACK.
 
-- **Bidirectional** — an app's **output** flows into JACK, and JACK can feed an
+- **Bidirectional**: an app's **output** flows into JACK, and JACK can feed an
   app's **input** (process a live instrument and send it back into a call, for example).
-- **Per application** — one JACK box per exposed app; output and input are independent
+- **Per application**: one JACK box per exposed app; output and input are independent
   and get their own persistent channel reservations.
-- **Transparent to the app** — no plug-in, no reconfiguration inside the app: its
+- **Transparent to the app**: no plug-in, no reconfiguration inside the app, so its
   audio simply appears in the JACK graph.
-- **Universal** — Apple Silicon + Intel, macOS 15+.
-- **Scriptable** — a `jackmoebius` command-line tool and a documented IPC protocol.
+- **Universal**: Apple Silicon + Intel, macOS 15+.
+- **Scriptable**: a `jackmoebius` command-line tool and a documented IPC protocol.
 
 Best when controlled from the **[JackMate](https://zinc75.github.io/JackMate)** GUI
-(free), which manages the JACK graph and the JackMoebius routing visually — but it
+(free), which manages the JACK graph and the JackMoebius routing visually, but it
 runs standalone from the CLI too.
 
 ## Download & install
@@ -61,7 +61,7 @@ runs standalone from the CLI too.
 
 ## Documentation
 
-Full documentation — how it works, the IPC protocol, and the CLI reference — lives at
+Full documentation (how it works, the IPC protocol, and the CLI reference) lives at
 **[zinc75.github.io/JackMoebius](https://zinc75.github.io/JackMoebius/)**.
 
 Release notes: **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)**.
@@ -84,7 +84,7 @@ Open an **[issue](https://github.com/zinc75/JackMoebius/issues)**.
 ## License
 
 JackMoebius is **proprietary software**, distributed with a **14-day free trial**.
-Continued use requires a license — a **one-time purchase**, no subscription, with
+Continued use requires a license: a **one-time purchase**, no subscription, with
 **all updates included** (see the EULA). **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)**.
 
 Copyright © 2026 Éric Bavu. All rights reserved.
