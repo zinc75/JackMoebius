@@ -10,7 +10,7 @@ license key from your email.
 <div style="text-align:center; margin:1.8rem 0 1.2rem;">
   <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg"
      class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
-    <i class="fa-solid fa-arrow-down-to-bracket"></i> Download JackMoebius {{< var jackmoebius-version >}}
+    <i class="fa-brands fa-apple"></i> Download JackMoebius {{< var jackmoebius-version >}}
   </a>
 </div>
 
@@ -51,7 +51,7 @@ license key from your email.
 <div id="download-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-title">
   <div class="dm-dialog">
     <div class="dm-header">
-      <div class="dm-header-icon icon-bg-cyan"><i class="fa-solid fa-arrow-down-to-bracket"></i></div>
+      <div class="dm-header-icon icon-bg-cyan"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-title" class="dm-title">Your download has started</h2>
         <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
