@@ -1,6 +1,6 @@
 ---
 title: "JackMoebius"
-description: "Route any macOS app to and from JACK, per application and bidirectionally — a modern, signed and notarized replacement for JackRouter on macOS 15+."
+description: "Route any macOS app to and from JACK, per application and bidirectionally. A modern, signed and notarized replacement for JackRouter on macOS 15+."
 image: https://zinc75.github.io/JackMoebius/assets/og-banner.png   # force the social card (not the hero icon Quarto would auto-pick)
 page-layout: full
 toc: false
@@ -14,7 +14,7 @@ filters:
     <img src="assets/icon.png" alt="JackMoebius" class="hero-icon" />
     <div class="hero-text">
       <h1>JackMoebius</h1>
-      <p class="subtitle">Route any macOS CoreAudio app to and from JACK — per app, bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI. <a href="video.html" onclick="openVideoLightbox(event)"><i class="fa-solid fa-circle-play"></i> See it in action</a>.</p>
+      <p class="subtitle">Route any macOS CoreAudio app to and from JACK, per app and bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI. <a href="video.html" onclick="openVideoLightbox(event)"><i class="fa-solid fa-circle-play"></i> See it in action</a>.</p>
       <div class="hero-pills">
         <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg" class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
           <i class="fa-brands fa-apple"></i> Download trial
@@ -60,7 +60,7 @@ filters:
   document.body.appendChild(ov);          // out of the content stacking context, so it covers the navbar
   window.openVideoLightbox = function (e) {
     if (e) e.preventDefault();
-    frame.innerHTML = '<iframe src="' + SRC + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="JackMoebius — See it in action"></iframe>';
+    frame.innerHTML = '<iframe src="' + SRC + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="JackMoebius: See it in action"></iframe>';
     ov.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -104,7 +104,7 @@ filters:
       <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-mobile-title" class="dm-title">JackMoebius is a macOS driver</h2>
-        <p class="dm-intro">It's a CoreAudio driver for the Mac — it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
+        <p class="dm-intro">It's a CoreAudio driver for the Mac, so it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
       </div>
     </div>
     <div class="dm-footer dm-footer-end">
@@ -120,14 +120,14 @@ filters:
       <div class="dm-header-icon icon-bg-cyan"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-title" class="dm-title">Your download has started</h2>
-        <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
+        <p class="dm-intro"><strong>Signed and notarized by Apple</strong>, it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
       </div>
     </div>
 
     <ol class="dm-steps">
       <li>Open the downloaded <strong>.dmg</strong>.</li>
       <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer (you'll accept the license).</li>
-      <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+      <li>macOS asks you to <strong>restart</strong>, and the audio driver loads at the next boot.</li>
     </ol>
 
     <div class="dm-footer">
@@ -156,7 +156,7 @@ filters:
   <div class="jm-card">
     <span class="ic icon-bg-cyan"><i class="fa-solid fa-right-left"></i></span>
     <h3>Bidirectional</h3>
-    <p>An app's <strong>output</strong> flows into JACK, and JACK can feed an app's <strong>input</strong> — process a live instrument and send it straight back into a call.</p>
+    <p>An app's <strong>output</strong> flows into JACK, and JACK can feed an app's <strong>input</strong>, so you can process a live instrument and send it straight back into a call.</p>
   </div>
   <div class="jm-card">
     <span class="ic icon-bg-orange"><i class="fa-solid fa-boxes-stacked"></i></span>
@@ -166,7 +166,7 @@ filters:
   <div class="jm-card">
     <span class="ic icon-bg-violet"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
     <h3>Transparent</h3>
-    <p>No plug-in, no reconfiguration inside the app, no aggregate devices needed. Its audio simply appears in the JACK graph — Safari, Music, FaceTime, a DAW helper, anything CoreAudio.</p>
+    <p>No plug-in, no reconfiguration inside the app, no aggregate devices needed. Its audio simply appears in the JACK graph: Safari, Music, FaceTime, a DAW helper, anything CoreAudio.</p>
   </div>
   <div class="jm-card">
     <span class="ic icon-bg-green"><i class="fa-solid fa-microchip"></i></span>
@@ -176,25 +176,25 @@ filters:
   <div class="jm-card">
     <span class="ic icon-bg-amber"><i class="fa-solid fa-terminal"></i></span>
     <h3>Scriptable</h3>
-    <p>A <code>jackmoebius</code> command-line tool and a documented, event-driven IPC protocol — automate routing or build your own front-end.</p>
+    <p>A <code>jackmoebius</code> command-line tool and a documented, event-driven IPC protocol lets you automate routing or build your own front-end.</p>
   </div>
   <div class="jm-card">
     <span class="ic icon-bg-red"><i class="fa-solid fa-sliders"></i></span>
     <h3>Studio-ready</h3>
-    <p>Per-app volumes, live routing status, persistent reservations — a <a href="https://zinc75.github.io/JackMate">JackMate</a> studio restores your whole wiring in one click.</p>
+    <p>Per-app volumes, live routing status, persistent reservations. A <a href="https://zinc75.github.io/JackMate">JackMate</a> studio restores your whole wiring in one click.</p>
   </div>
 </div>
 ```
 
 ## Controlled from JackMate
 
-**[JackMate](https://zinc75.github.io/JackMate)** — a free, standalone JACK patchbay &
-manager — is the recommended way to drive JackMoebius, and the installer sets it up
+**[JackMate](https://zinc75.github.io/JackMate)** (a free, standalone JACK patchbay &
+manager) is the recommended way to drive JackMoebius, and the installer sets it up
 alongside (optional, opt-out at install time). Activate your JackMoebius license, expose
 apps, patch them and set per-app volumes, all visually.
 
 ::: {.carousel effect="coverflow" thumbs="false" lazy="true" dots="true" autoplay="3000"}
-![Expose apps, patch them, and watch the routing status — visually, in JackMate.](assets/screenshots/jackmoebius-routing-in-jackmate.png)
+![Expose apps, patch them, and watch the routing status visually in JackMate.](assets/screenshots/jackmoebius-routing-in-jackmate.png)
 
 ![Flexible Per-app configuration : select the attributed number of channels, and which apps to expose](assets/screenshots/jackmoebius-panel.png)
 
@@ -222,7 +222,7 @@ apps, patch them and set per-app volumes, all visually.
 
      ![Per-app JACK boxes in the patchbay.](assets/screenshots/jackmate-patchbay.png)
 
-     ![The License panel — activation and slots.](assets/screenshots/jackmate-license.png)
+     ![The License panel: activation and slots.](assets/screenshots/jackmate-license.png)
 
      ![Per-app volumes and routing status.](assets/screenshots/jackmate-volumes.png)
 -->
@@ -231,7 +231,7 @@ apps, patch them and set per-app volumes, all visually.
 
 JackMoebius installs a per-app **AudioServerPlugIn** virtual device. When you expose
 an app, its CoreAudio stream is captured by the **`jackmoebiusd`** daemon and bridged
-into JACK as a dedicated client — and the reverse path lets JACK feed the app's input.
+into JACK as a dedicated client, and the reverse path lets JACK feed the app's input.
 The daemon keeps the JACK graph and the routing in sync, event-driven, with no polling.
 
 → Read the full explanation in **[How it works](guide/how-it-works.html)**, the
@@ -244,7 +244,7 @@ The daemon keeps the JACK graph and the routing in sync, event-driven, with no p
 | macOS | 15.0 (Sequoia) |
 | Architecture | Apple Silicon or Intel |
 | JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
-| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) — installed alongside |
+| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate), installed alongside |
 
 ::: {.callout-note}
 JackMoebius is **proprietary software** with a **14-day free trial**. A **one-time
