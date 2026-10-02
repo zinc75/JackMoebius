@@ -1,6 +1,6 @@
 ---
 title: "Advanced Command Line documentation"
-description: "Command-line reference for the jackmoebius CLI — expose apps, manage routing and channel reservations, and script JackMoebius from the terminal."
+description: "Command-line reference for the jackmoebius CLI: expose apps, manage routing and channel reservations, and script JackMoebius from the terminal."
 ---
 
 `jackmoebius` is the command-line control tool. It talks to the `jackmoebiusd` daemon
@@ -48,7 +48,7 @@ $ jackmoebius license activate XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 License activated on this Mac (1/5 machines used).
 ```
 
-A license is **perpetual** and, once activated, stays valid **offline indefinitely** — you're
+A license is **perpetual** and, once activated, stays valid **offline indefinitely**, so you're
 never locked out for lack of network. A license covers up to its activation limit of Macs
 (shown in the status); to move it to another Mac, contact support.
 
@@ -57,7 +57,7 @@ never locked out for lack of network. A license covers up to its activation limi
 | Command | What it does |
 |---|---|
 | `jackmoebius apps` | List CoreAudio apps seen by the driver (per-app state: exposed, channels, capture-capable, blacklisted). |
-| `jackmoebius add <App>` | Expose an app's **output** — its JACK box appears. |
+| `jackmoebius add <App>` | Expose an app's **output**, and its JACK box appears. |
 | `jackmoebius add --in <App> [N]` | Expose an app's **input** card (N channels, default 2), fed from JACK. |
 | `jackmoebius remove <App>` | Hide an app's output box (the channel reservation is kept). |
 | `jackmoebius remove --in <App>` | Hide an app's input card (reservation kept). |
@@ -71,12 +71,12 @@ $ jackmoebius add --in Safari
 input card 'Safari' on reverse channels 4,5
 ```
 
-The routing status in `list` is `ok` / `mismatch` / `idle` / `absent` — whether the
+The routing status in `list` is `ok` / `mismatch` / `idle` / `absent`. It reports whether the
 app actually uses the right JackMoebius device (see the [IPC protocol](ipc.qmd#routing-status)).
 
 ## Reservations
 
-Channel reservations are **persistent** — an app keeps its channels across restarts, so
+Channel reservations are **persistent**: an app keeps its channels across restarts, so
 a saved patchbay restores itself. `remove` hides a box but keeps the reservation;
 `clear` frees it.
 
@@ -121,10 +121,10 @@ Ships with Audio MIDI Setup, [JackMate](https://zinc75.github.io/JackMate), and 
 
 ::: {.callout-warning title="Zoom is not supported"}
 **Zoom is blacklisted by default and does not work with JackMoebius.** On macOS, Zoom
-rejects virtual audio devices — even when wrapped in an Aggregate Device, unlike most
+rejects virtual audio devices, even when wrapped in an Aggregate Device, unlike most
 apps. This is a Zoom limitation (its handling of virtual devices is undocumented), not
-a JackMoebius bug: every other app we tested — Microsoft Teams, Audacity, OBS,
-browsers… — works normally.
+a JackMoebius bug: every other app we tested (Microsoft Teams, Audacity, OBS,
+browsers…) works normally.
 :::
 
 ## Shell completion
@@ -143,11 +143,11 @@ autoload -Uz compinit && compinit
 ```
 
 Most setups (Oh My Zsh, a customized `~/.zshrc`, …) already do this. It's the standard
-step for **every** tool's zsh completion — the installer deliberately does not edit your
+step for **every** tool's zsh completion. The installer deliberately does not edit your
 shell configuration.
 
 For **bash** (a minority on macOS, whose default shell is zsh), the completion is
 installed in the standard Homebrew directory `/usr/local/etc/bash_completion.d`. It
 activates automatically once you have `bash-completion` installed and sourced
-(`brew install bash-completion`, then source it from your `~/.bash_profile`) — again, a
+(`brew install bash-completion`, then source it from your `~/.bash_profile`). Again, a
 shell-config step the installer leaves to you.
