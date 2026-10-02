@@ -1,16 +1,16 @@
 ---
 title: "IPC protocol documentation"
-description: "JackMoebius IPC protocol reference — the JSON socket API a front-end like JackMate uses to drive routing, exposure and live status."
+description: "JackMoebius IPC protocol reference: the JSON socket API a front-end like JackMate uses to drive routing, exposure and live status."
 ---
 
 `jackmoebiusd` exposes a small JSON protocol over a local Unix-domain socket. It's the
-same contract the `jackmoebius` CLI and the [JackMate](https://zinc75.github.io/JackMate) GUI use — you can drive JackMoebius
+same contract the `jackmoebius` CLI and the [JackMate](https://zinc75.github.io/JackMate) GUI use, so you can drive JackMoebius
 from any language that can open a socket.
 
 ## Transport
 
-- **Socket** — `/tmp/jackmoebius.sock`, mode `0600` (owner only).
-- **Request / response** — send one JSON line, read one JSON line, the connection closes:
+- **Socket**: `/tmp/jackmoebius.sock`, mode `0600` (owner only).
+- **Request / response**: send one JSON line, read one JSON line, the connection closes:
 
 ```json
 → {"command":"status"}
@@ -18,14 +18,14 @@ from any language that can open a socket.
 ```
 
 Every reply is `{"status":"ok","data":…}` or `{"status":"error","message":"…"}`. An error may
-carry an optional **`code`** — a machine-readable marker (e.g. `"licensing"` when a routing
-command is refused because the trial has expired) — so a client can react to a class of error
+carry an optional **`code`**, a machine-readable marker (e.g. `"licensing"` when a routing
+command is refused because the trial has expired), so a client can react to a class of error
 without parsing `message`.
 
-- **Event stream** — a `subscribe` connection stays **open** and streams invalidation
+- **Event stream**: a `subscribe` connection stays **open** and streams invalidation
   events (see [Event stream](#event-stream)).
 
-## Health — `status`
+## Health: `status`
 
 ```json
 → {"command":"status"}
@@ -37,14 +37,14 @@ without parsing `message`.
 
 Always present: `version`, `device_acquired`, `jack_connected`, `exposed_out`,
 `exposed_in`, `uptime_s`, `licensing`. `version` is the installed JackMoebius version (handy
-for an "About" box — and it answers even before the audio device is acquired). `licensing`
+for an "About" box, and it answers even before the audio device is acquired). `licensing`
 carries `{state, days_remaining}` (state ∈ `trial | licensed | expired`; `days_remaining` is
 present for `trial`/`expired`, absent for `licensed`). Reading or changing the license itself
-(status while stopped, activation) is a **CLI** concern — see the
+(status while stopped, activation) is a **CLI** concern. See the
 [CLI reference](cli.qmd#license--trial); the socket only reports the live state here and
 notifies changes via `licensing_changed`.
 
-## App state — `apps`
+## App state: `apps`
 
 Returns one entry per app the driver knows about, both directions in one call:
 
@@ -56,12 +56,12 @@ Returns one entry per app the driver knows about, both directions in one call:
       "can_capture":false,"blacklisted":false}, … ]}
 ```
 
-- `key` — bundle ID (stable persistence key) · `name` — display name · `pid`.
-- `out_exposed` / `in_exposed` — whether the box is exposed (the state `add` / `add --in`
+- `key`: bundle ID (stable persistence key) · `name`: display name · `pid`.
+- `out_exposed` / `in_exposed`: whether the box is exposed (the state `add` / `add --in`
   set), per direction.
-- `out_channels` / `in_channels` — the **reserved** bus channels (persistent), or `[]`.
-- `can_capture` — the app can be routed on the input side.
-- `blacklisted` — hidden from routing selectors.
+- `out_channels` / `in_channels`: the **reserved** bus channels (persistent), or `[]`.
+- `can_capture`: the app can be routed on the input side.
+- `blacklisted`: hidden from routing selectors.
 
 ## Expose & hide
 
@@ -90,7 +90,7 @@ Returns one entry per app the driver knows about, both directions in one call:
 ## Event stream {#event-stream}
 
 Send `{"command":"subscribe"}` on a dedicated connection. The daemon keeps it open and
-streams one event line per change — **invalidations**, never full state:
+streams one event line per change (**invalidations**, never full state):
 
 ```json
 → {"command":"subscribe"}
@@ -121,5 +121,5 @@ JackMoebius device:
 | `idle` | the app uses no device of that direction yet |
 | `absent` | the app is not running |
 
-The colour is the front-end's choice — a GUI shows a green / red / amber indicator, and
+The colour is the front-end's choice: a GUI shows a green / red / amber indicator, and
 raises an alert only for boxes it knows are wired.
