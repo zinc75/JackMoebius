@@ -17,7 +17,7 @@ filters:
       <p class="subtitle">Route any macOS CoreAudio app to and from JACK — per app, bidirectionally. A virtual audio driver + daemon that brings your apps into the JACK graph, best controlled from the <a href="https://zinc75.github.io/JackMate">JackMate</a> GUI. <a href="video.html" onclick="openVideoLightbox(event)"><i class="fa-solid fa-circle-play"></i> See it in action</a>.</p>
       <div class="hero-pills">
         <a href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg" class="hero-pill hero-pill-primary" id="download-btn" onclick="openDownloadModal(event)">
-          <i class="fa-solid fa-arrow-down-to-bracket"></i> Download trial
+          <i class="fa-brands fa-apple"></i> Download trial
         </a>
         <a href="{{< var store-url >}}?embed=1" class="hero-pill hero-pill-buy lemonsqueezy-button" id="buy-btn">
           <i class="fa-solid fa-key"></i> Buy a license
@@ -117,7 +117,7 @@ filters:
 <div id="download-modal" class="dm-overlay" role="dialog" aria-modal="true" aria-labelledby="dm-title">
   <div class="dm-dialog">
     <div class="dm-header">
-      <div class="dm-header-icon icon-bg-cyan"><i class="fa-solid fa-arrow-down-to-bracket"></i></div>
+      <div class="dm-header-icon icon-bg-cyan"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-title" class="dm-title">Your download has started</h2>
         <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
