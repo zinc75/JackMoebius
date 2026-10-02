@@ -49,7 +49,7 @@ toc: false
           <div class="dl-dl">
             <a class="hero-pill hero-pill-primary dl-btn" id="download-btn" onclick="openDownloadModal(event)"
                href="https://github.com/zinc75/JackMoebius/releases/download/v{{< var jackmoebius-version >}}/JackMoebius-{{< var jackmoebius-version >}}.dmg">
-              <i class="fa-solid fa-arrow-down-to-bracket"></i>
+              <i class="fa-brands fa-apple"></i>
               Download JackMoebius {{< var jackmoebius-version >}}
             </a>
           </div>
