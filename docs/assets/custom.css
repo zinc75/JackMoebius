@@ -227,6 +227,10 @@ nav.quarto-secondary-nav { display: none !important; }
 }
 #title-block-header .description,
 #title-block-header .quarto-title .description { font-size: 0.9rem; color: var(--jm-muted); margin: 0; }
+/* Breathing room between a page title and its description. Bootstrap forces the
+   description's margin-top to 0 at a higher specificity (id + .quarto-title-block.default
+   + .description), so we match that specificity here to win the cascade. */
+#title-block-header.quarto-title-block.default .description { margin-top: 0.85rem; }
 
 /* ── Sidebar ──────────────────────────────────────── */
 nav.sidebar.sidebar-navigation:not(.rollup),
