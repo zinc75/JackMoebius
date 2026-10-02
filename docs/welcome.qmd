@@ -55,15 +55,15 @@ toc: false
           </div>
           <ol class="dl-steps">
             <li>Open the downloaded <strong>.dmg</strong>.</li>
-            <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer — it also
+            <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer, which also
                 offers <strong>JackMate</strong> (the free JACK patchbay &amp; manager) as an
                 optional component; keeping it ticked is the easiest way to drive JackMoebius.</li>
-            <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+            <li>macOS asks you to <strong>restart</strong>, and the audio driver loads at the next boot.</li>
           </ol>
         </div>
 
         <div class="dl-note dl-panel dl-reinstall" id="panel-have" hidden>
-          Great — <strong>no need to reinstall</strong>. Move on to activation.
+          Great, <strong>no need to reinstall</strong>. Move on to activation.
         </div>
       </section>
 
@@ -162,7 +162,7 @@ toc: false
       <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-mobile-title" class="dm-title">JackMoebius is a macOS driver</h2>
-        <p class="dm-intro">It's a CoreAudio driver for the Mac — it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
+        <p class="dm-intro">It's a CoreAudio driver for the Mac, so it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
       </div>
     </div>
     <div class="dm-footer dm-footer-end">

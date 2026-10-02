@@ -1,6 +1,6 @@
 ---
 title: "Download JackMoebius"
-description: "Download and install JackMoebius — signed and notarized for macOS."
+description: "Download and install JackMoebius, signed and notarized for macOS."
 ---
 
 Thanks for your purchase! Download **JackMoebius** below, install it, then activate it with the
@@ -38,7 +38,7 @@ license key from your email.
       <div class="dm-header-icon icon-bg-violet"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-mobile-title" class="dm-title">JackMoebius is a macOS driver</h2>
-        <p class="dm-intro">It's a CoreAudio driver for the Mac — it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
+        <p class="dm-intro">It's a CoreAudio driver for the Mac, so it can't run on iPhone or iPad. Come back from a Mac to download it.</p>
       </div>
     </div>
     <div class="dm-footer dm-footer-end">
@@ -54,14 +54,14 @@ license key from your email.
       <div class="dm-header-icon icon-bg-cyan"><i class="fa-brands fa-apple"></i></div>
       <div>
         <h2 id="dm-title" class="dm-title">Your download has started</h2>
-        <p class="dm-intro"><strong>Signed and notarized by Apple</strong> — it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
+        <p class="dm-intro"><strong>Signed and notarized by Apple</strong>, it installs cleanly, with no Gatekeeper warnings. Here's how:</p>
       </div>
     </div>
 
     <ol class="dm-steps">
       <li>Open the downloaded <strong>.dmg</strong>.</li>
       <li>Run <strong>Install JackMoebius.pkg</strong> and follow the installer (you'll accept the license).</li>
-      <li>macOS asks you to <strong>restart</strong> — the audio driver loads at the next boot.</li>
+      <li>macOS asks you to <strong>restart</strong>, and the audio driver loads at the next boot.</li>
     </ol>
 
     <div class="dm-footer">

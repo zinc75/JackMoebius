@@ -3,7 +3,7 @@ title: "JackMoebius license activation in JackMate"
 description: "Watch the walkthrough and open JackMate's License panel to activate JackMoebius."
 ---
 
-**Opening JackMate…** its **License** panel should appear in a moment — paste your license key
+**Opening JackMate…** its **License** panel should appear in a moment. Paste your license key
 (it's in your purchase email) and click **Activate**. Here's the walkthrough:
 
 ```{=html}

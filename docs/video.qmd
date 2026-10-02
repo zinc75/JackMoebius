@@ -1,10 +1,10 @@
 ---
 title: "See it in action"
-description: "A short tour of JackMoebius — route any macOS app to and from JACK, add effects, and save it as a studio."
+description: "A short tour of JackMoebius: route any macOS app to and from JACK, add effects, and save it as a studio."
 ---
 
 A quick tour: download and activate JackMoebius, expose your apps to **JACK**, route them
-through live effects — in both directions — and save the whole setup as a studio.
+through live effects (in both directions) and save the whole setup as a studio.
 
 ```{=html}
 <div style="max-width:900px;margin:1.6rem auto;">
@@ -13,7 +13,7 @@ through live effects — in both directions — and save the whole setup as a st
             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
             style="position:absolute;top:0;left:0;width:100%;height:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.9);border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.5);"
-            title="JackMoebius — Route any macOS app into JACK"></iframe>
+            title="JackMoebius: Route any macOS app into JACK"></iframe>
   </div>
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
