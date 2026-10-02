@@ -11,7 +11,7 @@ project:
 
 website:
   title: "JackMoebius"
-  description: "Route macOS CoreAudio apps to and from JACK — per app, bidirectionally."
+  description: "Route macOS CoreAudio apps to and from JACK, per app and bidirectionally."
   site-url: https://zinc75.github.io/JackMoebius       # enables sitemap.xml + canonical links + absolute OG URLs
   repo-url: https://github.com/zinc75/JackMoebius
   favicon: assets/favicon.png
