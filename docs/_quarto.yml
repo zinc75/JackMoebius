@@ -2,6 +2,8 @@ project:
   type: website
   output-dir: _site
   resources:
+    - CNAME                      # custom domain (jackmoebius.io) — copied into _site so the
+                                 # GitHub Actions deploy keeps it (otherwise each deploy drops it)
     # Media referenced only from raw HTML blocks (<video>/<img src>) — Quarto
     # doesn't auto-detect these, so copy them into _site explicitly.
     - assets/video/**
