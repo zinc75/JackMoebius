@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: _site
+  post-render:
+    - scripts/og-url.sh          # inject a per-page og:url (Quarto doesn't emit it)
   resources:
     - CNAME                      # custom domain (jackmoebius.io) — copied into _site so the
                                  # GitHub Actions deploy keeps it (otherwise each deploy drops it)
