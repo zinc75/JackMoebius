@@ -1,7 +1,7 @@
 ---
 title: "JackMoebius"
 description: "Route any macOS app to and from JACK, per application and bidirectionally. A modern, signed and notarized replacement for JackRouter on macOS 15+."
-image: https://zinc75.github.io/JackMoebius/assets/og-banner.png   # force the social card (not the hero icon Quarto would auto-pick)
+image: https://jackmoebius.io/assets/og-banner.png   # force the social card (not the hero icon Quarto would auto-pick)
 page-layout: full
 toc: false
 filters:

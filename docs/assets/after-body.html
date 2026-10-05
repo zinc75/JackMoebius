@@ -244,12 +244,12 @@ function openDownloadModal(e) {
           </div>
         </div>
         <div class="jm-share-icons">
-          <a class="jm-pop-ic x" href="https://twitter.com/intent/tweet?text=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK&url=https%3A%2F%2Fzinc75.github.io%2FJackMoebius%2F" target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-          <a class="jm-pop-ic bsky" href="https://bsky.app/intent/compose?text=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK%20https%3A%2F%2Fzinc75.github.io%2FJackMoebius%2F" target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+          <a class="jm-pop-ic x" href="https://twitter.com/intent/tweet?text=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK&url=https%3A%2F%2Fjackmoebius.io%2F" target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a class="jm-pop-ic bsky" href="https://bsky.app/intent/compose?text=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK%20https%3A%2F%2Fjackmoebius.io%2F" target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
           <a class="jm-pop-ic masto" href="#" onclick="jmShareMastodon(event)" aria-label="Share on Mastodon"><i class="fa-brands fa-mastodon"></i></a>
-          <a class="jm-pop-ic reddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fzinc75.github.io%2FJackMoebius%2F&title=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK" target="_blank" rel="noopener" aria-label="Share on Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-          <a class="jm-pop-ic hn" href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fzinc75.github.io%2FJackMoebius%2F&t=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK" target="_blank" rel="noopener" aria-label="Share on Hacker News"><i class="fa-brands fa-hacker-news"></i></a>
-          <a class="jm-pop-ic mail" href="mailto:?subject=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK&body=Thought%20you%27d%20like%20this%3A%20https%3A%2F%2Fzinc75.github.io%2FJackMoebius%2F" aria-label="Share by email"><i class="fa-solid fa-envelope"></i></a>
+          <a class="jm-pop-ic reddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fjackmoebius.io%2F&title=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK" target="_blank" rel="noopener" aria-label="Share on Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+          <a class="jm-pop-ic hn" href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fjackmoebius.io%2F&t=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK" target="_blank" rel="noopener" aria-label="Share on Hacker News"><i class="fa-brands fa-hacker-news"></i></a>
+          <a class="jm-pop-ic mail" href="mailto:?subject=JackMoebius%3A%20route%20any%20macOS%20app%20to%20and%20from%20JACK&body=Thought%20you%27d%20like%20this%3A%20https%3A%2F%2Fjackmoebius.io%2F" aria-label="Share by email"><i class="fa-solid fa-envelope"></i></a>
         </div>
       </div>
     </div>
@@ -263,7 +263,7 @@ function openDownloadModal(e) {
     if (!inst) return;
     inst = inst.trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
     if (!inst) return;
-    var msg = "JackMoebius: route any macOS app to and from JACK https://zinc75.github.io/JackMoebius/";
+    var msg = "JackMoebius: route any macOS app to and from JACK https://jackmoebius.io/";
     window.open("https://" + inst + "/share?text=" + encodeURIComponent(msg), "_blank", "noopener");
   };
   window.jmToggleShare = function (e) {

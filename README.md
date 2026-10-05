@@ -16,9 +16,9 @@
     <strong>Signed &amp; notarized by Apple</strong>
   </p>
 
-  **[Documentation](https://zinc75.github.io/JackMoebius/)** · **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)** · **[Download trial](https://zinc75.github.io/JackMoebius/#download)** · **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
+  **[Documentation](https://jackmoebius.io/)** · **[Changelog](https://jackmoebius.io/changelog.html)** · **[Download trial](https://jackmoebius.io/#download)** · **[Buy a license](https://jackmoebius.io/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
 
-  <a href="https://zinc75.github.io/JackMoebius/#video">
+  <a href="https://jackmoebius.io/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action: a short guided tour">
   </a>
   <br><sub>▶ <strong>See it in action</strong>: a short guided tour</sub>
@@ -49,7 +49,7 @@ runs standalone from the CLI too.
 
 ## Download & install
 
-1. **[Download the latest `.dmg`](https://zinc75.github.io/JackMoebius/#download)** and open it.
+1. **[Download the latest `.dmg`](https://jackmoebius.io/#download)** and open it.
 2. Run **Install JackMoebius.pkg**. macOS installs a system audio driver, so you'll be
    **asked to reboot** at the end.
 3. Start a **JACK** server (via [JackMate](https://zinc75.github.io/JackMate)), then activate JackMoebius.
@@ -62,9 +62,9 @@ runs standalone from the CLI too.
 ## Documentation
 
 Full documentation (how it works, the IPC protocol, and the CLI reference) lives at
-**[zinc75.github.io/JackMoebius](https://zinc75.github.io/JackMoebius/)**.
+**[jackmoebius.io](https://jackmoebius.io/)**.
 
-Release notes: **[Changelog](https://zinc75.github.io/JackMoebius/changelog.html)**.
+Release notes: **[Changelog](https://jackmoebius.io/changelog.html)**.
 
 ## Requirements
 
@@ -85,6 +85,6 @@ Open an **[issue](https://github.com/zinc75/JackMoebius/issues)**.
 
 JackMoebius is **proprietary software**, distributed with a **14-day free trial**.
 Continued use requires a license: a **one-time purchase**, no subscription, with
-**all updates included** (see the EULA). **[Buy a license](https://zinc75.github.io/JackMoebius/#buy)**.
+**all updates included** (see the EULA). **[Buy a license](https://jackmoebius.io/#buy)**.
 
 Copyright © 2026 Éric Bavu. All rights reserved.
