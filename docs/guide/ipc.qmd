@@ -4,7 +4,7 @@ description: "JackMoebius IPC protocol reference: the JSON socket API a front-en
 ---
 
 `jackmoebiusd` exposes a small JSON protocol over a local Unix-domain socket. It's the
-same contract the `jackmoebius` CLI and the [JackMate](https://zinc75.github.io/JackMate) GUI use, so you can drive JackMoebius
+same contract the `jackmoebius` CLI and the [JackMate](https://jackmate.app) GUI use, so you can drive JackMoebius
 from any language that can open a socket.
 
 ## Transport

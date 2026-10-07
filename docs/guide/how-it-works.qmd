@@ -29,7 +29,7 @@ JackMoebius is two components (plus a CLI):
   registers per-app clients in JACK, and keeps everything in sync. It runs **only while
   a JACK server is up** and self-stops when JACK goes away.
 - **The CLI**: `jackmoebius`, a control tool that talks to the daemon over a local
-  socket (the same [IPC protocol](ipc.qmd) a GUI like [JackMate](https://zinc75.github.io/JackMate) uses).
+  socket (the same [IPC protocol](ipc.qmd) a GUI like [JackMate](https://jackmate.app) uses).
 
 ## The forward path: an app's output into JACK
 
@@ -62,7 +62,7 @@ Loudness in a JackMoebius chain runs through **two independent gain stages**, an
    or speakers), which has its own volume too.
 
 Turn either one down and the app gets quieter, which is easy to mistake for a routing problem.
-That's why [JackMate](https://zinc75.github.io/JackMate) puts these volumes on screen: a
+That's why [JackMate](https://jackmate.app) puts these volumes on screen: a
 slider for the output JACK feeds **plus a per-app slider** for every exposed app, so you
 balance both stages finely and fast, in one place, with no trip to System Settings or Audio
 MIDI Setup.
@@ -84,9 +84,9 @@ if the daemon stops (the connection closes).
 
 ## Lifecycle
 
-**Daemon running ⟺ JACK up.** Start a JACK server (via [JackMate](https://zinc75.github.io/JackMate)), activate JackMoebius,
+**Daemon running ⟺ JACK up.** Start a JACK server (via [JackMate](https://jackmate.app)), activate JackMoebius,
 and the devices appear in the system selectors; stop JACK and they vanish. The daemon
-is normally launched through a per-user **LaunchAgent** (which [JackMate](https://zinc75.github.io/JackMate) kick-starts),
+is normally launched through a per-user **LaunchAgent** (which [JackMate](https://jackmate.app) kick-starts),
 so it runs in the right session with its own identity.
 
 → Next: the [IPC protocol](ipc.qmd) and the [CLI reference](cli.qmd).

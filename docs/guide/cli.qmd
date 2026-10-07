@@ -109,7 +109,7 @@ The system-mix **monitor** box (`monitor_L`/`R`, auto-wired to `system:playback`
 ## Blacklist
 
 Apps you never want proposed for routing (hidden from `add` and from the selector).
-Ships with Audio MIDI Setup, [JackMate](https://zinc75.github.io/JackMate), and Zoom
+Ships with Audio MIDI Setup, [JackMate](https://jackmate.app), and Zoom
 (see the note below); fully revertable.
 
 | Command | What it does |

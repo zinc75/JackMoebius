@@ -38,6 +38,6 @@ description: "Watch the walkthrough and open JackMate's License panel to activat
 ```
 
 ::: {.callout-note appearance="simple"}
-**Nothing happens?** JackMate may not be installed. [Get JackMate](https://zinc75.github.io/JackMate)
+**Nothing happens?** JackMate may not be installed. [Get JackMate](https://jackmate.app)
 (it's free), then open it, go to the **License** panel, and paste your key.
 :::

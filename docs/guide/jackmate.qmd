@@ -28,7 +28,7 @@ lightbox: auto
 <p class="jm-pair-cap">JackMoebius and JackMate, made to work together.</p>
 ```
 
-The most natural way to use JackMoebius is the **[JackMate](https://zinc75.github.io/JackMate)**
+The most natural way to use JackMoebius is the **[JackMate](https://jackmate.app)**
 GUI, a free, standalone JACK patchbay and manager, and the visual way to drive it: one box per
 exposed app, per-app **Output / Input**, per-app volumes, live routing-status alerts, and
 **studios** that save and restore your whole setup in one click. JackMate detects the installed
@@ -41,7 +41,7 @@ JackMate's own guide walks through every JackMate ↔ JackMoebius interaction: e
 per-app Output / Input and channel counts, per-app volumes, the wrong-device routing alerts,
 and studios that restore your whole setup.
 
-[**Open the JackMate guide to JackMoebius →**](https://zinc75.github.io/JackMate/guide/jackmoebius.html)
+[**Open the JackMate guide to JackMoebius →**](https://jackmate.app/guide/jackmoebius.html)
 :::
 
 ::: {layout-ncol="2"}

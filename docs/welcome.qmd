@@ -90,7 +90,7 @@ toc: false
             </a>
           </div>
           <p class="dl-lead">Nothing happens? Activate manually: in
-             <a href="https://zinc75.github.io/JackMate">JackMate</a>, open the
+             <a href="https://jackmate.app">JackMate</a>, open the
              <strong>License</strong> panel, paste your key above, and click <strong>Activate</strong>.</p>
           <!-- VIDEO: short muted clip showing where to click in JackMate's License panel.
                Lives at assets/video/activate-jackmoebius-from-jackmate.mp4; the src below wires
@@ -116,7 +116,7 @@ toc: false
       <section class="wiz-slide" data-step="3">
         <p class="dl-steptitle">Start using it</p>
         <div class="dl-note">
-          Start a <strong>JACK</strong> server (via <a href="https://zinc75.github.io/JackMate">JackMate</a>),
+          Start a <strong>JACK</strong> server (via <a href="https://jackmate.app">JackMate</a>),
           then expose your apps in JackMoebius. Enjoy!
         </div>
       </section>

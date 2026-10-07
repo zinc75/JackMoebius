@@ -43,7 +43,7 @@ CoreAudio to JACK.
 - **Universal**: Apple Silicon + Intel, macOS 15+.
 - **Scriptable**: a `jackmoebius` command-line tool and a documented IPC protocol.
 
-Best when controlled from the **[JackMate](https://zinc75.github.io/JackMate)** GUI
+Best when controlled from the **[JackMate](https://jackmate.app)** GUI
 (free), which manages the JACK graph and the JackMoebius routing visually, but it
 runs standalone from the CLI too.
 
@@ -52,12 +52,12 @@ runs standalone from the CLI too.
 1. **[Download the latest `.dmg`](https://jackmoebius.io/#download)** and open it.
 2. Run **Install JackMoebius.pkg**. macOS installs a system audio driver, so you'll be
    **asked to reboot** at the end.
-3. Start a **JACK** server (via [JackMate](https://zinc75.github.io/JackMate)), then activate JackMoebius.
+3. Start a **JACK** server (via [JackMate](https://jackmate.app)), then activate JackMoebius.
 
 > 🛡️ **Signed and notarized by Apple.** The driver and daemon are Developer ID signed and
 > the installer is notarized + stapled, so it opens with **no Gatekeeper warnings**.
 >
-> Requires a running **JACK** server. Designed to be driven by **[JackMate](https://zinc75.github.io/JackMate)**.
+> Requires a running **JACK** server. Designed to be driven by **[JackMate](https://jackmate.app)**.
 
 ## Documentation
 
@@ -73,7 +73,7 @@ Release notes: **[Changelog](https://jackmoebius.io/changelog.html)**.
 | macOS | 15.0 (Sequoia) |
 | Architecture | Apple Silicon or Intel |
 | JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
-| GUI (recommended) | [JackMate](https://zinc75.github.io/JackMate) |
+| GUI (recommended) | [JackMate](https://jackmate.app) |
 
 ## Support
 
