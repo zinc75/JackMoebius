@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://jackmoebius.io/
+    about: Read the JackMoebius documentation before opening an issue
+  - name: Questions & Support
+    url: https://github.com/zinc75/JackMoebius/discussions
+    about: Ask a question or get help in GitHub Discussions
+  - name: License, activation or payment
+    url: https://jackmoebius.io/#buy
+    about: For purchase, activation or payment matters, use the private support channel from your order email — please don't open a public issue (it may contain personal or order details)

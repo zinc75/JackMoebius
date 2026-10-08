@@ -1,0 +1,59 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for JackMoebius
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to improve JackMoebius? Great — describe it below.
+        The clearer the description, the easier it is to evaluate and implement.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the situation or limitation you're running into.
+      placeholder: I find it difficult to… / There is currently no way to…
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the feature or behavior you'd like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example or expected behavior
+      description: |
+        A concrete example of how it would work — e.g. a CLI command and its output,
+        a routing scenario, or an IPC message. A sketch or annotated screenshot also helps.
+      placeholder: "e.g. `jackmoebius …` should …"
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you found any workarounds or alternative approaches?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of JackMoebius does this relate to?
+      options:
+        - Virtual audio driver / device
+        - Daemon (jackmoebiusd)
+        - Command line (jackmoebius)
+        - IPC protocol
+        - Routing / channels
+        - Installer / packaging
+        - Licensing / activation
+        - General / Other
+    validations:
+      required: true

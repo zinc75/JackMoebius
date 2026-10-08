@@ -1,0 +1,53 @@
+name: Documentation Issue
+description: Report an error, missing information, or unclear content in the JackMoebius documentation
+title: "[Docs] "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found something wrong or missing in the [JackMoebius documentation](https://jackmoebius.io/)?
+        Let us know below.
+
+  - type: dropdown
+    id: page
+    attributes:
+      label: Documentation page
+      options:
+        - Home / Overview
+        - How it works
+        - Use JackMoebius in JackMate
+        - IPC protocol
+        - Command line (CLI) reference
+        - Changelog
+        - Other / Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue type
+      options:
+        - Factual error
+        - Missing information
+        - Unclear or confusing content
+        - Outdated content
+        - Broken link or image
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is wrong or missing? Please be as specific as possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested correction or addition
+      description: How should it read? What information should be added?
