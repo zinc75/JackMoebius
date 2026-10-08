@@ -364,7 +364,7 @@ The daemon keeps the JACK graph and the routing in sync, event-driven, with no p
 
 | | Minimum |
 |---|---|
-| JACK | JACK2 (`jackd` / `jackdmp`) installed and running |
+| JACK | JACK2 (`jackd` / `jackdmp`) installed and running. [How to install JACK on macOS →](https://jackmate.app/install-jack-macos.html) |
 | GUI (recommended) | [JackMate](https://jackmate.app), installed alongside |
 
 ::: {.callout-note}
