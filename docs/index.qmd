@@ -21,12 +21,13 @@ filters:
 .compat .compat-bar::-webkit-details-marker{display:none}
 .compat .compat-bar:hover{border-color:var(--jm-border-med)}
 .compat .cap-txt{font-size:14px; font-weight:700; letter-spacing:-.2px; color:#ededf0}
-.compat .cap-short{display:none; font-size:14px; font-weight:700; letter-spacing:-.2px; color:#ededf0}
+.compat .cap-short{display:inline; font-size:14px; font-weight:700; letter-spacing:-.2px; color:#ededf0}
 .compat .cap-dot{color:var(--jm-muted); margin:0 1px}
 .compat .cap-arch{display:flex; align-items:center; gap:7px; font-size:13px; font-weight:500; color:var(--jm-text-dim)}
 .compat .cap-arch svg{width:18px; height:18px; flex:none; color:var(--jm-muted)}
 .compat .cap-arch.silicon svg{color:var(--jm-violet)}
 .compat .cap-arch.intel svg{color:var(--jm-cyan)}
+.compat .cap-txt, .compat .cap-dot, .compat .cap-arch{display:none}
 .compat .cap-more{margin-left:auto; display:flex; align-items:center; gap:6px; color:#ededf0; font-size:12.5px; white-space:nowrap}
 .compat .chev{width:15px; height:15px; transition:transform .25s ease}
 /* expanded = full-width overlay of translucent glass cards (floats, no layout shift) */
@@ -53,8 +54,6 @@ filters:
 .compat .arch.intel .chip{color:var(--jm-cyan)}
 @media (max-width:620px){
   .compat{flex:0 0 50%; max-width:50%}
-  .compat .cap-txt, .compat .cap-dot, .compat .cap-arch{display:none}
-  .compat .cap-short{display:inline}
   /* compact expanded detail on phones: 1 col, chips side by side, no sub-labels */
   .compat .compat-grid{grid-template-columns:1fr; gap:8px}
   .compat .os-card{padding:12px 13px}
