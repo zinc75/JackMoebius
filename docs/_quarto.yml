@@ -24,7 +24,8 @@ website:
   favicon: assets/favicon.png
   open-graph: true
   twitter-card: true
-  image: https://jackmoebius.io/assets/og-banner.png   # default social card; absolute so subdir pages resolve it
+  image: https://jackmoebius.io/assets/og-banner.png   # absolute so SUBDIR pages resolve it (a relative path would become /guide/assets/… → 404). The home (index.qmd) uses a relative path to also emit og:image:width/height.
+  image-alt: "JackMoebius — route any macOS CoreAudio app to and from JACK, per app and bidirectionally."
 
   navbar:
     pinned: true

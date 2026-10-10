@@ -1,7 +1,8 @@
 ---
 title: "JackMoebius"
 description: "Route any macOS app to and from JACK, per application and bidirectionally. A modern, signed and notarized replacement for JackRouter on macOS 15+."
-image: https://jackmoebius.io/assets/og-banner.png   # force the social card (not the hero icon Quarto would auto-pick)
+image: assets/og-banner.png   # relative → Quarto emits og:image:width/height + resolves absolute via site-url
+image-alt: "JackMoebius — route any macOS CoreAudio app to and from JACK, per app and bidirectionally."
 page-layout: full
 toc: false
 filters:
