@@ -12,6 +12,9 @@ project:
     - assets/screenshots/**
     - assets/icon.png            # hero icon, also paired on guide/jackmate.qmd
     - assets/jackmate-icon.png   # JackMate icon for the pairing on guide/jackmate.qmd
+    - assets/og-banner.png       # social card (og:image / twitter:image) — referenced only in meta tags, so copy explicitly
+    - apple-touch-icon.png       # iOS home-screen icon (180x180), served at site root
+    - favicon-32x32.png          # crisp 32px browser-tab favicon
 
 website:
   title: "JackMoebius"
