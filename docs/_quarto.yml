@@ -21,8 +21,6 @@ project:
     - assets/android-chrome-192x192.png          # favicon for Android
     - assets/android-chrome-512x512.png          # favicon for Android
     - assets/site.webmanifest          # webmanifest Android
-    - assets/favicon.png          # favicon for Github README
-
     - favicon.ico                 # fallback .ico
 
 website:
