@@ -16,6 +16,7 @@ project:
     - assets/apple-touch-icon.png       # iOS home-screen icon (180x180), served at site root
     - assets/favicon-32x32.png          # 32px browser-tab favicon
     - assets/favicon-192x192.png          # 192px favicon
+    - assets/favicon.png          # favicon for Github README
     - favicon.ico                 # fallback .ico
 
 website:
