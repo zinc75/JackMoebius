@@ -14,9 +14,15 @@ project:
     - assets/jackmate-icon.png   # JackMate icon for the pairing on guide/jackmate.qmd
     - assets/og-banner.png       # social card (og:image / twitter:image) — referenced only in meta tags, so copy explicitly
     - assets/apple-touch-icon.png       # iOS home-screen icon (180x180), served at site root
+    - assets/favicon-16x16.png          # 32px browser-tab favicon
     - assets/favicon-32x32.png          # 32px browser-tab favicon
     - assets/favicon-192x192.png          # 192px favicon
     - assets/favicon.png          # favicon for Github README
+    - assets/android-chrome-192x192.png          # favicon for Android
+    - assets/android-chrome-512x512.png          # favicon for Android
+    - assets/site.webmanifest          # webmanifest Android
+    - assets/favicon.png          # favicon for Github README
+
     - favicon.ico                 # fallback .ico
 
 website:
