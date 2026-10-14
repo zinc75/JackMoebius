@@ -13,15 +13,16 @@ project:
     - assets/icon.png            # hero icon, also paired on guide/jackmate.qmd
     - assets/jackmate-icon.png   # JackMate icon for the pairing on guide/jackmate.qmd
     - assets/og-banner.png       # social card (og:image / twitter:image) — referenced only in meta tags, so copy explicitly
-    - apple-touch-icon.png       # iOS home-screen icon (180x180), served at site root
-    - favicon-32x32.png          # crisp 32px browser-tab favicon
+    - assets/apple-touch-icon.png       # iOS home-screen icon (180x180), served at site root
+    - assets/favicon-16x16.png   # 16px browser-tab favicon
+    - assets/favicon-32x32.png          # 32px browser-tab favicon
 
 website:
   title: "JackMoebius"
   description: "Route macOS CoreAudio apps to and from JACK, per app and bidirectionally."
   site-url: https://jackmoebius.io       # enables sitemap.xml + canonical links + absolute OG URLs
   repo-url: https://github.com/zinc75/JackMoebius
-  favicon: assets/favicon.png
+  favicon: assets/favicon.ico
   open-graph: true
   twitter-card: true
   image: https://jackmoebius.io/assets/og-banner.png   # absolute so SUBDIR pages resolve it (a relative path would become /guide/assets/… → 404). The home (index.qmd) uses a relative path to also emit og:image:width/height.
