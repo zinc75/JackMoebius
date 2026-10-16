@@ -8,6 +8,46 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
+## 1.1.0 · unreleased · 256 channels each way, minimal latency by default
+
+A new device model and a new bridge: one `JackMoebius` device for everything, a private device per app with as
+many channels as you need, and a shared-memory bridge that replaces the buffered one.
+
+**Added**
+
+- One `JackMoebius` device (stereo in and out) replaces `JackMoebius In` and `JackMoebius Out`. Apps that follow
+  the system defaults, and apps that need input and output on one device (like REAPER), now just work.
+- Up to 64 channels per app, in each direction: `jackmoebius add <App> --out 8`, `jackmoebius add --in <App> 8`.
+  The app picks one device, **JackMoebius for <App>**, with both directions. In all, the buses carry up to 256
+  channels each way.
+- A shared input for apps without a device menu: `jackmoebius add --in <App> shared`. What you plug into
+  `shared_input_1/2` in JACK reaches every app in that mode. While one is in use, JackMoebius is the Mac's default
+  input; your previous input comes back afterwards.
+- `jackmoebius doctor` says what is wrong and what to do about it; `jackmoebius status` is shorter (`--verbose`
+  for details). JackMate shows the same messages.
+- A new uninstaller app on the disk image: confirmation, the list of files it removes, your language.
+
+**Changed**
+
+- **Minimal latency by default**: JackMoebius adds about 12 times less than 1.0 (roughly 11 ms between an app and
+  JACK and back, JACK at 128 frames, 48 kHz). It rests on a new shared-memory bridge, set up over XPC (idea by
+  [@sletz](https://github.com/sletz)). It stays flat for JACK buffers up to 512 frames, from 44.1 to 96 kHz, and
+  you can trade margin for even less with `jackmoebius safety`.
+- A small background service now sets up that bridge. It shows as **JackMoebius** in System Settings, Login
+  Items & Extensions. If it is missing or switched off, JackMoebius waits, tells you why and how to fix it, and
+  starts working by itself once the cause is gone.
+- The device you select in an app is now named `JackMoebius for <App>`.
+
+**Removed**
+
+- The monitor outputs and the master box switch: an app that is not exposed in JackMate is silent, on purpose.
+  The Mac's volume for JackMoebius works as before.
+
+**Upgrading from 1.0**
+
+- Apps that selected `JackMoebius In` or `Out` must select **JackMoebius** once. Restart your Mac after the update.
+- Update JackMate together with JackMoebius: the new features need it.
+
 ## 1.0.0 · 2026-10-08 · first commercial release
 
 JackMoebius is now a commercial product: a **14-day free trial**, then a one-time
