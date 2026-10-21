@@ -1,6 +1,8 @@
 ---
 page-layout: full
 toc: false
+search: false
+header-includes: '<meta name="robots" content="noindex, nofollow">'
 ---
 
 <!-- Post-purchase welcome page. Not in the navbar/sidebar — reached from the Lemon

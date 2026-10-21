@@ -1,6 +1,8 @@
 ---
 title: "Download JackMoebius"
 description: "Download and install JackMoebius, signed and notarized for macOS."
+search: false
+header-includes: '<meta name="robots" content="noindex, nofollow">'
 ---
 
 Thanks for your purchase! Download **JackMoebius** below, install it, then activate it with the

@@ -61,9 +61,27 @@ printf '%s\n' "${QUARTO_PROJECT_OUTPUT_FILES:-}" | while IFS= read -r f; do
   ' "$f" 2>/dev/null || true
 done
 
+# Sitemap: drop every page that carries a robots noindex (buyer-only pages: welcome, download,
+# open-in-jackmate). Keeping them in the sitemap would tell Google "index this" and "don't" at once.
+# The list is derived from the rendered HTML, so a future noindex page needs only its meta tag.
+# (Never block them in robots.txt: Google must be able to fetch the page to see the noindex.)
+SM="$OUT_DIR/sitemap.xml"
+if [ -f "$SM" ]; then
+  printf '%s\n' "${QUARTO_PROJECT_OUTPUT_FILES:-}" | while IFS= read -r f; do
+    [ -f "$f" ] || continue
+    case "$f" in *.html) ;; *) continue ;; esac
+    grep -qiE '<meta[^>]+name="robots"[^>]+noindex' "$f" 2>/dev/null || continue
+    rel="${f##*/$OUT_BASE/}"
+    case "$rel" in "$OUT_BASE"/*) rel="${rel#"$OUT_BASE"/}" ;; esac
+    JM_LOC="$BASE/$rel" perl -0777 -i -pe '
+      my $l = quotemeta($ENV{JM_LOC});
+      s{[ \t]*<url>\s*<loc>$l</loc>.*?</url>[ \t]*\n?}{}gs;
+    ' "$SM" 2>/dev/null || true
+  done
+fi
+
 # Sitemap: rewrite the home entry's <loc> from .../index.html to the clean root,
 # so it matches the home canonical/og:url exactly.
-SM="$OUT_DIR/sitemap.xml"
 if [ -f "$SM" ]; then
   JM_BASE="$BASE" perl -0777 -i -pe '
     my $b = quotemeta($ENV{JM_BASE});
