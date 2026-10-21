@@ -33,7 +33,7 @@ without parsing `message`.
      "version":"1.1.0","device_acquired":true,"jack_connected":true,
      "exposed_out":2,"exposed_in":1,"uptime_s":1234,
      "bridge":"shm","shared_input":{"on":true,"apps":["Safari"]},
-     "capacity":{"forward":{"used":6,"total":254},"reverse":{"used":2,"total":254}},
+     "capacity":{"forward":{"used":6,"total":254,"held":0},"reverse":{"used":2,"total":254,"held":0}},
      "default_input_is_jackmoebius":true,
      "licensing":{"state":"trial","days_remaining":9}, … }}
 ```
@@ -46,7 +46,8 @@ answers even before the audio device is acquired).
   structured `transport_problem` that says why (service not installed, switched off, unreachable, version mismatch,
   slot busy, driver not attached).
 - `shared_input` says whether the ports `shared_input_1/2` exist and which apps share them.
-- `capacity` is how full the two buses are, in channels (254 usable each way, shared by all apps).
+- `capacity` is how full the two buses are, in channels (254 usable each way, shared by all apps). `held` says how many of the used
+  channels are held by a stream that a card kept after its side was dropped, and `held_by` which apps (see `jack_rebuild`).
 - `default_input_is_jackmoebius` tells whether apps without a device menu reach the shared input.
 - `licensing` carries `{state, days_remaining}` (state ∈ `trial | licensed | expired`; `days_remaining` is
   present for `trial`/`expired`, absent for `licensed`). Reading or changing the license itself
@@ -86,6 +87,7 @@ Each direction has a **backing**, `shared` or `private`, and always send it expl
 | `{"command":"jack_add_in","app":"<key>","backing":"shared"}` | expose the input as the shared input | `{name,key,backing,channels}` |
 | `{"command":"jack_add_in","app":"<key>","backing":"private","n":2}` | expose the input as a card of `n` channels (1 to 64, default 2) | `{name,key,backing,channels, …}` |
 | `{"command":"jack_apply","app":"<key>","in":{…},"out":{…}}` | set both directions in one call (each `{backing, n}`; a missing side stays as it is) | `{name,key,in,out}` |
+| `{"command":"jack_rebuild","app":"<key>"}` | rebuild the app's card as it is and free the channels a dead stream holds (nothing held: nothing happens) | `{name,key,released,rebuilt, …}` |
 | `{"command":"jack_remove","app":"<key>"}` / `jack_remove_in` | hide the output / the input (reservation kept) | `null` |
 | `{"command":"jack_clear_assignment","app":"<key>"}` / `jack_clear_in` | drop the reservation | `null` |
 
@@ -135,6 +137,31 @@ once. If an app has a single device setting for input and output and you want it
 from it; `text` and `remedy` are English sentences), a `severity` (`error` | `warning`), the display name of the `app`
 when the message is about one, a `text` and a `remedy`. The CLI prints the same list
 ([`jackmoebius doctor`](cli.qmd#doctor), `--json` for this object).
+
+## Errors
+
+An error reply carries a stable **`code`** and, when it helps, a **`details`** object. Show the English `message` as a fallback and
+translate from the `code`:
+
+```json
+← {"status":"error","message":"not enough free forward channels (need 16, 4 free)","code":"capacity_forward_full",
+   "details":{"needed":16,"free":4,"held":0,"largest_holders":[{"app":"REAPER","key":"com.cockos.reaper","channels":64,"dead":0}]}}
+```
+
+| `code` | When |
+|---|---|
+| `jack_not_running` | no JACK server |
+| `transport_not_ready` | a card is asked while the shared-memory bridge is not up |
+| `app_not_running`, `no_audio_context` | no running app matches, or it holds no audio context yet (`details.app`) |
+| `not_capture_capable` | an input is asked of an app that cannot capture |
+| `app_blacklisted` | the app is on the blacklist |
+| `invalid_channel_count` | a width outside 1 to 64 (`details.direction`, `given`, `min`, `max`) |
+| `capacity_forward_full`, `capacity_reverse_full` | not enough free channels (`details.needed`, `free`, `held`, `largest_holders`) |
+| `slot_exhausted` | no card slot left |
+| `jack_port_limit` | JACK refused to register a port (`details.ports_registered`) |
+| `backing_required`, `nothing_to_apply` | a malformed `jack_add` or `jack_apply` |
+| `card_not_created`, `no_card` | the driver did not create the card, or `jack_rebuild` found no card |
+| `licensing` | the trial has expired |
 
 ## Event stream {#event-stream}
 

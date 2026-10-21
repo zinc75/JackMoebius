@@ -28,6 +28,9 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 - `jackmoebius doctor` says what is wrong and what to do about it; `jackmoebius status` is shorter (`--verbose`
   for details). JackMate shows the same messages.
 - A new uninstaller app on the disk image: confirmation, the list of files it removes, your language.
+- `jackmoebius rebuild <App>` frees the channels held by a device that kept a stream after one of its sides was removed.
+  `jackmoebius status` and `jackmoebius doctor` tell you which apps hold channels.
+- Errors from the daemon now carry a stable code, so front-ends like JackMate show them in your language.
 
 **Changed**
 

@@ -126,6 +126,7 @@ a saved patchbay restores itself. `remove` hides a box but keeps the reservation
 |---|---|
 | `jackmoebius assignments` | Show the persistent channel reservations (outputs, then private inputs). |
 | `jackmoebius clear <App> [--in] [--out]` | Drop an app's reservation (frees its channels; the card goes when nothing else needs it). Works with the daemon stopped, too. |
+| `jackmoebius rebuild <App>` | Rebuild an app's card as it is, to free the channels held by a stream the card kept without its side (the app sees its device go and come back). `status` and `doctor` say which apps hold channels; with none, nothing happens. |
 
 ## Volume
 
