@@ -80,8 +80,8 @@ Each direction of an app, input and output, goes one of two ways:
 | **In the app** | nothing to set: it follows the Mac's default output and input | you select the card as its device |
 
 If an app has no device menu (browsers, dictation, many small apps), use the shared device. If it lets you choose
-its input or output, a card gives it channels of its own. An app with a single device setting for both directions
-needs both of them to be cards. The [CLI reference](cli.qmd#apps-routing) shows how to choose, and
+its input or output, a card gives it channels of its own. If an app has a single device setting for both directions and you
+want it on a card, make both directions cards (or leave both shared and select JackMoebius). The [CLI reference](cli.qmd#apps-routing) shows how to choose, and
 [JackMate](jackmate.qmd) does it with a menu per app.
 
 ## Event-driven, no polling

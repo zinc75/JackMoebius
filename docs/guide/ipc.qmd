@@ -84,6 +84,7 @@ Each direction has a **backing**, `shared` or `private`, and always send it expl
 | `{"command":"jack_add","app":"<key>","backing":"private","n":8}` | expose the output as a card of `n` channels (1 to 64, default 2) | `{name,key,backing,channels, …}` |
 | `{"command":"jack_add_in","app":"<key>","backing":"shared"}` | expose the input as the shared input | `{name,key,backing,channels}` |
 | `{"command":"jack_add_in","app":"<key>","backing":"private","n":2}` | expose the input as a card of `n` channels (1 to 64, default 2) | `{name,key,backing,channels, …}` |
+| `{"command":"jack_apply","app":"<key>","in":{…},"out":{…}}` | set both directions in one call (each `{backing, n}`; a missing side stays as it is) | `{name,key,in,out}` |
 | `{"command":"jack_remove","app":"<key>"}` / `jack_remove_in` | hide the output / the input (reservation kept) | `null` |
 | `{"command":"jack_clear_assignment","app":"<key>"}` / `jack_clear_in` | drop the reservation | `null` |
 
@@ -101,7 +102,9 @@ effect on the device the app sees is:
 | `private` → `shared` | no | the card is **deleted**: an app that had chosen it falls back to another device |
 | `private` with another `n` | | the card is **rebuilt** with the new width |
 
-An app with a single device setting for input and output needs both directions private.
+`jack_apply` is all or nothing: everything is checked first, then both sides are applied and the card is created, rebuilt or deleted at most
+once. If an app has a single device setting for input and output and you want it on a card, make both directions private
+(or leave both shared and let it select `JackMoebius`).
 
 ## Listings
 

@@ -96,8 +96,9 @@ Choice [1/2/3, q to cancel]:
   default input and output, which JackMoebius takes care of.
 - Use a **card** when the app lets you choose its input or output device in its settings and you want channels of
   its own (a DAW, a video call, a recorder). Then select **JackMoebius for <App>** in the app.
-- If an app has a single device setting for input **and** output, make **both** directions private
-  (`--in private --out private`): a card that only has an input has no output for it.
+- If an app has a single device setting for input **and** output and you want it on a card, make **both** directions private
+  (`--in private --out private`): a card that only has an input has no output for it. Such an app can also stay on the shared
+  device: leave both directions shared and select **JackMoebius** in it.
 :::
 
 ### Changing a direction
