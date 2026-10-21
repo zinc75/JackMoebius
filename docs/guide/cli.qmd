@@ -21,7 +21,7 @@ jackmoebius <command> [arguments]
 | `jackmoebius version` | Print the version + copyright (works while stopped). Aliases: `--version`, `-v`. |
 | `jackmoebius start` | Launch `jackmoebiusd` (JACK must be up). |
 | `jackmoebius stop` | Stop the daemon cleanly. |
-| `jackmoebius status` | Daemon, device, JACK and transport health, shared input, capacity (`--verbose` for details). |
+| `jackmoebius status` | Daemon, device, JACK and transport health, shared input (`--verbose` for details). It also shows how full the two buses are (`capacity`), with `--verbose`, from 80 %, or whenever channels are held by a card that kept a stream without its side, naming the apps that hold them (see `rebuild`). |
 | `jackmoebius doctor [--json]` | Say what is wrong and what to do about it. See [Doctor](#doctor). |
 
 ```bash
