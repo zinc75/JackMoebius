@@ -36,7 +36,7 @@ JackMoebius is two components (plus a CLI):
 When you **expose** an app:
 
 1. The app's CoreAudio output is routed onto the JackMoebius device, or onto a device of its own (see
-   [below](#shared-or-a-card-of-its-own)).
+   [below](#shared-or-its-own-device)).
 2. The daemon reads it and publishes a **JACK client box** for that app, with output
    ports on reserved channels.
 3. Anything in your JACK graph can now read the app's audio: patch it into a recorder,
@@ -65,24 +65,33 @@ MIDI Setup.
 
 The bridge is **bidirectional**. Exposing an app's **input** makes JACK audio its microphone: either through
 the **shared input** (the ports `shared_input_1/2`, which every app in that mode reads) or through a device of its
-own, **JackMoebius for <App>**, fed by JACK. The app selects it as its microphone, and now **JACK audio becomes the
+own, **JackMoebius for &lt;App&gt;**, fed by JACK. The app selects it as its microphone, and now **JACK audio becomes the
 app's input**: process a live instrument through your JACK effects and send the result straight into a video call.
 
-## Shared or a card of its own {#shared-or-a-card-of-its-own}
+## Two ways to connect an app: shared, or its own device {#shared-or-its-own-device}
 
-Each direction of an app, input and output, goes one of two ways:
+Every app has two sides: its **output** (the sound it plays) and its **input** (the microphone it listens to). For each side you
+choose how it reaches JACK.
 
-| | Shared | A card of its own |
-|---|---|---|
-| **Device** | the common **JackMoebius** device | **JackMoebius for <App>** |
-| **Output** | a stereo pair of its own for the app, separate from every other app | 1 to 64 channels |
-| **Input** | the same two channels for every app in this mode | 1 to 64 channels of its own |
-| **In the app** | nothing to set: it follows the Mac's default output and input | you select the card as its device |
+**Shared: the simple way.** The app keeps using the Mac's normal sound settings, and JackMoebius is there as one ordinary audio
+device named **JackMoebius**. There is nothing to change inside the app.
 
-If an app has no device menu (browsers, dictation, many small apps), use the shared device. If it lets you choose
-its input or output, a card gives it channels of its own. If an app has a single device setting for both directions and you
-want it on a card, make both directions cards (or leave both shared and select JackMoebius). The [CLI reference](cli.qmd#apps-routing) shows how to choose, and
-[JackMate](jackmate.qmd) does it with a menu per app.
+- For its **output**, each app still gets **a stereo pair of its own** in JACK: two apps playing at the same time are not mixed together.
+- For its **input**, **every app in this mode hears the same two channels**. That is how macOS works: an input device is the same for
+  everyone who listens to it.
+
+**Its own device: more channels, and a private input.** JackMoebius creates a virtual sound device just for that app, named
+**JackMoebius for &lt;App&gt;**. It shows up in the app's device menu like a real sound card, with anything from 1 to 64 channels in each
+direction, and those channels belong to that app alone. You select it in the app's audio settings, and its channels appear in JACK as
+separate ports.
+
+| If the app... | Choose |
+|---|---|
+| has no device menu (browsers, dictation, many small apps) | **shared**: it follows the Mac's default input and output |
+| lets you pick its input or output device, and you want several channels, or an input of its own | **its own device**: select *JackMoebius for &lt;App&gt;* in the app |
+| has one device setting for both input and output | either leave both sides **shared** and select *JackMoebius*, or give **both** sides their own device |
+
+The [CLI reference](cli.qmd#apps-routing) shows how to choose, and [JackMate](jackmate.qmd) does it with a menu per app.
 
 ## Event-driven, no polling
 

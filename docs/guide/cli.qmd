@@ -60,7 +60,7 @@ Every app has two directions, and for each one you choose where it goes. That ch
 | Spec | What it means |
 |---|---|
 | `shared` | The common **JackMoebius** device, with nothing to set in the app. **Output:** a stereo pair of its own, separate from every other app. **Input:** the same two channels (`shared_input_1/2` in JACK) for every app in this mode. |
-| `private` | A device of its own, **JackMoebius for <App>**, that you select in the app. 2 channels. |
+| `private` | A device of its own, **JackMoebius for &lt;App&gt;**, that you select in the app (the guide calls it a **card**: a virtual sound card for that app). 2 channels. |
 | `private=N` or `N` | The same with N channels, from 1 to 64 (mono included). A bare number always means a card of N channels. |
 
 | Command | What it does |
@@ -95,7 +95,7 @@ Choice [1/2/3, q to cancel]:
 - Use **shared** for apps that have no device menu (browsers, dictation, many small apps): they follow the Mac's
   default input and output, which JackMoebius takes care of.
 - Use a **card** when the app lets you choose its input or output device in its settings and you want channels of
-  its own (a DAW, a video call, a recorder). Then select **JackMoebius for <App>** in the app.
+  its own (a DAW, a video call, a recorder). Then select **JackMoebius for &lt;App&gt;** in the app.
 - If an app has a single device setting for input **and** output and you want it on a card, make **both** directions private
   (`--in private --out private`): a card that only has an input has no output for it. Such an app can also stay on the shared
   device: leave both directions shared and select **JackMoebius** in it.

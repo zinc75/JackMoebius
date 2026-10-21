@@ -68,7 +68,8 @@ Returns one entry per app the driver knows about, both directions in one call:
 
 - `key`: bundle ID (stable persistence key) · `name`: display name · `pid`.
 - `out_exposed` / `in_exposed`: whether the box is exposed (the state `add` set), per direction.
-- `out_backing` / `in_backing`: `shared` (the common `JackMoebius` device) or `private` (a card of its own).
+- `out_backing` / `in_backing`: `shared` (the common `JackMoebius` device) or `private` (a **card**: a virtual device of its own,
+  named `JackMoebius for <App>`).
 - `out_channels` / `in_channels`: the **reserved** bus channels (persistent), or `[]`. For a shared output
   it is the stereo pair; for a shared input there is nothing to reserve.
 - `can_capture`: the app can be routed on the input side.
