@@ -73,6 +73,8 @@ Returns one entry per app the driver knows about, both directions in one call:
   named `JackMoebius for <App>`).
 - `out_channels` / `in_channels`: the **reserved** bus channels (persistent), or `[]`. For a shared output
   it is the stereo pair; for a shared input there is nothing to reserve.
+- `out_held_channels` / `in_held_channels`: the channels a card still **holds** for a stream whose side was removed (`[]` when none).
+  They count in `capacity`, and `jack_rebuild` frees them.
 - `can_capture`: the app can be routed on the input side.
 - `blacklisted`: hidden from routing selectors.
 
