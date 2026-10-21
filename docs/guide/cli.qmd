@@ -21,11 +21,12 @@ jackmoebius <command> [arguments]
 | `jackmoebius version` | Print the version + copyright (works while stopped). Aliases: `--version`, `-v`. |
 | `jackmoebius start` | Launch `jackmoebiusd` (JACK must be up). |
 | `jackmoebius stop` | Stop the daemon cleanly. |
-| `jackmoebius status` | Daemon / device / JACK health, exposed-box counts, master gain. |
+| `jackmoebius status` | Daemon, device, JACK and transport health, shared input, capacity (`--verbose` for details). |
+| `jackmoebius doctor [--json]` | Say what is wrong and what to do about it. See [Doctor](#doctor). |
 
 ```bash
 $ jackmoebius version
-JackMoebius 1.0.0
+JackMoebius 1.1.0
 Copyright © 2026 Éric Bavu. All rights reserved.
 ```
 
@@ -54,22 +55,62 @@ never locked out for lack of network. A license covers up to its activation limi
 
 ## Apps & routing
 
+Every app has two directions, and for each one you choose where it goes. That choice is a **spec**:
+
+| Spec | What it means |
+|---|---|
+| `shared` | The common **JackMoebius** device, with nothing to set in the app. **Output:** a stereo pair of its own, separate from every other app. **Input:** the same two channels (`shared_input_1/2` in JACK) for every app in this mode. |
+| `private` | A device of its own, **JackMoebius for <App>**, that you select in the app. 2 channels. |
+| `private=N` or `N` | The same with N channels, from 1 to 64 (mono included). A bare number always means a card of N channels. |
+
 | Command | What it does |
 |---|---|
-| `jackmoebius apps` | List CoreAudio apps seen by the driver (per-app state: exposed, channels, capture-capable, blacklisted). |
-| `jackmoebius add <App>` | Expose an app's **output**, and its JACK box appears. |
-| `jackmoebius add --in <App> [N]` | Expose an app's **input** card (N channels, default 2), fed from JACK. |
-| `jackmoebius remove <App>` | Hide an app's output box (the channel reservation is kept). |
-| `jackmoebius remove --in <App>` | Hide an app's input card (reservation kept). |
+| `jackmoebius apps` | List CoreAudio apps seen by the driver (per-app state: exposed, backing, channels, capture-capable, blacklisted). |
+| `jackmoebius add <App> [--in [<spec>]] [--out [<spec>]]` | Expose an app's input and/or output; its JACK box appears. |
+| `jackmoebius remove <App> [--in] [--out]` | Hide an app's box (the channel reservation is kept). |
 | `jackmoebius list` | Currently exposed boxes, with per-box **routing status**. |
 
-```bash
-$ jackmoebius add Music
-exposed 'Musique' on channels 2/3
+A flag without a spec asks you the question (at a terminal). `add`, `remove` and `clear` with neither `--in` nor
+`--out` ask which side you mean. In a script nothing is guessed: say it on the command line.
 
-$ jackmoebius add --in Safari
-input card 'Safari' on reverse channels 4,5
+```bash
+$ jackmoebius add Music --out shared
+exposed 'Music' on channels 2/3 (the app plays to the JackMoebius default output)
+
+$ jackmoebius add Safari --in shared
+'Safari' reads the shared input (ports shared_input_1/2, the same two channels for every app in this mode) ...
+
+# one device, JackMoebius for REAPER, with 8 inputs and 16 outputs
+$ jackmoebius add REAPER --in private=8 --out private=16
+
+$ jackmoebius add "QuickTime Player"
+Which side of 'QuickTime Player' do you want to expose?
+  1) output   the app's sound towards JACK
+  2) input    JACK towards the app
+  3) both
+Choice [1/2/3, q to cancel]:
 ```
+
+::: {.callout-tip title="Shared or a card of its own?"}
+- Use **shared** for apps that have no device menu (browsers, dictation, many small apps): they follow the Mac's
+  default input and output, which JackMoebius takes care of.
+- Use a **card** when the app lets you choose its input or output device in its settings and you want channels of
+  its own (a DAW, a video call, a recorder). Then select **JackMoebius for <App>** in the app.
+- If an app has a single device setting for input **and** output, make **both** directions private
+  (`--in private --out private`): a card that only has an input has no output for it.
+:::
+
+### Changing a direction
+
+A card only holds the directions you made private. When you change one direction of an app:
+
+- Adding a private direction to an app that already has a card for the other one, or changing the number of
+  channels, **rebuilds** the card: the app sees its device go and come back for a moment.
+- Moving a direction back to `shared` while the other direction keeps a card **leaves the card as it is**. That
+  direction is no longer wired, so choose the shared **JackMoebius** device for it in the app. Its channels stay
+  reserved until the card is deleted or rebuilt.
+- Moving it back when nothing else needs the card **deletes** the card. An app that had selected it falls back to
+  another device.
 
 The routing status in `list` is `ok` / `mismatch` / `idle` / `absent`. It reports whether the
 app actually uses the right JackMoebius device (see the [IPC protocol](ipc.qmd#routing-status)).
@@ -82,14 +123,13 @@ a saved patchbay restores itself. `remove` hides a box but keeps the reservation
 
 | Command | What it does |
 |---|---|
-| `jackmoebius assignments` | Show the persistent channel reservations (output). |
-| `jackmoebius clear <App>` | Drop an app's output reservation (frees its channels). |
-| `jackmoebius clear --in <App>` | Drop an app's input reservation. |
+| `jackmoebius assignments` | Show the persistent channel reservations (outputs, then private inputs). |
+| `jackmoebius clear <App> [--in] [--out]` | Drop an app's reservation (frees its channels; the card goes when nothing else needs it). Works with the daemon stopped, too. |
 
 ## Volume
 
-Per-app **output volume**, with a "cadenas" (lock): locked = follows the master
-*JackMoebius Out* level; unlocked = its own independent gain.
+Per-app **output volume**, with a "cadenas" (lock): locked = follows the volume of the
+*JackMoebius* device; unlocked = its own independent gain.
 
 | Command | What it does |
 |---|---|
@@ -97,14 +137,12 @@ Per-app **output volume**, with a "cadenas" (lock): locked = follows the master
 | `jackmoebius volume <App> lock` \| `unlock` | Lock to master, or take independent control. |
 | `jackmoebius volume <App> <gain>` | Set an independent linear gain (`1.0` = unity, `0.0` = mute). |
 
-## Master box
+## Doctor
 
-The system-mix **monitor** box (`monitor_L`/`R`, auto-wired to `system:playback`).
-
-| Command | What it does |
-|---|---|
-| `jackmoebius master on` \| `off` | Register / unregister the master box in the JACK graph. |
-| `jackmoebius master status` | Show whether it's on. |
+`jackmoebius doctor` lists what is wrong and what to do about it: the daemon or JACK not running, the background
+service missing or switched off, an app that does not use its card, a bus that is nearly full, another account
+using JackMoebius. Add `--json` for the structured list (stable codes, which JackMate shows as banners). The exit
+status is 1 when there is an error. It also works with the daemon stopped, with what it can check on its own.
 
 ## Blacklist
 
@@ -129,8 +167,8 @@ browsers…) works normally.
 
 ## Shell completion
 
-The installer ships **zsh** and **bash** completions (commands, and live app names for
-`add` / `remove` / `blacklist`).
+The installer ships **zsh** and **bash** completions (commands, `--in` and `--out` with their values, and live
+app names for `add` / `remove` / `clear` / `blacklist`).
 
 The zsh completion file is installed on the completion path
 (`/usr/local/share/zsh/site-functions`), but zsh only activates completions once your

@@ -8,7 +8,7 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
-## 1.1.0 · unreleased · 256 channels each way, minimal latency by default
+## 1.1.0 · unreleased · 256 channels each way, minimal latency by default {#v1-1-0}
 
 A new device model and a new bridge: one `JackMoebius` device for everything, a private device per app with as
 many channels as you need, and a shared-memory bridge that replaces the buffered one.
@@ -17,12 +17,14 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 
 - One `JackMoebius` device (stereo in and out) replaces `JackMoebius In` and `JackMoebius Out`. Apps that follow
   the system defaults, and apps that need input and output on one device (like REAPER), now just work.
-- Up to 64 channels per app, in each direction: `jackmoebius add <App> --out 8`, `jackmoebius add --in <App> 8`.
-  The app picks one device, **JackMoebius for <App>**, with both directions. In all, the buses carry up to 256
-  channels each way.
-- A shared input for apps without a device menu: `jackmoebius add --in <App> shared`. What you plug into
+- Each direction of an app now has a choice: the shared `JackMoebius` device, with nothing to set in the app, or
+  **a device of its own**, `JackMoebius for <App>`, with 1 to 64 channels (mono included). Both directions of an app
+  can share that one device. In all, the buses carry up to 256 channels each way.
+- A shared input for apps without a device menu: `jackmoebius add <App> --in shared`. What you plug into
   `shared_input_1/2` in JACK reaches every app in that mode. While one is in use, JackMoebius is the Mac's default
   input; your previous input comes back afterwards.
+- The command line is the same for both directions: `jackmoebius add <App> --in shared --out private=8`. `add`,
+  `remove` and `clear` ask which side you mean when you do not say. See the [CLI reference](guide/cli.qmd).
 - `jackmoebius doctor` says what is wrong and what to do about it; `jackmoebius status` is shorter (`--verbose`
   for details). JackMate shows the same messages.
 - A new uninstaller app on the disk image: confirmation, the list of files it removes, your language.
@@ -48,7 +50,7 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 - Apps that selected `JackMoebius In` or `Out` must select **JackMoebius** once. Restart your Mac after the update.
 - Update JackMate together with JackMoebius: the new features need it.
 
-## 1.0.0 · 2026-10-08 · first commercial release
+## 1.0.0 · 2026-10-08 · first commercial release {#v1-0-0}
 
 JackMoebius is now a commercial product: a **14-day free trial**, then a one-time
 license unlocks it for good, with all updates included. This release also brings a
@@ -68,19 +70,19 @@ smoother onboarding and UX polish gathered since 0.13.
   an Aggregate Device), so it is skipped by default. Every other tested app
   (Microsoft Teams, Audacity, OBS, browsers…) works normally.
 
-## 0.13.2 · 2026-07-12
+## 0.13.2 · 2026-07-12 {#v0-13-2}
 
 **Added**
 
 - The bundled command-line tool can report the trial status offline (without a
   running daemon), so a front-end can show the days remaining at any time.
 
-## 0.13.1 · 2026-07-12
+## 0.13.1 · 2026-07-12 {#v0-13-1}
 
 Internal groundwork for the upcoming trial and license system. No change to how
 JackMoebius works today; nothing is gated.
 
-## 0.13.0 · 2026-07-11
+## 0.13.0 · 2026-07-11 {#v0-13-0}
 
 **Added**
 
@@ -93,7 +95,7 @@ JackMoebius works today; nothing is gated.
 - In System Settings ▸ Login Items & Extensions, the background item is now clearly
   labeled **JackMoebius**.
 
-## 0.12.3 · 2026-07-07
+## 0.12.3 · 2026-07-07 {#v0-12-3}
 
 **Added**
 
@@ -102,7 +104,7 @@ JackMoebius works today; nothing is gated.
   installed version.
 - Shell completion for the `version` subcommand.
 
-## 0.12.2 · 2026-07-07
+## 0.12.2 · 2026-07-07 {#v0-12-2}
 
 **Added**
 
@@ -114,7 +116,7 @@ JackMoebius works today; nothing is gated.
 - Reliable capture eligibility for multi-process apps: apps that play from helper
   processes (browsers, etc.) are now detected correctly.
 
-## 0.12.1 · 2026-07-07
+## 0.12.1 · 2026-07-07 {#v0-12-1}
 
 **Changed**
 
@@ -125,7 +127,7 @@ JackMoebius works today; nothing is gated.
 - The daemon is launched through launchd rather than spawned as a child process (which
   broke JACK when started from the GUI).
 
-## 0.12.0 · 2026-07-06
+## 0.12.0 · 2026-07-06 {#v0-12-0}
 
 **Added**
 
@@ -133,7 +135,7 @@ JackMoebius works today; nothing is gated.
   pushes invalidation events (exposure, apps, routing, master, JACK, stopping). A
   front-end stays in sync without polling and detects a daemon exit instantly.
 
-## 0.11.3 · 2026-07-02
+## 0.11.3 · 2026-07-02 {#v0-11-3}
 
 **Added**
 
@@ -141,14 +143,14 @@ JackMoebius works today; nothing is gated.
   (`current_device` / `current_device_uid`), for a guided message in the GUI, covering both
   output and input directions.
 
-## 0.11.2 · 2026-07-02
+## 0.11.2 · 2026-07-02 {#v0-11-2}
 
 **Added**
 
 - `status` reports per-direction exposed-box counts (`exposed_out` / `exposed_in`) so a
   front-end can gate its polling.
 
-## 0.11.1 · 2026-06-26
+## 0.11.1 · 2026-06-26 {#v0-11-1}
 
 **Added**
 
@@ -159,20 +161,20 @@ JackMoebius works today; nothing is gated.
 - Per-app audio status is aggregated across an app's helper processes (so a browser
   playing from a helper reads as active), and listings show friendly names.
 
-## 0.11.0 · 2026-06-26
+## 0.11.0 · 2026-06-26 {#v0-11-0}
 
 **Added**
 
 - **User blacklist:** apps you never want proposed for routing (hidden from `add` and
   from the app selector), with CLI management.
 
-## 0.10.1 · 2026-06-26
+## 0.10.1 · 2026-06-26 {#v0-10-1}
 
 **Added**
 
 - The master box carries `org.jackmoebius.master` metadata so a front-end can recognise it.
 
-## 0.10.0 · 2026-06-25
+## 0.10.0 · 2026-06-25 {#v0-10-0}
 
 **Added**
 
@@ -187,7 +189,7 @@ JackMoebius works today; nothing is gated.
 
 - The `jack_list_in` mirror.
 
-## 0.9.0 · 2026-06-22 · First packaged version
+## 0.9.0 · 2026-06-22 · First packaged version {#v0-9-0}
 
 The first formally versioned build, setting the macOS 15 floor.
 
@@ -200,7 +202,7 @@ The first formally versioned build, setting the macOS 15 floor.
 
 - A login LaunchAgent that hides the internal devices at boot.
 
-## 0.8.0 · 2026-06-18 · Master, volume & sample rate
+## 0.8.0 · 2026-06-18 · Master, volume & sample rate {#v0-8-0}
 
 **Added**
 
@@ -213,7 +215,7 @@ The first formally versioned build, setting the macOS 15 floor.
   (8 kHz – 192 kHz).
 - A clock-drift diagnostic gauge.
 
-## 0.7.0 · 2026-06-16 · Bidirectional, per app
+## 0.7.0 · 2026-06-16 · Bidirectional, per app {#v0-7-0}
 
 **Added**
 
@@ -229,7 +231,7 @@ The first formally versioned build, setting the macOS 15 floor.
 - **JACK-tied visibility:** the internal devices are hidden, and capture is gated, while
   JACK is down.
 
-## 0.6.0 · 2026-06-13 · Deterministic transport + the reverse device
+## 0.6.0 · 2026-06-13 · Deterministic transport + the reverse device {#v0-6-0}
 
 **Added**
 
@@ -241,7 +243,7 @@ The first formally versioned build, setting the macOS 15 floor.
 - **Deterministic bus transport**: a per-reader alignment delta on the write head removes
   the timing "anchor lottery" (later measured at ±26 ms per take).
 
-## 0.5.0 · 2026-06-12 · Lifecycle & latency
+## 0.5.0 · 2026-06-12 · Lifecycle & latency {#v0-5-0}
 
 **Added**
 
@@ -250,7 +252,7 @@ The first formally versioned build, setting the macOS 15 floor.
 - `clear` chains an implicit remove (unroute, drop the box, free the channels).
 - Bridge latency computed and pushed to the driver, buffer tuning, monitor volume + mute.
 
-## 0.4.0 · 2026-06-11 · One box per app
+## 0.4.0 · 2026-06-11 · One box per app {#v0-4-0}
 
 **Added**
 
@@ -261,7 +263,7 @@ The first formally versioned build, setting the macOS 15 floor.
 - **One JACK box per app** (localized names, a metadata tag, monitor control) with a
   lifecycle reconciler: a box is visible if and only if its app is running and exposed.
 
-## 0.3.0 · 2026-06-11 · Into the JACK graph
+## 0.3.0 · 2026-06-11 · Into the JACK graph {#v0-3-0}
 
 **Added**
 
@@ -270,7 +272,7 @@ The first formally versioned build, setting the macOS 15 floor.
 - A **supervised daemon** with auto-reconnect to both `jackd` and `coreaudiod`, plus latency
   instrumentation.
 
-## 0.2.0 · 2026-06-11 · Continuous 64-channel capture
+## 0.2.0 · 2026-06-11 · Continuous 64-channel capture {#v0-2-0}
 
 **Added**
 
@@ -278,7 +280,7 @@ The first formally versioned build, setting the macOS 15 floor.
   64-channel CoreAudio capture from the driver. Validated with live hot-routing and a
   10-minute endurance run.
 
-## 0.1.0 · 2026-06-10 · The driver
+## 0.1.0 · 2026-06-10 · The driver {#v0-1-0}
 
 The starting point was a close reading of [Stéphane Letz's note on moving *JackRouter* to
 AudioServerPlugin](https://github.com/jackaudio/jack-router/blob/main/macOS/docs/JackRouter-AudioServerPlugin.md).

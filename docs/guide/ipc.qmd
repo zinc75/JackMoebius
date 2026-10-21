@@ -30,19 +30,29 @@ without parsing `message`.
 ```json
 → {"command":"status"}
 ← {"status":"ok","data":{
-     "version":"1.0.0","device_acquired":true,"jack_connected":true,
-     "exposed_out":2,"exposed_in":1,"master_on":false,"uptime_s":1234,
+     "version":"1.1.0","device_acquired":true,"jack_connected":true,
+     "exposed_out":2,"exposed_in":1,"uptime_s":1234,
+     "bridge":"shm","shared_input":{"on":true,"apps":["Safari"]},
+     "capacity":{"forward":{"used":6,"total":254},"reverse":{"used":2,"total":254}},
+     "default_input_is_jackmoebius":true,
      "licensing":{"state":"trial","days_remaining":9}, … }}
 ```
 
-Always present: `version`, `device_acquired`, `jack_connected`, `exposed_out`,
-`exposed_in`, `uptime_s`, `licensing`. `version` is the installed JackMoebius version (handy
-for an "About" box, and it answers even before the audio device is acquired). `licensing`
-carries `{state, days_remaining}` (state ∈ `trial | licensed | expired`; `days_remaining` is
-present for `trial`/`expired`, absent for `licensed`). Reading or changing the license itself
-(status while stopped, activation) is a **CLI** concern. See the
-[CLI reference](cli.qmd#license--trial); the socket only reports the live state here and
-notifies changes via `licensing_changed`.
+Always present: `version`, `device_acquired`, `jack_connected`, `exposed_out`, `exposed_in`, `uptime_s`,
+`bridge`, `capacity`, `licensing`. `version` is the installed JackMoebius version (handy for an "About" box, and it
+answers even before the audio device is acquired).
+
+- `bridge` is `shm` once the shared-memory transport between the driver and the daemon is up, or `waiting`, with a
+  structured `transport_problem` that says why (service not installed, switched off, unreachable, version mismatch,
+  slot busy, driver not attached).
+- `shared_input` says whether the ports `shared_input_1/2` exist and which apps share them.
+- `capacity` is how full the two buses are, in channels (254 usable each way, shared by all apps).
+- `default_input_is_jackmoebius` tells whether apps without a device menu reach the shared input.
+- `licensing` carries `{state, days_remaining}` (state ∈ `trial | licensed | expired`; `days_remaining` is
+  present for `trial`/`expired`, absent for `licensed`). Reading or changing the license itself
+  (status while stopped, activation) is a **CLI** concern. See the
+  [CLI reference](cli.qmd#license-trial); the socket only reports the live state here and
+  notifies changes via `licensing_changed`.
 
 ## App state: `apps`
 
@@ -51,41 +61,76 @@ Returns one entry per app the driver knows about, both directions in one call:
 ```json
 ← {"status":"ok","data":[
      {"name":"Music","key":"com.apple.Music","pid":606,
-      "out_exposed":true,"out_channels":[2,3],
-      "in_exposed":false,"in_channels":[],
+      "out_exposed":true,"out_backing":"shared","out_channels":[2,3],
+      "in_exposed":false,"in_backing":"shared","in_channels":[],
       "can_capture":false,"blacklisted":false}, … ]}
 ```
 
 - `key`: bundle ID (stable persistence key) · `name`: display name · `pid`.
-- `out_exposed` / `in_exposed`: whether the box is exposed (the state `add` / `add --in`
-  set), per direction.
-- `out_channels` / `in_channels`: the **reserved** bus channels (persistent), or `[]`.
+- `out_exposed` / `in_exposed`: whether the box is exposed (the state `add` set), per direction.
+- `out_backing` / `in_backing`: `shared` (the common `JackMoebius` device) or `private` (a card of its own).
+- `out_channels` / `in_channels`: the **reserved** bus channels (persistent), or `[]`. For a shared output
+  it is the stereo pair; for a shared input there is nothing to reserve.
 - `can_capture`: the app can be routed on the input side.
 - `blacklisted`: hidden from routing selectors.
 
 ## Expose & hide
 
+Each direction has a **backing**, `shared` or `private`, and always send it explicitly.
+
 | Command | Effect | Reply |
 |---|---|---|
-| `{"command":"jack_add","app":"<key>"}` | expose output | `{name,key,channel_offset}` |
-| `{"command":"jack_remove","app":"<key>"}` | hide output (reservation kept) | `null` |
-| `{"command":"jack_add_in","app":"<key>","n":2}` | expose input card (N ch) | `{name,key,channels, …}` |
-| `{"command":"jack_remove_in","app":"<key>"}` | hide input card (reservation kept) | `null` |
+| `{"command":"jack_add","app":"<key>","backing":"shared"}` | expose the output as a stereo pair of the shared device | `{name,key,backing,channel_offset}` |
+| `{"command":"jack_add","app":"<key>","backing":"private","n":8}` | expose the output as a card of `n` channels (1 to 64, default 2) | `{name,key,backing,channels, …}` |
+| `{"command":"jack_add_in","app":"<key>","backing":"shared"}` | expose the input as the shared input | `{name,key,backing,channels}` |
+| `{"command":"jack_add_in","app":"<key>","backing":"private","n":2}` | expose the input as a card of `n` channels (1 to 64, default 2) | `{name,key,backing,channels, …}` |
+| `{"command":"jack_remove","app":"<key>"}` / `jack_remove_in` | hide the output / the input (reservation kept) | `null` |
+| `{"command":"jack_clear_assignment","app":"<key>"}` / `jack_clear_in` | drop the reservation | `null` |
+
+`jack_add {app}` with no `backing` and no `n` is the 1.0 form: the stereo stem. `{app, n}` without `backing` is an
+error. `jack_add_in` without `backing` means `private`. Only an explicit `backing:"shared"` ever takes a card away.
+
+**Changing the backing of a direction is one call.** A card only holds the directions that are private, so the
+effect on the device the app sees is:
+
+| Call | The other direction has a card | Effect |
+|---|---|---|
+| `shared` → `private` | yes | the card is **rebuilt** with this side added: the app sees its device go and come back |
+| `shared` → `private` | no | the card is **created** |
+| `private` → `shared` | yes | the card is **kept** as it is: this side is no longer wired, its channels stay reserved until the card is deleted or rebuilt |
+| `private` → `shared` | no | the card is **deleted**: an app that had chosen it falls back to another device |
+| `private` with another `n` | | the card is **rebuilt** with the new width |
+
+An app with a single device setting for input and output needs both directions private.
 
 ## Listings
 
-- `{"command":"jack_list"}` → exposed **output** boxes, each with `out_status` (+
+- `{"command":"jack_list"}` → exposed **output** boxes (stems and cards), each with `out_status` (+
   `current_device` on a mismatch).
-- `{"command":"jack_list_in"}` → exposed **input** cards, each with `in_status`.
+- `{"command":"jack_list_in"}` → exposed **input** cards and apps on the shared input, each with `in_status`.
 - `{"command":"jack_assignments"}` / `jack_assignments_in` → the persistent reservations.
 
-## Volume, master, blacklist
+## Volume and blacklist
 
 - `{"command":"set_volume","app":"<name>","locked":false,"gain":0.5}` → per-app output
-  volume (locked = follows master; unlocked = independent linear gain). Reply
+  volume (locked = follows the `JackMoebius` device volume; unlocked = independent linear gain). Reply
   `{app,key,locked,gain}`.
-- `{"command":"jack_master","enabled":true}` → the system-mix monitor box → `{master_on}`.
 - `{"command":"blacklist_show|blacklist_add|blacklist_remove|blacklist_reset", …}`.
+
+## Doctor
+
+```json
+→ {"command":"doctor"}
+← {"status":"ok","data":{"messages":[
+     {"code":"app_input_mismatch","severity":"warning","app":"REAPER",
+      "text":"REAPER does not read its JackMoebius card.",
+      "remedy":"In REAPER, choose \"JackMoebius for REAPER\" as the input device."}]}}
+```
+
+`messages` is empty when nothing is wrong, errors come before warnings. Each message has a stable **`code`** (localize
+from it; `text` and `remedy` are English sentences), a `severity` (`error` | `warning`), the display name of the `app`
+when the message is about one, a `text` and a `remedy`. The CLI prints the same list
+([`jackmoebius doctor`](cli.qmd#doctor), `--json` for this object).
 
 ## Event stream {#event-stream}
 
@@ -94,13 +139,14 @@ streams one event line per change (**invalidations**, never full state):
 
 ```json
 → {"command":"subscribe"}
-← {"event":"exposure_changed"}   # a box was added/removed (out or in)
-← {"event":"apps_changed"}       # app launched/quit, capture-capability, blacklist
-← {"event":"routing_changed"}    # an app's device usage may have changed
-← {"event":"master_changed"}     # master box toggled
-← {"event":"jack_changed"}       # JACK came up / went down
-← {"event":"licensing_changed"}  # trial/license state changed (day count, activation, revoke)
-← {"event":"stopping"}           # clean shutdown, just before the socket closes
+← {"event":"exposure_changed"}         # a box was added/removed (out or in)
+← {"event":"apps_changed"}             # app launched/quit, capture-capability, blacklist
+← {"event":"routing_changed"}          # an app's device usage may have changed
+← {"event":"shared_input_changed"}     # an app entered or left the shared input, or its ports came or went
+← {"event":"transport_changed"}        # the shared-memory transport came up, or its problem changed
+← {"event":"jack_changed"}             # JACK came up / went down
+← {"event":"licensing_changed"}        # trial/license state changed (day count, activation, revoke)
+← {"event":"stopping"}                 # clean shutdown, just before the socket closes
 ```
 
 On each event, **re-fetch the matching query** (single source of truth). Ordering matters:

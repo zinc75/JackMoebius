@@ -22,10 +22,10 @@ directions**, without touching the app itself.
 JackMoebius is two components (plus a CLI):
 
 - **The driver**: an [`AudioServerPlugIn`](https://developer.apple.com/documentation/coreaudio/creating_an_audio_server_driver_plug-in)
-  virtual audio device (`JackMoebius`). It runs inside `coreaudiod`, in **userspace**:
-  no kernel extension, no SIP changes. It presents the routing endpoints that apps and
-  the daemon attach to.
-- **The daemon**: `jackmoebiusd`, a Swift process that captures the driver's audio,
+  virtual audio device (`JackMoebius`), plus a device of its own for an app when you ask for one. It runs
+  inside `coreaudiod`, in **userspace**: no kernel extension, no SIP changes. It presents the routing endpoints
+  that apps and the daemon attach to.
+- **The daemon**: `jackmoebiusd`, a Swift process that exchanges audio with the driver through shared memory,
   registers per-app clients in JACK, and keeps everything in sync. It runs **only while
   a JACK server is up** and self-stops when JACK goes away.
 - **The CLI**: `jackmoebius`, a control tool that talks to the daemon over a local
@@ -35,28 +35,22 @@ JackMoebius is two components (plus a CLI):
 
 When you **expose** an app:
 
-1. The app's CoreAudio output is routed onto the JackMoebius device.
-2. The daemon captures it and publishes a **JACK client box** for that app, with output
-   ports on a reserved pair of channels.
+1. The app's CoreAudio output is routed onto the JackMoebius device, or onto a device of its own (see
+   [below](#shared-or-a-card-of-its-own)).
+2. The daemon reads it and publishes a **JACK client box** for that app, with output
+   ports on reserved channels.
 3. Anything in your JACK graph can now read the app's audio: patch it into a recorder,
    an effect, a DAW, another app.
 
 The channel reservation is **persistent**: an app that stops and restarts audio comes
 back on the *same* channels, so a saved patchbay restores itself.
 
-### The system monitor mix
-
-Alongside the per-app boxes, the device's **system mix** (everything playing through
-JackMoebius) is exposed as `monitor_L` / `monitor_R`, auto-connected to
-`system:playback` so you still **hear** your Mac normally while its audio also flows
-into JACK.
-
 ## Volume: two gain stages that stack
 
 Loudness in a JackMoebius chain runs through **two independent gain stages**, and they
 **multiply**:
 
-1. **JackMoebius Out**: each exposed app plays into a JackMoebius output device that
+1. **JackMoebius**: each exposed app plays into the JackMoebius device, which
    carries its own CoreAudio volume.
 2. **The output JACK feeds**: `system:playback` drives your real output device (interface
    or speakers), which has its own volume too.
@@ -69,10 +63,26 @@ MIDI Setup.
 
 ## The reverse path: JACK into an app's input
 
-The bridge is **bidirectional**. Exposing an app's **input** creates a dedicated
-capture device, *JackMoebius In (App)*, fed by JACK. The app selects it as its
-microphone, and now **JACK audio becomes the app's input**: process a live instrument
-through your JACK effects and send the result straight into a video call.
+The bridge is **bidirectional**. Exposing an app's **input** makes JACK audio its microphone: either through
+the **shared input** (the ports `shared_input_1/2`, which every app in that mode reads) or through a device of its
+own, **JackMoebius for <App>**, fed by JACK. The app selects it as its microphone, and now **JACK audio becomes the
+app's input**: process a live instrument through your JACK effects and send the result straight into a video call.
+
+## Shared or a card of its own {#shared-or-a-card-of-its-own}
+
+Each direction of an app, input and output, goes one of two ways:
+
+| | Shared | A card of its own |
+|---|---|---|
+| **Device** | the common **JackMoebius** device | **JackMoebius for <App>** |
+| **Output** | a stereo pair of its own for the app, separate from every other app | 1 to 64 channels |
+| **Input** | the same two channels for every app in this mode | 1 to 64 channels of its own |
+| **In the app** | nothing to set: it follows the Mac's default output and input | you select the card as its device |
+
+If an app has no device menu (browsers, dictation, many small apps), use the shared device. If it lets you choose
+its input or output, a card gives it channels of its own. An app with a single device setting for both directions
+needs both of them to be cards. The [CLI reference](cli.qmd#apps-routing) shows how to choose, and
+[JackMate](jackmate.qmd) does it with a menu per app.
 
 ## Event-driven, no polling
 
