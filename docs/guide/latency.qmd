@@ -1,0 +1,80 @@
+---
+title: "Latency"
+description: "How much delay JackMoebius adds between an app and JACK: the numbers, how they were measured, on which Mac, and what they mean for your buffer settings."
+---
+
+## The short version
+
+JackMoebius adds **about 3 ms or less** to the round trip of an app: 3.0 ms at 44.1 kHz, 2.7 ms at 48 kHz, and 1.4 to 1.5 ms at 88.2 and 96 kHz. That comes **on top of** the buffer your app already uses and of the JACK period you choose. An app running a 64-frame buffer at 48 kHz goes into JACK and back in about **4 ms**.
+
+::: {.callout-note}
+**Round trip** means out of an app into JACK, and back into an app. It is not a one-way figure: do not halve it.
+:::
+
+## What these numbers are made of
+
+Digital audio is processed in small blocks. The size of a block, in **frames**, is the *buffer*. A frame is one sample for each channel, so a "128-sample buffer" in your DAW and a 128-frame buffer in JACK or macOS are the same thing: this page says frames, like JACK and CoreAudio do. The smaller it is, the lower the delay, and the harder the computer has to work to never miss a block. A missed block is a click.
+
+To convert: **64 frames** last 1.33 ms at 48 kHz, **128 frames** 2.67 ms, **384 frames** 8 ms. At 96 kHz the same number of frames lasts half as long.
+
+When an app's sound goes through JackMoebius into JACK and back, three delays add up:
+
+| What | Who decides | Typical size at 48 kHz |
+|---|---|---|
+| The **app's buffer** | you, in the app's audio settings | 64 frames = 1.33 ms |
+| The **JACK period** | you, when you start JACK | 128 frames = 2.67 ms |
+| **JackMoebius** | the bridge, fixed | about 130 frames = 2.7 ms |
+
+JackMoebius hands each app's audio to JACK, and JACK's audio back to the app, through a shared memory area. So that a block never arrives late, it keeps a small cushion in **each direction**: 64 frames on the way out and 64 frames on the way back, plus a few frames of transfer. That is its whole cost, about 130 frames, whatever the buffer or the JACK period (up to 1024 frames).
+
+## The measurements
+
+The tables and charts below are what we measured. The first chart shows the JACK period next to JackMoebius's own cost; the tables give the exact values; the four columns show where the cost comes from.
+
+```{=html}
+{{< include _latency-fragment.html >}}
+```
+
+## How we measured it
+
+**The tool.** `jack_iodelay` ships with JACK. It sends a test signal into the graph and measures how long it takes to come back, in frames. It measures what really happens, not what a device announces about itself.
+
+**Two loops.** For each setting we measure twice:
+
+1. a **direct loop**: the signal leaves `jack_iodelay` and returns to it inside JACK. The result is the JACK period itself, and it is our reference;
+2. a loop **through JackMoebius**: the signal goes into JackMoebius's shared input, through a test app, and the app's output comes back into JACK.
+
+The difference between the two is the cost of the trip through JackMoebius and the app.
+
+**The test app.** A minimal CoreAudio app built with [Faust](https://faust.grame.fr) whose output is simply its input. It does nothing to the sound and handles input and output in the same callback, so it adds no delay of its own. We run it with an audio buffer of 16, 64, 128 and 384 frames.
+
+**Isolating JackMoebius.** CoreAudio tells us which buffer it really granted to the app, and that buffer is not JackMoebius's. We subtract it from the difference above: what remains is *JackMoebius's own cost*, the part the tables call "own cost".
+
+**The grid.** Four sample rates (44.1, 48, 88.2 and 96 kHz), nine JACK periods (16 to 4096 frames) and four app buffers make 144 settings. 138 were measured: at 88.2 and 96 kHz, JACK itself would not start with a 16-frame period. For each setting, JACK and JackMoebius are restarted, we wait a few seconds, then `jack_iodelay` runs for 16 seconds and we keep the **median of its last five readings**. The test app is the only app using the shared JackMoebius device: that device runs at the smallest buffer any of its apps asks for, so another app would change the result.
+
+**What was not measured.** The devices of their own (`JackMoebius for <App>`) follow the same design but were not measured separately. One-way latencies, plug-ins, and the delay of a physical audio interface are not included either.
+
+## The machine
+
+| | |
+|---|---|
+| Computer | MacBook Pro (model Mac17,8), Apple M5 Pro |
+| macOS | 26.7 |
+| JackMoebius | 1.1.0, default settings (safety offset 64) |
+| JACK | JACK 2 (jackdmp 1.9.22), the Mac's built-in microphone and speakers as its audio devices |
+| Date | 22 October 2026 |
+
+These are measurements from **one Mac**. Yours may differ a little, especially with heavy plug-ins and very small buffers. The raw data is available: [the measurements (CSV)](../assets/data/latency-sweep-2026-10-22.csv) and [the machine and settings](../assets/data/latency-sweep-2026-10-22-machine.txt).
+
+## What it means for your settings
+
+- **The best way to lower the delay is the app's buffer**, not JackMoebius, whose share is fixed. With a 384-frame buffer JackMoebius is a quarter of the total; with 16 frames it is nine tenths of a much smaller total.
+- **Apps that share the JackMoebius device run at the smallest buffer any of them asks for.** A device of its own (`JackMoebius for <App>`) keeps its own buffer.
+- **At 88.2 and 96 kHz CoreAudio did not grant a 16-frame buffer** in our tests: the smallest we obtained was 64 frames.
+- **A small buffer costs CPU and leaves less margin.** If you hear clicks, raise the buffer first.
+- **The JACK period is yours too.** JackMoebius's cost does not depend on it up to 1024 frames. At 88.2 and 96 kHz with periods of 2048 and more, it grows.
+- For comparison, with a 384-frame buffer the bridge of JackMoebius 1.0 added about 123 ms in the same kind of test. Version 1.1.0 adds 10.7 ms with the same buffer, and 4 ms with a 64-frame buffer.
+
+## The safety offset
+
+The safety offset is a value the JackMoebius devices announce to macOS. It is 64 frames by default, and `jackmoebius safety` changes it (see the [command line reference](cli.qmd)); the change applies the next time the daemon starts. We measured 0, 64 and 128 frames, at 48 kHz with a JACK period of 128 and app buffers of 64 and 384: **the round trip did not change**, so it is not a latency setting.

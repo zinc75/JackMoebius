@@ -1,0 +1,7 @@
+date: Thu Oct 22 10:53:15 CEST 2026
+machine: Mac17,8 / Apple M5 Pro
+macOS: 26.7
+jackmoebius: 1.1.0 (JackMoebius 1.1.0)
+jackd: /usr/local/bin/jackd -d coreaudio -r 48000 -p 128 -C BuiltInMicrophoneDevice -P BuiltInSpeakerDevice
+app: passthrough-ca (Faust CoreAudio), shared device
+rates: 44100 48000 88200 96000   periods: 16 32 64 128 256 512 1024 2048 4096   app buffers: 16 64 128 384   safety offsets: as configured (default)   measure: 16s (median of the last 5 readings)

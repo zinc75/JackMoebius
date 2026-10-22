@@ -10,6 +10,7 @@ project:
     # doesn't auto-detect these, so copy them into _site explicitly.
     - assets/video/**
     - assets/screenshots/**
+    - assets/data/**             # the raw latency measurements, linked from guide/latency.qmd
     - assets/icon.png            # hero icon, also paired on guide/jackmate.qmd
     - assets/jackmate-icon.png   # JackMate icon for the pairing on guide/jackmate.qmd
     - assets/og-banner.png       # social card (og:image / twitter:image) — referenced only in meta tags, so copy explicitly
@@ -47,6 +48,8 @@ website:
         menu:
           - href: guide/how-it-works.qmd
             text: How it works
+          - href: guide/latency.qmd
+            text: Latency
           - href: guide/jackmate.qmd
             text: Use JackMoebius in JackMate
           - href: guide/ipc.qmd
@@ -74,6 +77,7 @@ website:
       - section: "Guide"
         contents:
           - guide/how-it-works.qmd
+          - guide/latency.qmd
           - guide/jackmate.qmd
           - guide/ipc.qmd
           - guide/cli.qmd
