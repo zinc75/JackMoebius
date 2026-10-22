@@ -139,6 +139,16 @@ Per-app **output volume**, with a "cadenas" (lock): locked = follows the volume 
 | `jackmoebius volume <App> lock` \| `unlock` | Lock to master, or take independent control. |
 | `jackmoebius volume <App> <gain>` | Set an independent linear gain (`1.0` = unity, `0.0` = mute). |
 
+## Safety offset
+
+The safety offset is the value, in frames, that the JackMoebius devices announce to macOS. The default is 64. It is applied when the daemon starts, so a new value takes effect after `jackmoebius stop` and `jackmoebius start` (in JackMate, deactivate and activate JackMoebius). In our measurements it does not change the round trip: see [Latency](latency.qmd#the-safety-offset).
+
+| Command | What it does |
+|---|---|
+| `jackmoebius safety` | Show the configured value and the one in force. |
+| `jackmoebius safety <frames>` | Set it, from 0 to 2048. |
+| `jackmoebius safety reset` | Back to the default (64). |
+
 ## Doctor
 
 `jackmoebius doctor` lists what is wrong and what to do about it: the daemon or JACK not running, the background

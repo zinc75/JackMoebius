@@ -8,7 +8,7 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
-## 1.1.0 · unreleased · 256 channels each way, minimal latency by default {#v1-1-0}
+## 1.1.0 · unreleased · 254 channels each way, minimal latency by default {#v1-1-0}
 
 A new device model and a new bridge: one `JackMoebius` device for everything, a private device per app with as
 many channels as you need, and a shared-memory bridge that replaces the buffered one.
@@ -19,7 +19,7 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
   the system defaults, and apps that need input and output on one device (like REAPER), now just work.
 - Each direction of an app now has a choice: the shared `JackMoebius` device, with nothing to set in the app, or
   **a device of its own**, `JackMoebius for <App>`, with 1 to 64 channels (mono included). Both directions of an app
-  can share that one device. In all, the buses carry up to 256 channels each way.
+  can share that one device. In all, the buses carry up to 254 channels each way for your apps.
 - A shared input for apps without a device menu: `jackmoebius add <App> --in shared`. What you plug into
   `shared_input_1/2` in JACK reaches every app in that mode. While one is in use, JackMoebius is the Mac's default
   input; your previous input comes back afterwards.
@@ -34,10 +34,11 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 
 **Changed**
 
-- **Minimal latency by default**: JackMoebius adds about 12 times less than 1.0 (roughly 11 ms between an app and
-  JACK and back, JACK at 128 frames, 48 kHz). It rests on a new shared-memory bridge, set up over XPC (idea by
-  [@sletz](https://github.com/sletz)). It stays flat for JACK buffers up to 512 frames, from 44.1 to 96 kHz, and
-  you can trade margin for even less with `jackmoebius safety`.
+- **Minimal latency by default**: with a 384-frame app buffer, JackMoebius adds 10.7 ms to an app's round trip through
+  JACK instead of about 123 ms in 1.0, and about 4 ms with a 64-frame buffer (48 kHz). Its own share is about 130 frames
+  (2.7 ms at 48 kHz), whatever the buffer and the JACK period (up to 1024 frames), from 44.1 to 96 kHz. It rests on a new
+  shared-memory bridge, set up over XPC (idea by [@sletz](https://github.com/sletz)). The measurements and how they were
+  made are on the [Latency](guide/latency.qmd) page.
 - A small background service now sets up that bridge. It shows as **JackMoebius** in System Settings, Login
   Items & Extensions. If it is missing or switched off, JackMoebius waits, tells you why and how to fix it, and
   starts working by itself once the cause is gone.

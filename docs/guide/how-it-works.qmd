@@ -93,6 +93,17 @@ separate ports.
 
 The [CLI reference](cli.qmd#apps-routing) shows how to choose, and [JackMate](jackmate.qmd) does it with a menu per app.
 
+**A few things worth knowing about specific apps.**
+
+- **REAPER** does not open its audio device until it plays or records when *Close audio device when stopped and application inactive* is ticked, so JackMoebius sees nothing before the first play. Play once, or untick the option.
+- **Audacity** reads its list of devices at start. After you create a device for it, or change its number of channels, use *Transport, Rescan Audio Devices* and select the device again.
+
+## Room to grow
+
+Each app can have a device of its own with up to **64 channels in each direction**: enough for a full multichannel session. Across all your apps, the two buses carry **254 channels each way** (the system device `JackMoebius` keeps the other two). An app that uses the shared device takes two output channels; on the input side, the shared stereo input comes on top of those 254.
+
+The 254 channels are shared by every app. `jackmoebius status` shows how many are used, JackMate shows it as a gauge, and `jackmoebius doctor` warns when a bus is nearly full. If channels stay reserved after you removed one side of an app, `jackmoebius rebuild <App>` frees them.
+
 ## Event-driven, no polling
 
 The daemon watches CoreAudio (apps launching/quitting, starting/stopping audio,

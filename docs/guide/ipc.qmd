@@ -143,7 +143,7 @@ when the message is about one, a `text` and a `remedy`. The CLI prints the same 
 ## Errors
 
 An error reply carries a stable **`code`** and, when it helps, a **`details`** object. Show the English `message` as a fallback and
-translate from the `code`:
+translate from the `code`. **A refused request changes nothing**: the check happens before any change, so you can read `apps` and `status` as they were.
 
 ```json
 ← {"status":"error","message":"not enough free forward channels (need 16, 4 free)","code":"capacity_forward_full",
@@ -158,7 +158,7 @@ translate from the `code`:
 | `not_capture_capable` | an input is asked of an app that cannot capture |
 | `app_blacklisted` | the app is on the blacklist |
 | `invalid_channel_count` | a width outside 1 to 64 (`details.direction`, `given`, `min`, `max`) |
-| `capacity_forward_full`, `capacity_reverse_full` | not enough free channels (`details.needed`, `free`, `held`, `largest_holders`) |
+| `capacity_forward_full`, `capacity_reverse_full` | not enough free channels (`details.needed`, `free`, `held`, `largest_holders`). For a shared output (a stereo pair), `free` counts what a pair can really use, `free_pairs` the free stereo pairs among them (`free` above 0 with `free_pairs` at 0 means a fragmented bus), and `own_held`, when present, the app's own output channels that would stay held because its input card keeps the device |
 | `slot_exhausted` | no card slot left |
 | `jack_port_limit` | JACK refused to register a port (`details.ports_registered`) |
 | `backing_required`, `nothing_to_apply` | a malformed `jack_add` or `jack_apply` |
