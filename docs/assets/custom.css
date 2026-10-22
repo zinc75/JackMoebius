@@ -12,6 +12,13 @@
   --jm-red-dark:   #b91c1c;
   --jm-red-glow:   rgba(239, 68, 68, 0.18);
   --jm-cyan:       #22d3ee;
+  /* The accent of the site (links, active items, notes, inline code). The download page, welcome page, the
+     "Download trial" button and the download dialogs keep the cyan: they set these variables back, or use it directly. */
+  --jm-accent:        #b9a4fc;
+  --jm-accent-rgb:    185,164,252;
+  --jm-accent-hi:     #d6caff;
+  --jm-accent-hi-rgb: 214,202,255;
+  --jm-accent-lite:   #e4dcff;
   --jm-violet:     #a78bfa;
   --jm-amber:      #f59e0b;
   --jm-orange:     #f97316;
@@ -40,7 +47,7 @@
   --bs-link-hover-color:  #f87171 !important;
   --bs-border-color:      var(--jm-border) !important;
   --bs-card-bg:           var(--jm-bg-card) !important;
-  --bs-code-color:        var(--jm-cyan) !important;
+  --bs-code-color:        var(--jm-accent) !important;
 }
 
 /* ── Base + ambient page glow ─────────────────────── */
@@ -474,9 +481,9 @@ code:not(.sourceCode) {
 }
 /* Variantes couleur — bordure gauche vive + gradient bg + inset glow */
 .callout-note {
-  border-color: rgba(34,211,238,0.32) rgba(34,211,238,0.12) rgba(34,211,238,0.12) var(--jm-cyan) !important;
-  background: linear-gradient(135deg, rgba(34,211,238,0.09) 0%, rgba(14,14,16,0) 60%) !important;
-  box-shadow: inset 5px 0 18px rgba(34,211,238,0.10) !important;
+  border-color: rgba(var(--jm-accent-rgb),0.32) rgba(var(--jm-accent-rgb),0.12) rgba(var(--jm-accent-rgb),0.12) var(--jm-accent) !important;
+  background: linear-gradient(135deg, rgba(var(--jm-accent-rgb),0.09) 0%, rgba(14,14,16,0) 60%) !important;
+  box-shadow: inset 5px 0 18px rgba(var(--jm-accent-rgb),0.10) !important;
 }
 .callout-tip {
   border-color: rgba(74,222,128,0.42) rgba(74,222,128,0.14) rgba(74,222,128,0.14) #4ade80 !important;
@@ -499,7 +506,7 @@ code:not(.sourceCode) {
   font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em;
   padding-top: 0.6rem !important; padding-bottom: 0.6rem !important;
 }
-.callout-note     .callout-header { background: rgba(34,211,238,0.10) !important; color: var(--jm-cyan)   !important; }
+.callout-note     .callout-header { background: rgba(var(--jm-accent-rgb),0.10) !important; color: var(--jm-accent)   !important; }
 .callout-tip      .callout-header { background: rgba(74,222,128,0.16) !important; color: #4ade80         !important; }
 .callout-warning  .callout-header { background: rgba(245,158,11,0.10) !important; color: var(--jm-amber)  !important; }
 .callout-important.callout-header { background: rgba(239,68,68,0.10)  !important; color: var(--jm-red)    !important; }
@@ -511,7 +518,7 @@ code:not(.sourceCode) {
   border-radius: 8px !important; margin-right: 0.6rem !important;
   flex-shrink: 0 !important;
 }
-.callout-note      .callout-icon-container { background: rgba(34,211,238,0.18) !important; }
+.callout-note      .callout-icon-container { background: rgba(var(--jm-accent-rgb),0.18) !important; }
 .callout-tip       .callout-icon-container { background: rgba(74,222,128,0.24)  !important; }
 .callout-warning   .callout-icon-container { background: rgba(245,158,11,0.18) !important; }
 .callout-important .callout-icon-container { background: rgba(239,68,68,0.18)  !important; }
@@ -1374,52 +1381,52 @@ main mark {
    ══════════════════════════════════════════════════════════════════ */
 
 :root {
-  --bs-link-color:       var(--jm-cyan) !important;
-  --bs-link-hover-color: #67e8f9 !important;
+  --bs-link-color:       var(--jm-accent) !important;
+  --bs-link-hover-color: var(--jm-accent-hi) !important;
 }
 
 /* Links */
-a        { color: var(--jm-cyan); text-decoration-color: rgba(34,211,238,0.35); }
-a:hover  { color: #67e8f9; text-decoration-color: rgba(103,232,249,0.55); }
+a        { color: var(--jm-accent); text-decoration-color: rgba(var(--jm-accent-rgb),0.35); }
+a:hover  { color: var(--jm-accent-hi); text-decoration-color: rgba(var(--jm-accent-hi-rgb),0.55); }
 
 /* Ambient page halo (top of every page) */
 body::before {
   background: radial-gradient(ellipse 55% 35% at 50% 0%,
-    rgba(34,211,238,0.055) 0%, transparent 100%) !important;
+    rgba(var(--jm-accent-rgb),0.055) 0%, transparent 100%) !important;
 }
 
 /* Navbar active item */
 .navbar-nav .nav-link.active {
-  color: var(--jm-cyan) !important;
-  background: rgba(34,211,238,0.08) !important;
+  color: var(--jm-accent) !important;
+  background: rgba(var(--jm-accent-rgb),0.08) !important;
 }
 
 /* Page-title and section (h2) underline filets */
 #title-block-header.quarto-title-block.default {
   border-image: linear-gradient(90deg,
-    rgba(34,211,238,0.25) 0%, rgba(255,255,255,0.08) 28%, transparent 100%) 1 !important;
+    rgba(var(--jm-accent-rgb),0.25) 0%, rgba(255,255,255,0.08) 28%, transparent 100%) 1 !important;
 }
 h2 {
   border-image: linear-gradient(90deg,
-    rgba(34,211,238,0.28) 0%, rgba(255,255,255,0.09) 28%, transparent 100%) 1 !important;
+    rgba(var(--jm-accent-rgb),0.28) 0%, rgba(255,255,255,0.09) 28%, transparent 100%) 1 !important;
 }
 
 /* Sidebar active page */
 #quarto-sidebar a.sidebar-link.active {
-  background: rgba(34,211,238,0.14) !important;
-  color: var(--jm-cyan) !important;
-  border-left: 2px solid var(--jm-cyan) !important;
-  box-shadow: inset 3px 0 12px rgba(34,211,238,0.10) !important;
+  background: rgba(var(--jm-accent-rgb),0.14) !important;
+  color: var(--jm-accent) !important;
+  border-left: 2px solid var(--jm-accent) !important;
+  box-shadow: inset 3px 0 12px rgba(var(--jm-accent-rgb),0.10) !important;
 }
 
 /* TOC active */
-#TOC .active { color: var(--jm-cyan) !important; border-left-color: var(--jm-cyan) !important; }
+#TOC .active { color: var(--jm-accent) !important; border-left-color: var(--jm-accent) !important; }
 
 /* Inline code */
 code:not(.sourceCode) {
-  background: rgba(34,211,238,0.09) !important;
-  color: var(--jm-cyan) !important;
-  border: 1px solid rgba(34,211,238,0.22) !important;
+  background: rgba(var(--jm-accent-rgb),0.09) !important;
+  color: var(--jm-accent) !important;
+  border: 1px solid rgba(var(--jm-accent-rgb),0.22) !important;
 }
 
 /* Search result hovered/selected — soft pill over the glass panel */
@@ -1427,33 +1434,33 @@ code:not(.sourceCode) {
 
 /* Back to top */
 #quarto-back-to-top {
-  border: 1px solid rgba(34,211,238,0.28) !important;
-  color: var(--jm-cyan) !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 0 18px rgba(34,211,238,0.08) !important;
+  border: 1px solid rgba(var(--jm-accent-rgb),0.28) !important;
+  color: var(--jm-accent) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 0 18px rgba(var(--jm-accent-rgb),0.08) !important;
 }
 #quarto-back-to-top:hover {
-  background: rgba(34,211,238,0.11) !important;
-  border-color: rgba(34,211,238,0.55) !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 0 28px rgba(34,211,238,0.22) !important;
-  color: var(--jm-cyan) !important;
+  background: rgba(var(--jm-accent-rgb),0.11) !important;
+  border-color: rgba(var(--jm-accent-rgb),0.55) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.55), 0 0 28px rgba(var(--jm-accent-rgb),0.22) !important;
+  color: var(--jm-accent) !important;
 }
 
 /* Hero — halo, icon glow, title gradient, Download pill */
 .hero::before {
   background: linear-gradient(145deg,
-    rgba(34,211,238,0.60) 0%, rgba(255,255,255,0.08) 35%,
+    rgba(var(--jm-accent-rgb),0.60) 0%, rgba(255,255,255,0.08) 35%,
     rgba(255,255,255,0.04) 65%, transparent 100%) !important;
 }
 .hero::after {
   background: radial-gradient(ellipse at center,
-    rgba(34,211,238,0.14) 0%, rgba(167,139,250,0.05) 45%, transparent 70%) !important;
+    rgba(var(--jm-accent-rgb),0.14) 0%, rgba(167,139,250,0.05) 45%, transparent 70%) !important;
 }
 .hero-icon {
   box-shadow: 0 0 0 1px rgba(255,255,255,0.14),
-    0 10px 36px rgba(34,211,238,0.38), 0 3px 10px rgba(0,0,0,0.55) !important;
+    0 10px 36px rgba(var(--jm-accent-rgb),0.38), 0 3px 10px rgba(0,0,0,0.55) !important;
 }
 .hero-text h1 {
-  background: linear-gradient(140deg, #ffffff 15%, #a5f3fc 55%, #22d3ee 100%) !important;
+  background: linear-gradient(140deg, #ffffff 15%, var(--jm-accent-lite) 55%, var(--jm-accent) 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -1473,11 +1480,11 @@ code:not(.sourceCode) {
   max-height: 28px !important;   /* neutralise le max-height du thème qui écrasait la hauteur → vraie tuile carrée */
   object-fit: contain !important;
   background: #0a0a0c !important;
-  border: 1px solid rgba(34,211,238,0.22) !important;
+  border: 1px solid rgba(var(--jm-accent-rgb),0.22) !important;
   border-radius: 7px !important;
   padding: 2px !important;
   box-sizing: border-box !important;
-  box-shadow: 0 0 6px rgba(34,211,238,0.18) !important;   /* discreet cyan halo */
+  box-shadow: 0 0 6px rgba(var(--jm-accent-rgb),0.18) !important;   /* discreet cyan halo */
 }
 
 .hero-pill-primary {

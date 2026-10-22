@@ -5,6 +5,13 @@ search: false
 header-includes: '<meta name="robots" content="noindex, nofollow">'
 ---
 
+```{=html}
+<style>
+/* This page keeps the cyan accent (the site's accent is violet): the variables are set back here. */
+:root { --jm-accent:#22d3ee; --jm-accent-rgb:34,211,238; --jm-accent-hi:#67e8f9; --jm-accent-hi-rgb:103,232,249; --jm-accent-lite:#a5f3fc; }
+</style>
+```
+
 <!-- Post-purchase welcome page. Not in the navbar/sidebar — reached from the Lemon
      Squeezy confirmation modal + email receipt buttons (…/welcome.html?key=[license_key]).
      Sequential wizard carousel: the buyer's license key is shown large and permanently
