@@ -18,8 +18,10 @@
 
   **[Documentation](https://jackmoebius.io/)** · **[Changelog](https://jackmoebius.io/changelog.html)** · **[Download trial](https://jackmoebius.io/#download)** · **[Buy a license](https://jackmoebius.io/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
 
-  <img src="docs/assets/readme-stats.png" width="800" alt="Up to 64 channels per app in each direction, up to 254 channels each way for all your apps, less than 3 ms of added round-trip latency">
-  <br><sub>* Round-trip latency added by JackMoebius itself, on top of your app's buffer and the JACK period. <a href="https://jackmoebius.io/guide/latency.html">How it was measured</a>.</sub>
+  <p>
+    <img src="docs/assets/readme-stats.png" width="800" alt="Up to 64 channels per app in each direction, up to 254 channels each way for all your apps, less than 3 ms of added round-trip latency">
+    <br><sub>* Round-trip latency added by JackMoebius itself, on top of your app's buffer and the JACK period. <a href="https://jackmoebius.io/guide/latency.html">How it was measured</a>.</sub>
+  </p>
 
   <a href="https://jackmoebius.io/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action: a short guided tour">
