@@ -8,7 +8,7 @@ Notable changes to JackMoebius.
 Format: [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions 0.x cover the
 initial development phase (before commercialization).
 
-## 1.1.0 · unreleased · 254 channels each way, minimal latency by default {#v1-1-0}
+## 1.1.0 · 2026-10-23 · 254 channels each way, minimal latency by default {#v1-1-0}
 
 A new device model and a new bridge: one `JackMoebius` device for everything, a private device per app with as
 many channels as you need, and a shared-memory bridge that replaces the buffered one.
@@ -31,6 +31,8 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 - `jackmoebius rebuild <App>` frees the channels held by a device that kept a stream after one of its sides was removed.
   `jackmoebius status` and `jackmoebius doctor` tell you which apps hold channels.
 - Errors from the daemon now carry a stable code, so front-ends like JackMate show them in your language.
+- JackMate opens once, at the first login after an install or an update, so you find the app that drives JackMoebius. It happens only that
+  once: nothing is left running at later logins.
 
 **Changed**
 
@@ -48,6 +50,11 @@ many channels as you need, and a shared-memory bridge that replaces the buffered
 
 - The monitor outputs and the master box switch: an app that is not exposed in JackMate is silent, on purpose.
   The Mac's volume for JackMoebius works as before.
+
+**Fixed**
+
+- On a Mac where `~/Library/LaunchAgents` did not exist yet, the installer left it owned by root, so your other apps could not add a
+  launch agent there. It now gives the folder back to you, and repairs it if an earlier install had left it that way.
 
 **Upgrading from 1.0**
 
