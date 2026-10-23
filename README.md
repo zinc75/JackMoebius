@@ -18,6 +18,9 @@
 
   **[Documentation](https://jackmoebius.io/)** · **[Changelog](https://jackmoebius.io/changelog.html)** · **[Download trial](https://jackmoebius.io/#download)** · **[Buy a license](https://jackmoebius.io/#buy)** · **[Support](https://github.com/zinc75/JackMoebius/discussions)**
 
+  <img src="docs/assets/readme-stats.png" width="800" alt="Up to 64 channels per app in each direction, up to 254 channels each way for all your apps, less than 3 ms of added round-trip latency">
+  <br><sub>* Round-trip latency added by JackMoebius itself, on top of your app's buffer and the JACK period. <a href="https://jackmoebius.io/guide/latency.html">How it was measured</a>.</sub>
+
   <a href="https://jackmoebius.io/#video">
     <img src="docs/assets/video-poster.png" width="640" alt="Watch JackMoebius in action: a short guided tour">
   </a>
@@ -40,6 +43,9 @@ CoreAudio to JACK.
   and get their own persistent channel reservations.
 - **Transparent to the app**: no plug-in, no reconfiguration inside the app, so its
   audio simply appears in the JACK graph.
+- **Up to 64 channels per app, each way**, on a device of its own (`JackMoebius for <App>`); 254 channels each way
+  for all your apps.
+- **Minimal latency**: about 130 frames (under 3 ms at 48 kHz) added on top of your app's buffer, with a shared-memory bridge.
 - **Universal**: Apple Silicon + Intel, macOS 15+.
 - **Scriptable**: a `jackmoebius` command-line tool and a documented IPC protocol.
 
@@ -51,7 +57,7 @@ runs standalone from the CLI too.
 
 1. **[Download the latest `.dmg`](https://jackmoebius.io/#download)** and open it.
 2. Run **Install JackMoebius.pkg**. macOS installs a system audio driver, so you'll be
-   **asked to reboot** at the end.
+   **asked to reboot** at the end. The installer also offers **JackMate** and opens it once after the restart, so you can start routing right away.
 3. Start a **JACK** server (via [JackMate](https://jackmate.app)), then activate JackMoebius.
 
 > 🛡️ **Signed and notarized by Apple.** The driver and daemon are Developer ID signed and
